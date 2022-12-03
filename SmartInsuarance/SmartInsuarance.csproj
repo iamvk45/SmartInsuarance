@@ -124,8 +124,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Global.asax.cs">
@@ -133,6 +135,7 @@
     </Compile>
     <Compile Include="Helper\Api_CommonResponse.cs" />
     <Compile Include="Models\FillDropDown.cs" />
+    <Compile Include="Models\UserMaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -5350,6 +5353,7 @@
     <Content Include="Content\Template\js\highlight.min.js" />
     <Content Include="Content\Template\js\invoice.js" />
     <Content Include="Content\Template\js\jquery.localizationTool.js" />
+    <Content Include="Content\Template\js\jquery.min.js" />
     <Content Include="Content\Template\js\layout-compact-nav.js" />
     <Content Include="Content\Template\js\layout-dark.js" />
     <Content Include="Content\Template\js\layout-fixed-header.js" />
@@ -6882,6 +6886,9 @@
     <Content Include="Views\Common\Index.cshtml" />
     <Content Include="Views\User\EditProfile.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
+    <Content Include="Views\User\AddUserMember.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Admin\ApproveTrailuser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
