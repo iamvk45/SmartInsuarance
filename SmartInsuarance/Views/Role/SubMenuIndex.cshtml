@@ -1,0 +1,78 @@
+﻿@using SmartInsuarance.Models
+@model List <SubMenuMaster>
+@{
+    ViewBag.Title = "SubMenuIndex";
+    Layout = "~/Views/Shared/_Layout_new.cshtml";
+}
+
+<link href="~/Content/Custom.css" rel="stylesheet" />
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title" style="color: blanchedalmond;font-weight: bold;">SubMenu List</h4>
+            <a href="@Url.Action("SubMenuCreate", "Role", new { Id = 0 })" class="btn btn-success float-right"><i class="fa fa-plus"></i> New Create</a>
+
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-responsive-md">
+                    <thead>
+                        <tr>
+                            <th>#No</th>
+                            <th>Menu Name</th>
+                            <th>SubMenu Name </th>
+                            <th>Controller Name</th>
+                            <th>Action Name</th>
+
+                            <th>Active</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var i = 1;
+                            foreach (var item in Model)
+                            {
+                                <tr id="tr_@item.iSubMnuId">
+                                    <td>@i</td>
+                                    <td>
+                                        @item.sMenuName
+                                    </td>
+                                    <td>
+                                        @item.sSubMnuName
+                                    </td>
+                                    <td>
+                                        @item.sCntrolName
+                                    </td>
+
+                                    <td>
+                                        @item.sActnMthd
+                                    </td>
+                                    <td>
+                                        <label class="toggle">
+                                            <input class="toggle-checkbox" type="checkbox" id="Status" name="Status" value="@item.iSubMnuId" @(item.iSubMnuId == 1 ? "checked" : "")>
+                                            <div class="toggle-switch"></div>
+                                            @*<span class="toggle-label">Bluetooth</span>*@
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <a href="#" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                            <a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

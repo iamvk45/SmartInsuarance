@@ -1,0 +1,87 @@
+﻿@using SmartInsuarance.Models
+@model SubMenuMaster
+@{
+    ViewBag.Title = "SubMenuCreate";
+    Layout = "~/Views/Shared/_Layout_new.cshtml";
+    List<ShowMenuDropDown> Menulist = new List<ShowMenuDropDown>();
+    if (ViewBag.Menulist != null)
+    {
+        Menulist = (List<ShowMenuDropDown>)ViewBag.Menulist;
+    }
+
+}
+<link href="~/Content/Custom.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-lg-12">
+        @using (Html.BeginForm("SubMenuCreate", "Role", FormMethod.Post, new { @class = "formcreateupdate", @id = "frmAddUpdate", enctype = "multipart/form-data" }))
+        {
+            <input name="SubMenuId" id="iSubMnuId" type="hidden" value="@(Model != null ? Model.iSubMnuId.ToString() : "0")">
+
+            <div class="card">
+               
+                    <div class="card-header">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">Smart Insurance</li>
+                            <li class="breadcrumb-item">Create SubMenu</li>
+
+                        </ol>
+                        <a class="btn btn-success float-right" href="@Url.Action("SubMenuIndex", "Role")"><i class="fas fa-list"></i> SubMenu Index</a>
+
+                </div>
+                <div class="card-body">
+                    <div class="form-group is-empty row Paddingtop">
+                        <label for="nameInput" class="col-sm-3 control-label">Menu Name</label>
+                        <div class="col-sm-6">
+                            <select class="single-select" name="iFK_MnuId" id="single-select" required>
+
+                                <option value="">Select Menu Name</option>
+                                @{
+                                    foreach (var item in Menulist)
+                                    {
+                                        <option @(Model != null && Model.iFK_MnuId == item.MenuId ? "selected" : "") value="@item.MenuId">@item.MenuName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group is-empty row Paddingtop">
+                        <label for="nameInput" class="col-sm-3 control-label">SubMenu Name</label>
+                        <div class="col-sm-6">
+                            <input name="sSubMnuName" id="SubMenuName" type="text" value="@(Model != null ? Model.sSubMnuName : "")" class="form-control" placeholder="Enter Menu Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group is-empty row Paddingtop">
+                        <label for="nameInput" class="col-sm-3 control-label">Controller Name</label>
+                        <div class="col-sm-6">
+                            <input name="sCntrolName" id="ControllerName" type="text" value="@(Model != null ? Model.sCntrolName : "")" class="form-control" placeholder="Enter Controller Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group is-empty row Paddingtop">
+                        <label for="nameInput" class="col-sm-3 control-label">Action Name</label>
+                        <div class="col-sm-6">
+                            <input name="sActnMthd" id="ActionMethod" type="text" value="@(Model != null ? Model.sActnMthd : "")" class="form-control" placeholder="Enter Action Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group is-empty row Paddingtop">
+                        <label for="nameInput" class="col-sm-3 control-label">Active</label>
+                        <label class="col-sm-6 toggle pull-left">
+                            <input class="toggle-checkbox" type="checkbox" id="Status" name="iStatus" value="1" checked>
+                            <div class="toggle-switch"></div>
+                            @*<span class="toggle-label">Bluetooth</span>*@
+                        </label>
+
+                    </div>
+
+                </div>
+            </div>
+            <footer class="form-footer">
+                <div class="pull-right" style="text-align: end;">
+                    <a href="@Url.Action("SubMenuIndex", "Role")" class="btn btn-default">DISCARD</a>
+                    <button class="btn btn-primary"> Save </button>
+                </div>
+            </footer>
+        }
+    </div>
+</div>
+

@@ -8,18 +8,41 @@
     <!-- PAGE TITLE HERE -->
     <title>Smart ensure - Admin</title>
     <!-- FAVICONS ICON -->
+
     <link rel="shortcut icon" type="image/png" href="~/Content/Template/images/favicon.png" />
+    <link rel="stylesheet" href="~/Content/Template/vendor/select2/css/select2.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.8/dist/sweetalert2.min.css" rel="stylesheet" type="text/css">
     <link href="~/Content/Template/vendor/wow-master/css/libs/animate.css" rel="stylesheet">
     <link href="~/Content/Template/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/Content/Template/vendor/bootstrap-select-country/css/bootstrap-select-country.min.css">
     <link rel="stylesheet" href="~/Content/Template/vendor/jquery-nice-select/css/nice-select.css">
     <link href="~/Content/Template/vendor/datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <!-- ----swiper-slider---- -->
-    <link rel="stylesheet" href="./~/Content/Template/vendor/swiper/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="~/Content/Template/vendor/swiper/css/swiper-bundle.min.css">
     <!-- Style css -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
     <link href="~/Content/Template/css/style.css" rel="stylesheet">
 
+    <!-- Daterange picker -->
+    <link href="~/Content/Template/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Clockpicker -->
+    <link href="~/Content/Template/vendor/clockpicker/css/bootstrap-clockpicker.min.css" rel="stylesheet">
+    <!-- asColorpicker -->
+    <link href="~/Content/Template/vendor/jquery-asColorPicker/css/asColorPicker.min.css" rel="stylesheet">
+    <!-- Material color picker -->
+    <link href="~/Content/Template/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+
+    <!-- Pick date -->
+    <link rel="stylesheet" href="~/Content/Template/vendor/pickadate/themes/default.css">
+    <link rel="stylesheet" href="~/Content/Template/vendor/pickadate/themes/default.date.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="~/Content/Template/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <!-- Custom Stylesheet -->
+    <link href="~/Content/Template/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <link href="~/Content/select2/css/select2.css" rel="stylesheet" />
+    <link href="~/Content/Template/css/style.css" rel="stylesheet">
+    @RenderSection("styles", false)
     <style type="text/css">
         .logoShadow {
             text-shadow: 0px 3px 19px rgba(144,135,135,0.51);
@@ -1078,7 +1101,7 @@
         ***********************************-->
         <div class="content-body">
             <!-- row -->
-            <div class="container-fluid">
+            <div class="container-fluid" id="fluid">
                 <!-- Row -->
                 @RenderBody()
 
@@ -1087,7 +1110,8 @@
                 ***********************************-->
                 <div class="footer">
                     <div class="copyright">
-                        <p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/" target="_blank">DexignLab</a> 2022</p>
+                        @*<p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/" target="_blank">DexignLab</a> 2022</p>*@
+                        <p>S3 Company</p>
                     </div>
                 </div>
             </div>
@@ -1171,6 +1195,7 @@
         Scripts
     ***********************************-->
     <!-- Required vendors -->
+
     <script src="~/Content/Template/vendor/global/global.min.js"></script>
     <script src="~/Content/Template/vendor/chart.js/Chart.bundle.min.js"></script>
     <script src="~/Content/Template/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
@@ -1192,7 +1217,48 @@
     <script src="~/Content/Template/js/custom.min.js"></script>
     <script src="~/Content/Template/js/demo.js"></script>
     <script src="~/Content/Template/js/styleSwitcher.js"></script>
+    <script src="~/Content/select2/js/select2.js"></script>
     <script src="~/Content/Template/select2/js/select2.js"></script>
+    <script src="~/Content/Template/js/plugins-init/select2-init.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.8/dist/sweetalert2.all.min.js"></script>
+
+
+    <!-- Daterangepicker -->
+    <!-- momment js is must -->
+    <script src="~/Content/Template/vendor/moment/moment.min.js"></script>
+    <script src="~/Content/Template/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- clockpicker -->
+    <script src="~/Content/Template/vendor/clockpicker/js/bootstrap-clockpicker.min.js"></script>
+    <!-- asColorPicker -->
+    <script src="~/Content/Template/vendor/jquery-asColor/jquery-asColor.min.js"></script>
+    <script src="~/Content/Template/vendor/jquery-asGradient/jquery-asGradient.min.js"></script>
+    <script src="~/Content/Template/vendor/jquery-asColorPicker/js/jquery-asColorPicker.min.js"></script>
+    <!-- Material color picker -->
+    <script src="~/Content/Template/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+    <!-- pickdate -->
+    <script src="~/Content/Template/vendor/pickadate/picker.js"></script>
+    <script src="~/Content/Template/vendor/pickadate/picker.time.js"></script>
+    <script src="~/Content/Template/vendor/pickadate/picker.date.js"></script>
+
+
+
+    <!-- Daterangepicker -->
+    <script src="~/Content/Template/js/plugins-init/bs-daterange-picker-init.js"></script>
+    <!-- Clockpicker init -->
+    <script src="~/Content/Template/js/plugins-init/clock-picker-init.js"></script>
+    <!-- asColorPicker init -->
+    <script src="~/Content/Template/js/plugins-init/jquery-asColorPicker.init.js"></script>
+    <!-- Material color picker init -->
+    <script src="./js/plugins-init/material-date-picker-init.js"></script>
+    <!-- Pickdate -->
+    <script src="~/Content/Template/js/plugins-init/pickadate-init.js"></script>
+    <script src="~/Content/Template/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="~/Content/Template/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+
+    <script src="~/Content/Template/js/custom.min.js"></script>
+    <script src="~/Content/Template/js/dlabnav-init.js"></script>
+    <script src="~/Content/Template/js/demo.js"></script>
+    <script src="~/Content/Template/js/styleSwitcher.js"></script>
     <script>
 
         $(function () {
@@ -1215,6 +1281,42 @@
             //      }, 1500)
         });
         $('.my-select').selectpicker();
+
     </script>
+    @if (TempData["StatusMsg"] != null)
+    {
+
+        if (TempData["Message"] != null)
+        {
+            var Msg = TempData["Message"];
+            var StatusMsg = TempData["StatusMsg"];
+            <script type="text/javascript">
+                $(document).ready(function () {
+                var Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        timerProgressBar: true,
+                        onOpen: function (toast) {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                })
+                    Toast.fire({
+                        icon: '@StatusMsg.ToString()' ,
+                        title: '@Msg.ToString()'
+                    })
+                    //    icon: 'success',
+                    //    icon: 'error',
+                    //    icon: 'info',
+                    //    icon: 'warning',
+                });
+                //$(document).bind("contextmenu", function (e) {
+                //    e.preventDefault();
+                //});
+            </script>
+        }
+    }
 </body>
 </html>

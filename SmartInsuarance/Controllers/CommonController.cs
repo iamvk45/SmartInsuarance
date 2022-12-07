@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
 using SmartInsuarance.Helper;
+using SmartInsuarance.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,6 +13,7 @@ namespace SmartInsuarance.Controllers
 {
     public class CommonController : Controller
     {
+        Api_CommonResponse _CommonResponse = new Api_CommonResponse();
         public ActionResult Index()
         {
             return View();
@@ -27,7 +29,7 @@ namespace SmartInsuarance.Controllers
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Accept", "application/json");
             IRestResponse response = client.Execute(request);
-            Api_CommonResponse _CommonResponse = new Api_CommonResponse();
+          
 
             if (response.StatusCode.ToString() == "OK")
             {
@@ -41,6 +43,33 @@ namespace SmartInsuarance.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
+        public List<ShowMenuDropDown> GetMenulist()
+        {
+            List<ShowMenuDropDown> menus = new List<ShowMenuDropDown>();
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "RoleMaster/GetMenuMasterList");
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            if (response.StatusCode.ToString() == "OK")
+            {
+                _CommonResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if (_CommonResponse.data != null)
+                {
+                    List<MenuMasters> objlist = new List<MenuMasters>();
+                    objlist = JsonConvert.DeserializeObject<List<MenuMasters>>(_CommonResponse.data.ToString());
+                    var menulist = objlist.Select(p => new { p.MenuId, p.MenuName }).ToList();
+                    foreach (var item in menulist)
+                    {
+                        ShowMenuDropDown obj = new ShowMenuDropDown();
+                        obj.MenuId = item.MenuId;
+                        obj.MenuName = item.MenuName;
+                        menus.Add(obj);
+                    }
+                }
+            }
+            return menus;
+        }
     }
 }

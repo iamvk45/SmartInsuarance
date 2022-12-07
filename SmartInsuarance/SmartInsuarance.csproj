@@ -46,6 +46,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.1\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
     </Reference>
@@ -124,8 +127,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminAjaxRequestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Global.asax.cs">
@@ -133,6 +138,7 @@
     </Compile>
     <Compile Include="Helper\Api_CommonResponse.cs" />
     <Compile Include="Models\FillDropDown.cs" />
+    <Compile Include="Models\Roll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +154,9 @@
     <Content Include="Content\CountrySelect\build\js\countrySelect.js" />
     <Content Include="Content\CountrySelect\build\js\countrySelect.min.js" />
     <Content Include="Content\CountrySelect\src\js\countrySelect.js" />
+    <Content Include="Content\Custom.css" />
+    <Content Include="Content\select2\css\select2.css" />
+    <Content Include="Content\select2\js\select2.js" />
     <Content Include="Content\Template\css\perfect-scrollbar.css" />
     <Content Include="Content\Template\css\style.css" />
     <Content Include="Content\Template\icons\avasta\css\style.css" />
@@ -5350,6 +5359,7 @@
     <Content Include="Content\Template\js\highlight.min.js" />
     <Content Include="Content\Template\js\invoice.js" />
     <Content Include="Content\Template\js\jquery.localizationTool.js" />
+    <Content Include="Content\Template\js\jScript.js" />
     <Content Include="Content\Template\js\layout-compact-nav.js" />
     <Content Include="Content\Template\js\layout-dark.js" />
     <Content Include="Content\Template\js\layout-fixed-header.js" />
@@ -6853,6 +6863,9 @@
     <Content Include="Content\Template\select2\css\desktop.ini" />
     <Content Include="Content\Template\select2\desktop.ini" />
     <Content Include="Content\Template\select2\js\desktop.ini" />
+    <Content Include="Content\select2\css\desktop.ini" />
+    <Content Include="Content\select2\desktop.ini" />
+    <Content Include="Content\select2\js\desktop.ini" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -6882,6 +6895,12 @@
     <Content Include="Views\Common\Index.cshtml" />
     <Content Include="Views\User\EditProfile.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
+    <Content Include="Views\Role\MenuMaster.cshtml" />
+    <Content Include="Views\Role\MenuIndex.cshtml" />
+    <Content Include="Views\Role\SubMenuIndex.cshtml" />
+    <Content Include="Views\Role\SubMenuCreate.cshtml" />
+    <Content Include="Views\Role\RateMaster.cshtml" />
+    <Content Include="Views\AdminAjaxRequest\BindSubmenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

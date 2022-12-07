@@ -1,0 +1,100 @@
+﻿@using SmartInsuarance.Models
+@model List<RateMaster>
+@{
+    ViewBag.Title = "BindSubmenu";
+    List<SmartInsuarance.Model.GlobalClass> lst = new List<SmartInsuarance.Model.GlobalClass>();
+    lst = SmartInsuarance.Model.CommonList.GetTypeList();
+    Layout = null;
+}
+
+@{
+    var i = 1;
+    foreach (var item in Model)
+    {
+        <tr id="tr_@item.iPk_RateMstId">
+            <td>@i</td>
+            <td>
+                @item.sMnuNme
+            </td>
+            <td>
+                @item.sSbMnuNme
+            </td>
+            <td>
+               
+                @item.Typename
+
+            </td>
+
+            <td>
+            @item.dRate  
+            </td>
+            <td>
+                @item.StartDate
+            </td>
+            <td>
+                <label class="toggle">
+                    <input class="toggle-checkbox" type="checkbox" id="Status" name="Status" value="@item.iStts" @(item.iStts == 1 ? "checked" : "")>
+                    <div class="toggle-switch"></div>
+                    @*<span class="toggle-label">Bluetooth</span>*@
+                </label>
+            </td>
+            <td>
+                <div class="d-flex">
+                    <button href="javascript:;" id="Clone_@item.iPk_RateMstId" class="btn btn-primary shadow btn-xs sharp me-1 Edit" onclick="Clone(@item.iPk_RateMstId);"><i class="fas fa-clone"></i></button>
+                 
+                                        <button class="btn btn-danger shadow btn-xs sharp Delete" id="delete_@item.iPk_RateMstId"><i class="fa fa-trash"></i></button>
+                </div>
+            </td>
+        </tr>
+        i++;
+    }
+}
+
+@*<script src="~/Content/Template/select2/js/select2.js"></script>*@
+@*<script type="text/javascript">
+    $(document).ready(function () {
+
+        //Edit event handler.
+        $("#tblCustomers #tbody").on("click", ".Edit", function () {
+            debugger;
+            var row = $(this).closest("tr");
+            $("td", row).each(function () {
+                if ($(this).find("input").length > 0) {
+                    $(this).find("input").show();
+                    $(this).find("span").hide();
+                }
+            });
+            row.find(".Update").show();
+            row.find(".Cancel").show();
+            row.find(".Delete").hide();
+            $(this).hide();
+        });
+
+    });
+    function edit(id) {
+        $("#edit_" + id).css('display', 'none');
+        $("#update_" + id).css('display', 'block');
+        $("#cancel_" + id).css('display', 'block');
+        $("#delete_" + id).css('display', 'none');
+        $("#divdisplay_" + id).css('display', 'none');
+        $("#divselect_" + id).css('display', 'block');
+        $("#inputtext_" + id).css('display', 'block');
+        $("#inputdisplay_" + id).css('display', 'none');
+    }
+    function cancel(id) {
+        $("#edit_" + id).css('display', 'block');
+        $("#update_" + id).css('display', 'none');
+        $("#cancel_" + id).css('display', 'none');
+        $("#delete_" + id).css('display', 'block');
+        $("#divselect_" + id).css('display', 'none');
+        $("#divdisplay_" + id).css('display', 'block');
+        $("#inputdisplay_" + id).css('display', 'block');
+        $("#inputtext_" + id).css('display', 'none');
+
+    }
+    function update(id) {
+
+        var fromdate = $("#Fromdate").val();
+        alert(fromdate);
+    }
+</script>*@
