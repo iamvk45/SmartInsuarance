@@ -1,0 +1,599 @@
+﻿@using SmartInsuarance.Model;
+@{
+    ViewBag.Title = "EditProfile";
+    Layout = "~/Views/Shared/_Layout_new.cshtml";
+    //var BaseURL = System.Configuration.ConfigurationManager.AppSettings["BaseUrl"];
+
+}
+
+<link href="~/Content/Template/select2/css/select2.css" rel="stylesheet" />
+@*<link href="~/Content/CountrySelect/build/css/countrySelect.css" rel="stylesheet" />
+    <link href="~/Content/CountrySelect/build/css/demo.css" rel="stylesheet" />*@
+
+
+<div class="row">
+    <input type="hidden" id="hdf_longitudeData" />
+    <input type="hidden" id="hdf_latitudeData" />
+    <div class="col-xl-3 col-lg-4">
+        <div class="clearfix">
+            <div class="card card-bx profile-card author-profile m-b30">
+                <div class="card-body">
+                    <div class="p-5">
+                        <div class="author-profile">
+                            <div class="author-media">
+                                <img src="~/Content/Template/images/userlogo.png" alt="">
+                                <div class="upload-link" title="" data-toggle="tooltip" data-placement="right" data-original-title="update">
+                                    <input type="file" class="update-flie">
+                                    <i class="fa fa-camera"></i>
+                                </div>
+                            </div>
+                            <div class="author-info">
+                                <h6 class="title">Super User</h6>
+                                <span>Admin</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-list">
+                        <ul>
+                            <li><a href="javascript:void(0)">Username</a><span>SU</span></li>
+                            <li><a href="javascript:void(0)">Role</a><span>Admin</span></li>
+                            <li><a href="javascript:void(0)">My Members</a><span>0</span></li>
+                        </ul>
+                    </div>
+                </div>
+                @*<div class="card-footer">
+                        <div class="input-group mb-3">
+                            <div class="form-control rounded text-center bg-white">Portfolio</div>
+                        </div>
+                        <div class="input-group">
+                            <a href="https://www.dexignlab.com/" class="form-control text-primary rounded text-start bg-white">https://www.dexignlab.com/</a>
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+
+    </div>
+    <div class="col-xl-9 col-lg-8">
+        <div class="card profile-card card-bx m-b30">
+            <div class="card-header">
+                <h6 class="title">Account setup</h6>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6 m-b30">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" id="txtName">
+                    </div>
+                    <div class="col-sm-6 m-b30">
+                        <label class="form-label">Surname</label>
+                        <input type="text" class="form-control" id="txtSurName">
+                    </div>
+                    <div class="col-sm-6 m-b30">
+                        <label class="form-label">Date Of Birth</label>
+                        <input type="text" class="form-control" placeholder="dd.MM.yyyy" id="txtDOB">
+                    </div>
+                    <div class="col-sm-6 m-b30">
+                        <label class="form-label">Email address</label>
+                        <input type="text" class="form-control" placeholder="somthing@mail.com" id="txtEmail">
+                    </div>
+
+                    <div class="col-sm-6 m-b30">
+                        <label class="form-label">Select Country</label><br />
+                        @*<input class="form-control" id="countrySelect" style="width:100%"/>*@
+                        <select class="form-control" id="ddlCountry">
+                            <option value="0" role=separator>Select Country</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6 m-b30">
+                        <label class="form-label">Select State</label><br />
+                        <select class="form-control" id="ddlState">
+                            <option value="0" role=separator>Select State</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6 m-b30">
+                        <label class="form-label">Select City</label><br />
+
+                        <select class="form-control" id="ddlCity">
+                            <option value="0" role=separator>Select City</option>
+                        </select>
+                    </div>
+
+
+                    <div class="col-sm-6 m-b30">
+                        <label class="form-label">Phone Number</label>
+                        <div class="row col-12">
+                            <div class="col-2">
+                                <input type="text" class="form-control" id="txtPhoneCodeID" value="NA" style="font-size:15px;width: 80px; background-color: #f1f1f1" disabled readonly />
+                            </div>
+                            <div class="col-10">
+                                <input type="text" class="form-control" id="txtPhone" oninput="numberOnly(this.id);" maxlength="10">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-6 m-b30">
+                        <label class="form-label">Pincode</label>
+                        <input type="text" class="form-control" id="txtPincode" oninput="numberOnly(this.id);" maxlength="6">
+                    </div>
+                    <div class="col-sm-6 m-b30">
+                        <label class="form-label">Role</label><br />
+                        <select class="selectpicker" id="ddlRole">
+                            <option value="1">Admin</option>
+                            <option value="2">User</option>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-6 m-b30">
+                        <label class="form-label">Aadhar Number</label>
+                        <input type="text" class="form-control" id="txtAadhaar" oninput="numberOnly(this.id);" maxlength="12">
+                    </div>
+
+                    <div class="col-sm-6 m-b30">
+                        <label class="form-label">PAN Number</label>
+                        <input type="text" class="form-control" id="txtPan" maxlength="10">
+                    </div>
+
+                    <div class="col-sm-6 m-b30">
+                        <label class="form-label" id="lblAadhaarImg">Choose Image (Aadhaar)</label>
+                        <input type="file" class="form-control" id="fupAadhaar" onchange="return encodeImageFileAsURL(this,'Aadhaar')">
+                        <input type="hidden" id="hdnUploadedAadhaarImage" />
+                    </div>
+
+                    <div class="col-sm-6 m-b30">
+                        <label class="form-label" id="lblPanImg">Choose Image (PAN)</label>
+                        <input type="file" class="form-control" id="fupPan" onchange="return encodeImageFileAsURL(this,'Pan')">
+                        <input type="hidden" id="hdnUploadedPanImage" />
+                    </div>
+
+                    <div class="col-sm-6 m-b30">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-control" id="txtUsername">
+                    </div>
+
+                    <div class="col-sm-6 m-b30">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" id="txtpassword">
+                        @*<p style="height: 22px;width:100%;background-color:red;margin-top: 5px;border-radius: 14px;text-align: center;color: white;">weak</p>*@
+                    </div>
+
+
+                    <div class="col-sm-12 m-b30">
+                        <label class="form-label">Full Address</label>
+                        <textarea class="form-control" placeholder="Some where....." rows="3" style="resize:none" id="txtAddress"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary" type="button" onclick="SaveDetails()"><i class="fa fa-plus"></i> Add @ViewBag.type</button>
+                <a href="javascript:void(0);" class="btn-link">Forgot your password?</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--**********************************
+    Footer start
+***********************************-->
+<!--**********************************
+    Footer end
+***********************************-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+@*
+    <script src="~/Content/CountrySelect/build/js/countrySelect.js"></script>
+    <script>
+        $("#countrySelect").countrySelect({
+            defaultStyling: "inside"
+
+        });
+    </script>*@
+<script type="text/javascript">
+    var imagebase64 = "";
+    $(document).ready(function () {
+        getLocation();
+        bindCountryStateCity('Country', 0, 0);
+        $('#ddlCountry').change(function () {
+            $('#ddlCity').html('');
+            $('#ddlState').html('');
+            var ds = $('#ddlCountry').val();
+            var ds1 = $('#ddlCountry option:selected').text();
+
+            ds1 = ds1.split('(')[1].replace(')', '').trim();
+            bindCountryStateCity('State', ds, 0);
+
+            $('#txtPhoneCodeID').val('');
+            $('#txtPhoneCodeID').val(ds1);
+
+        });
+        $('#ddlState').change(function () {
+
+            $('#ddlCity').html('');
+            var ds = $('#ddlState').val();
+            bindCountryStateCity('City', 0, ds);
+        });
+    });
+
+    function bindCountryStateCity(type, cID, sID) {
+        var Content = {
+            type: type,
+            countryID: parseInt(cID),
+            stateID: parseInt(sID),
+        }
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            url: "/Common/GetCountryStateCity",
+            dataType: 'json',
+            type: 'Post',
+            cache: false,
+            data: JSON.stringify(Content),
+            success: function (data) {
+                console.log('ajax');
+                //console.log(data.Data);
+
+                var mainData = JSON.parse(data.Data);
+                if (type == 'Country') {
+                    var countryData = "<option value=0>Select Country</option>";
+                    mainData.forEach(function (item) {
+                        /* console.log(item.DDLText);*/
+                        countryData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
+
+                    });
+                    //console.log(countryData);
+                    $('#ddlCountry').html('');
+                    $('#ddlCountry').html(countryData);
+                    $('#ddlCountry').select2();
+                }
+
+                if (type == 'State') {
+                    var stateData = "<option value=0>Select State</option>";
+                    mainData.forEach(function (item) {
+                        /* console.log(item.DDLText);*/
+                        stateData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
+
+                    });
+                    //console.log(countryData);
+                    $('#ddlState').html('');
+                    $('#ddlState').html(stateData);
+                    $('#ddlState').select2();
+                }
+                if (type == 'City') {
+                    var cityData = "<option value=0>Select City</option>";
+                    mainData.forEach(function (item) {
+                        /* console.log(item.DDLText);*/
+                        cityData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
+
+                    });
+                    //console.log(countryData);
+                    $('#ddlCity').html('');
+                    $('#ddlCity').html(cityData);
+                    $('#ddlCity').select2();
+                }
+            },
+            error: function (d) {
+                console.log(d);
+                //alert("404. Please wait until the File is Loaded.");
+            }
+        });
+    }
+
+
+    function SaveDetails() {
+
+        var name = $('#txtName').val();
+        var surname = $('#txtSurName').val();
+        var dob = $('#txtDOB').val();
+        var email = $('#txtEmail').val();
+        var country = $('#ddlCountry').val();
+        var state = $('#ddlState').val();
+        var city = $('#ddlCity').val();
+        var phonenumber = $('#txtPhone').val();
+        var pincode = $('#txtPincode').val();
+        var role = $('#ddlRole').val();
+        var adhaarNumber = $('#txtAadhaar').val();
+        var panNumber = $('#txtPan').val();
+        var adhaarImg = $('#hdnUploadedAadhaarImage').val();
+        var pancardImg = $('#hdnUploadedPanImage').val();
+        var username = $('#txtUsername').val();
+        var password = $('#txtpassword').val();
+        var address = $('#txtAddress').val();
+
+        var userMasterModal = {
+            sNME: name,
+            sSurNME: surname,
+            sUSRNME: username,
+            dtDOB: dob,
+            sEmail: email,
+            sPhone: phonenumber,
+            iCountryID: parseInt(country),
+            iStateID: parseInt(state),
+            iCityID: parseInt(city),
+            sPincode: pincode,
+            sPincode: pincode,
+            sPincode: pincode,
+            sPincode: pincode,
+            sPincode: pincode,
+            sAadhaar: adhaarNumber,
+            sPan: panNumber,
+            sAddress: address,
+            bPassword: password,
+            sLatitude: $('#hdf_latitudeData').val(),
+            sLongitude: $('#hdf_longitudeData').val(),
+            iRoleID: parseInt(role),
+            aadhaarImg: adhaarImg,
+            panImg: pancardImg,
+            type:"@ViewBag.type",
+        }
+
+        var d = checkValidate();
+        console.log(d);
+        //var d = JSON.stringify(Content);
+        //console.log(d);
+
+        if (d) {
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: "/User/SaveUserDetails",
+                dataType: 'json',
+                type: 'Post',
+                cache: false,
+                data: JSON.stringify(userMasterModal),
+                success: function (data) {
+                    console.log('ajax');
+                    console.log(data);
+                    if (data.StatusCode == 1) {
+                        swal({
+                            title: "Success",
+                            text: "Details Saved Successfully..!",
+                            type: "success",
+                            showCancelButton: !1,
+                        });
+                    }
+                },
+                error: function (d) {
+                    console.log(d);
+                    //alert("404. Please wait until the File is Loaded.");
+                }
+            });
+        }
+    }
+
+
+    function checkValidate() {
+        var status = true;
+
+        var name = $('#txtName').val();
+        var surname = $('#txtSurName').val();
+        var dob = $('#txtDOB').val();
+        var email = $('#txtEmail').val();
+        var country = $('#ddlCountry').val();
+        var state = $('#ddlState').val();
+        var city = $('#ddlCity').val();
+        var phonenumber = $('#txtPhone').val();
+        var pincode = $('#txtPincode').val();
+        var role = $('#ddlRole').val();
+        var adhaarNumber = $('#txtAadhaar').val();
+        var panNumber = $('#txtPan').val();
+        var adhaarImg = $('#hdnUploadedAadhaarImage').val();
+        var panImg = $('#hdnUploadedPanImage').val();
+        var username = $('#txtUsername').val();
+        var password = $('#txtpassword').val();
+        var address = $('#txtAddress').val();
+
+        if (name.length <= 0) {
+            swal({
+                title: "Error",
+                text: "Please Enter Name..!",
+                type: "warning",
+                showCancelButton: !1,
+            });
+            status = false;
+        }
+        else if (surname.length <= 0) {
+            swal({
+                title: "Error",
+                text: "Please Enter Surname..!",
+                type: "warning",
+                showCancelButton: !1,
+            });
+            status = false;
+        }
+        else if (dob.length <= 0) {
+            swal({
+                title: "Error",
+                text: "Please Enter Date of Birth..!",
+                type: "warning",
+                showCancelButton: !1,
+            });
+            status = false;
+        }
+        else if (email.length <= 0) {
+            swal({
+                title: "Error",
+                text: "Please Enter Email Address..!",
+                type: "warning",
+                showCancelButton: !1,
+            });
+            status = false;
+        }
+        else if (country == 0) {
+            swal({
+                title: "Error",
+                text: "Please Select Country..!",
+                type: "warning",
+                showCancelButton: !1,
+            });
+            status = false;
+        }
+        else if (state == 0) {
+            swal({
+                title: "Error",
+                text: "Please Select State..!",
+                type: "warning",
+                showCancelButton: !1,
+            });
+            status = false;
+        }
+        else if (city == 0) {
+            swal({
+                title: "Error",
+                text: "Please Select City..!",
+                type: "warning",
+                showCancelButton: !1,
+            });
+            status = false;
+        }
+        else if (phonenumber.length <= 0) {
+            swal({
+                title: "Error",
+                text: "Please Enter Phone Number..!",
+                type: "warning",
+                showCancelButton: !1,
+            });
+            status = false;
+        }
+        else if (pincode.length <= 0) {
+            swal({
+                title: "Error",
+                text: "Please Enter Pincode..!",
+                type: "warning",
+                showCancelButton: !1,
+            });
+            status = false;
+        }
+        else if (adhaarNumber.length <= 0) {
+            swal({
+                title: "Error",
+                text: "Please Enter Aadhaar Number..!",
+                type: "warning",
+                showCancelButton: !1,
+            });
+            status = false;
+        }
+        else if (panNumber.length <= 0) {
+            swal({
+                title: "Error",
+                text: "Please Enter Pan Number..!",
+                type: "warning",
+                showCancelButton: !1,
+            });
+            status = false;
+        }
+
+        //else if (adhaarImg.length <= 0) {
+        //    swal({
+        //        title: "Error",
+        //        text: "Please Select Aadhaar Image..!",
+        //        type: "warning",
+        //        showCancelButton: !1,
+        //    });
+        //    status = false;
+        //}
+        //else if (panImg.length <= 0) {
+        //    swal({
+        //        title: "Error",
+        //        text: "Please Select Pan Image..!",
+        //        type: "warning",
+        //        showCancelButton: !1,
+        //    });
+        //    status = false;
+        //}
+
+        else if (username.length <= 0) {
+            swal({
+                title: "Error",
+                text: "Please Enter Username..!",
+                type: "warning",
+                showCancelButton: !1,
+            });
+            status = false;
+        }
+        else if (password.length <= 0) {
+            swal({
+                title: "Error",
+                text: "Please Enter Password..!",
+                type: "warning",
+                showCancelButton: !1,
+            });
+            status = false;
+        }
+        else if (address.length <= 0) {
+            swal({
+                title: "Error",
+                text: "Please Enter Address..!",
+                type: "warning",
+                showCancelButton: !1,
+            });
+            status = false;
+        }
+
+        return status;
+    }
+
+    function numberOnly(id) {
+        // Get element by id which passed as parameter within HTML element event
+        var element = document.getElementById(id);
+        // This removes any other character but numbers as entered by user
+        element.value = element.value.replace(/[^0-9]/gi, "");
+    }
+
+    function encodeImageFileAsURL(element,item) {
+        var elementID = element.id;
+        var file = element.files[0];
+        console.log(file);
+        console.log(elementID);
+
+        var reader = new FileReader();
+        reader.onloadend = function () {
+            imagebase64 = reader.result;
+            var binaryOnly = imagebase64.split(',')[1];
+            //console.log(binaryOnly);
+
+            if (item == "Aadhaar") {
+                $('#hdnUploadedAadhaarImage').val(binaryOnly);
+            }
+            if (item == "Pan") {
+                $('#hdnUploadedPanImage').val(binaryOnly);
+            }
+            //var c = $('#UploadedImage').val();
+            // console.log("Converted "+ c)
+        }
+        reader.readAsDataURL(file);
+        return imagebase64;
+    }
+
+
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+    function showPosition(position) {
+        //alert("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude)
+        //var data = {
+        //    lat:position.coords.latitude,
+        //    long:position.coords.longitude
+        //}
+
+        //console.log(JSON.stringify(data));
+
+        $('#hdf_longitudeData').val(position.coords.longitude)
+        $('#hdf_latitudeData').val(position.coords.latitude)
+
+        console.log('from inner');
+        console.log("lat : " + $('#hdf_longitudeData').val());
+        console.log("long : " + $('#hdf_latitudeData').val());
+    }
+
+</script>

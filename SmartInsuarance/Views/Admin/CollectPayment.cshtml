@@ -1,0 +1,221 @@
+﻿
+@{
+    ViewBag.Title = "Collect Payment";
+    Layout = "~/Views/Shared/_Layout_new.cshtml";
+
+    var pendingPayments = ViewBag.orderDetails as List<SmartInsuarance.Models.CollectPaymentData>;
+    var paymentMethods = ViewBag.paymentMethod as List<SmartInsuarance.Model.FillDropDown>;
+
+
+    var TotalAmount = Convert.ToDecimal(pendingPayments[0].PurchaseCost) + Convert.ToDecimal(pendingPayments[0].TaxCost);
+
+}
+
+
+<link href="~/Content/Template/select2/css/select2.css" rel="stylesheet" />
+@*<link href="~/Content/CountrySelect/build/css/countrySelect.css" rel="stylesheet" />
+    <link href="~/Content/CountrySelect/build/css/demo.css" rel="stylesheet" />*@
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Collect Amount - <span id="spnOrdID"> @pendingPayments[0].orderID</span></h4>
+                <a href="@Url.Action("PendingPayments", "Admin")"><i class="fas fa-arrow-left"></i> Back To List</a>
+                <input type="hidden" id="hdnuserID" value="@pendingPayments[0].userID" />
+            </div>
+            <div class="card-body">
+                <div>
+                    <table class="table table-borderless" style="width: 60%;font-size: 15px;">
+                        <tr>
+                            <td><strong> Username : </strong></td>
+                            <td>@pendingPayments[0].userName</td>
+                            <td><strong> Package : </strong></td>
+                            <td>@pendingPayments[0].PackageName</td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>  Purchase Cost : </strong></td>
+                            <td>&#8377; @pendingPayments[0].PurchaseCost</td>
+                            <td><strong>Tax Amount : </strong>  </td>
+                            <td>&#8377; @pendingPayments[0].TaxCost</td>
+                        </tr>
+
+                    </table>
+                </div>
+
+                <div class="row col-12" style="    padding: 12px;    background: #c6c6c6;   border-radius: 8px;    font-size: 14px;   font-weight: 500;    color: black;">
+                    Collect Payment
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-borderless" style="width: 90%;font-size: 15px;margin-top: -40px;">
+                    <tr>
+                        <td><strong> Collect Amount : </strong></td>
+                        <td><input type="number" id="txtAmount" class="form-control" value="@TotalAmount" readonly="readonly" disabled="disabled" /></td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Payment Method : </strong>  </td>
+                        <td>
+                            <select class="selectpicker" id="ddlpayMethod">
+                                <option value="0">Select Payment Method</option>
+                                @{
+                                    if (paymentMethods != null)
+                                    {
+                                        foreach (var item in paymentMethods)
+                                        {
+                                            <option value="@item.DDLValue">@item.DDLText</option>
+                                        }
+                                    }
+                                }
+
+                                @*<option value="14">GPay</option>
+                                    <option value="15">Phone Pay</option>
+                                    <option value="16">Net Banking</option>
+                                    <option value="17">Cash</option>*@
+                            </select>
+                        </td>
+                        <td><strong>Reference Number : </strong>  </td>
+                        <td>
+                            <input type="text" id="txtReferenceNumber" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Attachment Of Proof : </strong>  </td>
+                        <td>
+                            <input class="form-control-file" type="file" onchange="return encodeImageFileAsURL(this)" />&nbsp;&nbsp;&nbsp; <button class="btn btn-primary"><i class="fas fa-upload"></i>  Attach</button>
+                            <input type="hidden" id="hdnUploadedRecieptImage" />
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td><strong>Collected By : </strong>  </td>
+                        <td>
+                            <input type="text" id="txtCollectedBy" class="form-control" />
+                        </td>
+
+                        <td>
+                            <button class="btn btn-primary" id="btnsaveData"><i class="fas fa-save"></i>  Save</button>
+                        </td>
+                    </tr>
+
+                </table>
+
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+@*
+    <script src="~/Content/CountrySelect/build/js/countrySelect.js"></script>
+    <script>
+        $("#countrySelect").countrySelect({
+            defaultStyling: "inside"
+
+        });
+    </script>*@
+<script>
+    $(document).ready(function () {
+
+        $('#btnsaveData').click(function () {
+
+            CollectPayment();
+        });
+
+        //$('.form-check-input').click(function () {
+
+        //    var d = $(".form-check-input").is(':checked')
+        //    if (d) {
+        //        var Name = $(this).data("id");
+        //        var EnailAddress = $(this).data("html");
+        //        ActiveTrialUser(EnailAddress, Name);
+
+        //        setTimeout(function () {
+        //            location.reload();
+        //        }, 3000);
+        //    }
+
+        //});
+    });
+    function CollectPayment() {
+        var Content = {
+            sTrackingId: $('#spnOrdID').text().trim(),
+            dPaidAmnt: parseFloat($('#txtAmount').val()),
+            sPymntMode: parseInt(19),
+            sPaidThrough: $('#ddlpayMethod').val(),
+            sRefNo: $('#txtReferenceNumber').val(),
+            sCollectBy: $('#txtCollectedBy').val(),
+            paymentReciept:$('#hdnUploadedRecieptImage').val(),
+            sUserID: $('#hdnuserID').val()
+        }
+
+        var d = JSON.stringify(Content)
+        console.log(d);
+
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            url: "/User/CollectPayment",
+            dataType: 'json',
+            type: 'Post',
+            cache: false,
+            data: JSON.stringify(Content),
+            success: function (data) {
+                //console.log('ajax');
+                //console.log(data.Message);
+                //console.log(data);
+
+                if (data.StatusCode == 1) {
+                    swal({
+                        title: "Success",
+                        text: "Details Updated Successfully..!",
+                        type: "success",
+                        showCancelButton: !1,
+                    });
+                }
+
+                setTimeout(function () {
+                   // location.reload();
+                    window.location.href = "@Url.Action("PendingPayments", "Admin")";
+                }, 3000);
+
+            },
+            error: function (d) {
+                console.log(d);
+                //alert("404. Please wait until the File is Loaded.");
+            }
+        });
+    }
+
+    function encodeImageFileAsURL(element) {
+        var elementID = element.id;
+        var file = element.files[0];
+        console.log(file);
+        console.log(elementID);
+
+        var reader = new FileReader();
+        reader.onloadend = function () {
+            imagebase64 = reader.result;
+            var binaryOnly = imagebase64.split(',')[1];
+            //console.log(binaryOnly);
+            $('#hdnUploadedRecieptImage').val(binaryOnly);
+            //var c = $('#UploadedImage').val();
+            // console.log("Converted "+ c)
+        }
+        reader.readAsDataURL(file);
+        return imagebase64;
+    }
+
+
+
+</script>

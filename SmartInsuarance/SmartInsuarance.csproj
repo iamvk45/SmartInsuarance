@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -128,9 +128,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminAjaxRequestController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Global.asax.cs">
@@ -139,6 +141,9 @@
     <Compile Include="Helper\Api_CommonResponse.cs" />
     <Compile Include="Models\FillDropDown.cs" />
     <Compile Include="Models\Roll.cs" />
+    <Compile Include="Models\PaymentTracking.cs" />
+    <Compile Include="Models\PendingPayments.cs" />
+    <Compile Include="Models\UserMaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -5360,6 +5365,7 @@
     <Content Include="Content\Template\js\invoice.js" />
     <Content Include="Content\Template\js\jquery.localizationTool.js" />
     <Content Include="Content\Template\js\jScript.js" />
+    <Content Include="Content\Template\js\jquery.min.js" />
     <Content Include="Content\Template\js\layout-compact-nav.js" />
     <Content Include="Content\Template\js\layout-dark.js" />
     <Content Include="Content\Template\js\layout-fixed-header.js" />
@@ -6901,6 +6907,12 @@
     <Content Include="Views\Role\SubMenuCreate.cshtml" />
     <Content Include="Views\Role\RateMaster.cshtml" />
     <Content Include="Views\AdminAjaxRequest\BindSubmenu.cshtml" />
+    <Content Include="Views\User\AddUserMember.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Admin\ApproveTrailuser.cshtml" />
+    <Content Include="Views\Admin\PendingPayments.cshtml" />
+    <Content Include="Views\Admin\CollectPayment.cshtml" />
+    <Content Include="Views\Admin\PaymentHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

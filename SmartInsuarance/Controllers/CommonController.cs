@@ -1,13 +1,15 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using RestSharp;
 using SmartInsuarance.Helper;
 using SmartInsuarance.Models;
+using SmartInsuarance.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace SmartInsuarance.Controllers
 {
@@ -42,34 +44,32 @@ namespace SmartInsuarance.Controllers
                 ContentEncoding = System.Text.Encoding.UTF8,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
-        }
-        public List<ShowMenuDropDown> GetMenulist()
+        }        
+        public List<FillDropDown> GetDataForDropdown(int enumNum)
         {
-            List<ShowMenuDropDown> menus = new List<ShowMenuDropDown>();
-            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "RoleMaster/GetMenuMasterList");
+            //var json = JsonConvert.SerializeObject(geographical);
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Common/GetFillDropDowns?EnumId=" + enumNum);
             var request = new RestRequest(Method.GET);
             request.AddHeader("cache-control", "no-cache");
             //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
             request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
             IRestResponse response = client.Execute(request);
+            Api_CommonResponse _CommonResponse = new Api_CommonResponse();
+            List<FillDropDown> dropDowns = new List<FillDropDown>();
+
             if (response.StatusCode.ToString() == "OK")
             {
                 _CommonResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
-                if (_CommonResponse.data != null)
+                if(_CommonResponse.data != null)
                 {
-                    List<MenuMasters> objlist = new List<MenuMasters>();
-                    objlist = JsonConvert.DeserializeObject<List<MenuMasters>>(_CommonResponse.data.ToString());
-                    var menulist = objlist.Select(p => new { p.MenuId, p.MenuName }).ToList();
-                    foreach (var item in menulist)
-                    {
-                        ShowMenuDropDown obj = new ShowMenuDropDown();
-                        obj.MenuId = item.MenuId;
-                        obj.MenuName = item.MenuName;
-                        menus.Add(obj);
-                    }
+                    dropDowns = JsonConvert.DeserializeObject<List<FillDropDown>>(_CommonResponse.data.ToString());
+
                 }
             }
-            return menus;
+          
+            return dropDowns;
         }
     }
 }
