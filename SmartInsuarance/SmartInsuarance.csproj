@@ -135,6 +135,8 @@
     </Compile>
     <Compile Include="Helper\Api_CommonResponse.cs" />
     <Compile Include="Models\FillDropDown.cs" />
+    <Compile Include="Models\PaymentTracking.cs" />
+    <Compile Include="Models\PendingPayments.cs" />
     <Compile Include="Models\UserMaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -6889,6 +6891,9 @@
     <Content Include="Views\User\AddUserMember.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Admin\ApproveTrailuser.cshtml" />
+    <Content Include="Views\Admin\PendingPayments.cshtml" />
+    <Content Include="Views\Admin\CollectPayment.cshtml" />
+    <Content Include="Views\Admin\PaymentHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

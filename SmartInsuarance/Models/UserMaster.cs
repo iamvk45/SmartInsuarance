@@ -38,12 +38,43 @@ namespace SmartInsuarance.Models
         public byte[] aadhaarImg { get; set; }
         public byte[] panImg { get; set; }
         public string type { get; set; }
+    }
+
+    public class UserMasterDetails
+    {
+        public string sUSRCode { get; set; }
+        public string sPrntID { get; set; }
+        public string Name { get; set; }
+        public string sUSRNME { get; set; }
+        public int iUsrTypeID { get; set; }
+        public string UserType { get; set; }
+        public string dtDOB { get; set; }
+        public string sEmail { get; set; }
+        public string sPhone { get; set; }
+        public int iCountryID { get; set; }
+        public string sContryName { get; set; }
+        public int iStateID { get; set; }
+        public string sStateName { get; set; }
+        public int iCityID { get; set; }
+        public string sCityName { get; set; }
+        public string sPincode { get; set; }
+        public string sAadhaar { get; set; }
+        public string sPan { get; set; }
+        public string sAddress { get; set; }
+        public int iRoleID { get; set; }
+        public string Role { get; set; }
+        public string location { get; set; }
+        public string sCrtedBy { get; set; }
+        public string dtCrtedOn { get; set; }
+        public string sUpdateBy { get; set; }
+        public string dtUpdateOn { get; set; }
+
 
     }
     public class UserModelSession
     {
         public string sUSRCode { get; set; }
-      
+
         public string Name { get; set; }
         public string Username { get; set; }
         public string sEmail { get; set; }

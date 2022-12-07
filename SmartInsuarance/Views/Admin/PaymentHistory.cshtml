@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "PaymentHistory";
+    Layout = "~/Views/Shared/_Layout_new.cshtml";
+
+    var paymentHistory = ViewBag.paymentHistory as List<SmartInsuarance.Models.PaymentHistory>;
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">My Payments</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-responsive-md">
+                        <thead>
+                            <tr>
+                                <th style="width:80px;"><strong>#</strong></th>
+                                <th><strong>TRANSACTION DATE</strong></th>
+                                <th><strong>PAID AMT</strong></th>
+                                <th><strong>BALANCE</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                if (paymentHistory != null)
+                                {
+                                    var i = 1;
+                                    foreach (var item in paymentHistory)
+                                    {
+                                        <tr>
+                                            <td>@i</td>
+                                            <td>@item.dtTxnDt</td>
+                                            <td>&#8377; @item.Paid</td>
+                                            <td>&#8377; @item.Balance</td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

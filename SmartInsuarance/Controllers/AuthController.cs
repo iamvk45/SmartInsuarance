@@ -48,7 +48,7 @@ namespace SmartInsuarance.Controllers
                         {
                             //if (permissions != null)
                             //{
-                            Session["UserDetails"] = userModel;
+                            Session["UserDetails"] = userModel[0];
 
                             //}
                             return RedirectToAction("Index", "Dashboard");
