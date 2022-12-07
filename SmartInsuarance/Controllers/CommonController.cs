@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using RestSharp;
 using SmartInsuarance.Helper;
+using SmartInsuarance.Models;
 using SmartInsuarance.Model;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace SmartInsuarance.Controllers
 {
     public class CommonController : Controller
     {
+        Api_CommonResponse _CommonResponse = new Api_CommonResponse();
         public ActionResult Index()
         {
             return View();
@@ -29,7 +31,7 @@ namespace SmartInsuarance.Controllers
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Accept", "application/json");
             IRestResponse response = client.Execute(request);
-            Api_CommonResponse _CommonResponse = new Api_CommonResponse();
+          
 
             if (response.StatusCode.ToString() == "OK")
             {
@@ -42,8 +44,7 @@ namespace SmartInsuarance.Controllers
                 ContentEncoding = System.Text.Encoding.UTF8,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
-        }
-        
+        }        
         public List<FillDropDown> GetDataForDropdown(int enumNum)
         {
             //var json = JsonConvert.SerializeObject(geographical);
@@ -70,6 +71,5 @@ namespace SmartInsuarance.Controllers
           
             return dropDowns;
         }
-
     }
 }
