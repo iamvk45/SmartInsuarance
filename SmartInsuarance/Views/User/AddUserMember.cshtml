@@ -1,4 +1,5 @@
 ﻿@using SmartInsuarance.Model;
+@model SmartInsuarance.Models.UserMasterDetails
 @{
     ViewBag.Title = "EditProfile";
     Layout = "~/Views/Shared/_Layout_new.cshtml";
@@ -11,168 +12,341 @@
     <link href="~/Content/CountrySelect/build/css/demo.css" rel="stylesheet" />*@
 
 
-<div class="row">
-    <input type="hidden" id="hdf_longitudeData" />
-    <input type="hidden" id="hdf_latitudeData" />
-    <div class="col-xl-3 col-lg-4">
-        <div class="clearfix">
-            <div class="card card-bx profile-card author-profile m-b30">
-                <div class="card-body">
-                    <div class="p-5">
-                        <div class="author-profile">
-                            <div class="author-media">
-                                <img src="~/Content/Template/images/userlogo.png" alt="">
-                                <div class="upload-link" title="" data-toggle="tooltip" data-placement="right" data-original-title="update">
-                                    <input type="file" class="update-flie">
-                                    <i class="fa fa-camera"></i>
+@{
+    if (ViewBag.type == "Member")
+    {
+        <div class="row">
+            <input type="hidden" id="hdf_longitudeData" />
+            <input type="hidden" id="hdf_latitudeData" />
+            <div class="col-xl-3 col-lg-4">
+                <div class="clearfix">
+                    <div class="card card-bx profile-card author-profile m-b30">
+                        <div class="card-body">
+                            <div class="p-5">
+                                <div class="author-profile">
+                                    <div class="author-media">
+                                        <img src="~/Content/Template/images/userlogo.png" alt="">
+                                        <div class="upload-link" title="" data-toggle="tooltip" data-placement="right" data-original-title="update">
+                                            <input type="file" class="update-flie">
+                                            <i class="fa fa-camera"></i>
+                                        </div>
+                                    </div>
+                                    <div class="author-info">
+                                        <h6 class="title" id="proIMGName">NA</h6>
+                                        @*<span>Admin</span>*@
+                                    </div>
                                 </div>
                             </div>
-                            <div class="author-info">
-                                <h6 class="title">Super User</h6>
-                                <span>Admin</span>
+                            <div class="info-list">
+                                @*<ul>
+                                        <li><a href="javascript:void(0)">Username</a><span>SU</span></li>
+                                        <li><a href="javascript:void(0)">Role</a><span>Admin</span></li>
+                                        <li><a href="javascript:void(0)">My Members</a><span>0</span></li>
+                                    </ul>*@
                             </div>
                         </div>
-                    </div>
-                    <div class="info-list">
-                        <ul>
-                            <li><a href="javascript:void(0)">Username</a><span>SU</span></li>
-                            <li><a href="javascript:void(0)">Role</a><span>Admin</span></li>
-                            <li><a href="javascript:void(0)">My Members</a><span>0</span></li>
-                        </ul>
+                        @*<div class="card-footer">
+                                <div class="input-group mb-3">
+                                    <div class="form-control rounded text-center bg-white">Portfolio</div>
+                                </div>
+                                <div class="input-group">
+                                    <a href="https://www.dexignlab.com/" class="form-control text-primary rounded text-start bg-white">https://www.dexignlab.com/</a>
+                                </div>
+                            </div>*@
                     </div>
                 </div>
-                @*<div class="card-footer">
-                        <div class="input-group mb-3">
-                            <div class="form-control rounded text-center bg-white">Portfolio</div>
-                        </div>
-                        <div class="input-group">
-                            <a href="https://www.dexignlab.com/" class="form-control text-primary rounded text-start bg-white">https://www.dexignlab.com/</a>
-                        </div>
-                    </div>*@
+
             </div>
-        </div>
-
-    </div>
-    <div class="col-xl-9 col-lg-8">
-        <div class="card profile-card card-bx m-b30">
-            <div class="card-header">
-                <h6 class="title">Account setup</h6>
-            </div>
-
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-6 m-b30">
-                        <label class="form-label">Name</label>
-                        <input type="text" class="form-control" id="txtName">
-                    </div>
-                    <div class="col-sm-6 m-b30">
-                        <label class="form-label">Surname</label>
-                        <input type="text" class="form-control" id="txtSurName">
-                    </div>
-                    <div class="col-sm-6 m-b30">
-                        <label class="form-label">Date Of Birth</label>
-                        <input type="text" class="form-control" placeholder="dd.MM.yyyy" id="txtDOB">
-                    </div>
-                    <div class="col-sm-6 m-b30">
-                        <label class="form-label">Email address</label>
-                        <input type="text" class="form-control" placeholder="somthing@mail.com" id="txtEmail">
+            <div class="col-xl-9 col-lg-8">
+                <div class="card profile-card card-bx m-b30">
+                    <div class="card-header">
+                        <h6 class="title">Account setup</h6>
+                        <a href="@Url.Action("Profilestatus", "User")"><i class="fas fa-arrow-left"></i> Back To List</a>
                     </div>
 
-                    <div class="col-sm-6 m-b30">
-                        <label class="form-label">Select Country</label><br />
-                        @*<input class="form-control" id="countrySelect" style="width:100%"/>*@
-                        <select class="form-control" id="ddlCountry">
-                            <option value="0" role=separator>Select Country</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-6 m-b30">
-                        <label class="form-label">Select State</label><br />
-                        <select class="form-control" id="ddlState">
-                            <option value="0" role=separator>Select State</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-6 m-b30">
-                        <label class="form-label">Select City</label><br />
-
-                        <select class="form-control" id="ddlCity">
-                            <option value="0" role=separator>Select City</option>
-                        </select>
-                    </div>
-
-
-                    <div class="col-sm-6 m-b30">
-                        <label class="form-label">Phone Number</label>
-                        <div class="row col-12">
-                            <div class="col-2">
-                                <input type="text" class="form-control" id="txtPhoneCodeID" value="NA" style="font-size:15px;width: 80px; background-color: #f1f1f1" disabled readonly />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" id="txtName">
                             </div>
-                            <div class="col-10">
-                                <input type="text" class="form-control" id="txtPhone" oninput="numberOnly(this.id);" maxlength="10">
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Surname</label>
+                                <input type="text" class="form-control" id="txtSurName">
+                            </div>
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Date Of Birth</label>
+                                <input type="text" class="form-control" placeholder="dd.MM.yyyy" id="txtDOB">
+                            </div>
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Email address</label>
+                                <input type="text" class="form-control" placeholder="somthing@mail.com" id="txtEmail">
+                            </div>
+
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Select Country</label><br />
+                                @*<input class="form-control" id="countrySelect" style="width:100%"/>*@
+                                <select class="form-control" id="ddlCountry">
+                                    <option value="0" role=separator>Select Country</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Select State</label><br />
+                                <select class="form-control" id="ddlState">
+                                    <option value="0" role=separator>Select State</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Select City</label><br />
+
+                                <select class="form-control" id="ddlCity">
+                                    <option value="0" role=separator>Select City</option>
+                                </select>
+                            </div>
+
+
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Phone Number</label>
+                                <div class="row col-12">
+                                    <div class="col-2">
+                                        <input type="text" class="form-control" id="txtPhoneCodeID" value="NA" style="font-size:15px;width: 80px; background-color: #f1f1f1" disabled readonly />
+                                    </div>
+                                    <div class="col-10">
+                                        <input type="text" class="form-control" id="txtPhone" oninput="numberOnly(this.id);" maxlength="10">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Pincode</label>
+                                <input type="text" class="form-control" id="txtPincode" oninput="numberOnly(this.id);" maxlength="6">
+                            </div>
+
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Aadhar Number</label>
+                                <input type="text" class="form-control" id="txtAadhaar" oninput="numberOnly(this.id);" maxlength="12">
+                            </div>
+
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">PAN Number</label>
+                                <input type="text" class="form-control" id="txtPan" maxlength="10">
+                            </div>
+
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">GST Number</label>
+                                <input type="checkbox" id="chkIsGST">
+                                <input type="text" class="form-control" id="txtGST" maxlength="10">
+                            </div>
+
+                            @*<div class="col-sm-6 m-b30">
+                                    <label class="form-label" id="lblAadhaarImg">Choose Image (Aadhaar)</label>
+                                    <input type="file" class="form-control" id="fupAadhaar" onchange="return encodeImageFileAsURL(this,'Aadhaar')">
+                                    <input type="hidden" id="hdnUploadedAadhaarImage" />
+                                </div>
+
+                                <div class="col-sm-6 m-b30">
+                                    <label class="form-label" id="lblPanImg">Choose Image (PAN)</label>
+                                    <input type="file" class="form-control" id="fupPan" onchange="return encodeImageFileAsURL(this,'Pan')">
+                                    <input type="hidden" id="hdnUploadedPanImage" />
+                                </div>*@
+
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" id="txtUsername">
+                            </div>
+
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control" id="txtpassword">
+                                @*<p style="height: 22px;width:100%;background-color:red;margin-top: 5px;border-radius: 14px;text-align: center;color: white;">weak</p>*@
+                            </div>
+
+
+                            <div class="col-sm-12 m-b30">
+                                <label class="form-label">Full Address</label>
+                                <textarea class="form-control" placeholder="Some where....." rows="3" style="resize:none" id="txtAddress"></textarea>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary" type="button" onclick="SaveDetails()"><i class="fa fa-plus"></i> Add @ViewBag.type</button>
+                        @*<a href="javascript:void(0);" class="btn-link">Forgot your password?</a>*@
                     </div>
 
-                    <div class="col-sm-6 m-b30">
-                        <label class="form-label">Pincode</label>
-                        <input type="text" class="form-control" id="txtPincode" oninput="numberOnly(this.id);" maxlength="6">
-                    </div>
-                    <div class="col-sm-6 m-b30">
-                        <label class="form-label">Role</label><br />
-                        <select class="selectpicker" id="ddlRole">
-                            <option value="1">Admin</option>
-                            <option value="2">User</option>
-                        </select>
-                    </div>
-
-                    <div class="col-sm-6 m-b30">
-                        <label class="form-label">Aadhar Number</label>
-                        <input type="text" class="form-control" id="txtAadhaar" oninput="numberOnly(this.id);" maxlength="12">
-                    </div>
-
-                    <div class="col-sm-6 m-b30">
-                        <label class="form-label">PAN Number</label>
-                        <input type="text" class="form-control" id="txtPan" maxlength="10">
-                    </div>
-
-                    <div class="col-sm-6 m-b30">
-                        <label class="form-label" id="lblAadhaarImg">Choose Image (Aadhaar)</label>
-                        <input type="file" class="form-control" id="fupAadhaar" onchange="return encodeImageFileAsURL(this,'Aadhaar')">
-                        <input type="hidden" id="hdnUploadedAadhaarImage" />
-                    </div>
-
-                    <div class="col-sm-6 m-b30">
-                        <label class="form-label" id="lblPanImg">Choose Image (PAN)</label>
-                        <input type="file" class="form-control" id="fupPan" onchange="return encodeImageFileAsURL(this,'Pan')">
-                        <input type="hidden" id="hdnUploadedPanImage" />
-                    </div>
-
-                    <div class="col-sm-6 m-b30">
-                        <label class="form-label">Username</label>
-                        <input type="text" class="form-control" id="txtUsername">
-                    </div>
-
-                    <div class="col-sm-6 m-b30">
-                        <label class="form-label">Password</label>
-                        <input type="password" class="form-control" id="txtpassword">
-                        @*<p style="height: 22px;width:100%;background-color:red;margin-top: 5px;border-radius: 14px;text-align: center;color: white;">weak</p>*@
-                    </div>
-
-
-                    <div class="col-sm-12 m-b30">
-                        <label class="form-label">Full Address</label>
-                        <textarea class="form-control" placeholder="Some where....." rows="3" style="resize:none" id="txtAddress"></textarea>
-                    </div>
                 </div>
             </div>
-            <div class="card-footer">
-                <button class="btn btn-primary" type="button" onclick="SaveDetails()"><i class="fa fa-plus"></i> Add @ViewBag.type</button>
-                <a href="javascript:void(0);" class="btn-link">Forgot your password?</a>
-            </div>
-
         </div>
-    </div>
-</div>
+    }
+    else
+    {
+        <div class="row">
+            <input type="hidden" id="hdf_longitudeData" />
+            <input type="hidden" id="hdf_latitudeData" />
+            <div class="col-xl-3 col-lg-4">
+                <div class="clearfix">
+                    <div class="card card-bx profile-card author-profile m-b30">
+                        <div class="card-body">
+                            <div class="p-5">
+                                <div class="author-profile">
+                                    <div class="author-media">
+                                        <img src="~/Content/Template/images/userlogo.png" alt="">
+                                        <div class="upload-link" title="" data-toggle="tooltip" data-placement="right" data-original-title="update">
+                                            <input type="file" class="update-flie">
+                                            <i class="fa fa-camera"></i>
+                                        </div>
+                                    </div>
+                                    <div class="author-info">
+                                        <h6 class="title" id="proIMGName">@(Model.Name==null?"": Model.Name)</h6>
+                                        @*<span>Admin</span>*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-list">
+                                @*<ul>
+                                        <li><a href="javascript:void(0)">Username</a><span>SU</span></li>
+                                        <li><a href="javascript:void(0)">Role</a><span>Admin</span></li>
+                                        <li><a href="javascript:void(0)">My Members</a><span>0</span></li>
+                                    </ul>*@
+                            </div>
+                        </div>
+                        @*<div class="card-footer">
+                                <div class="input-group mb-3">
+                                    <div class="form-control rounded text-center bg-white">Portfolio</div>
+                                </div>
+                                <div class="input-group">
+                                    <a href="https://www.dexignlab.com/" class="form-control text-primary rounded text-start bg-white">https://www.dexignlab.com/</a>
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-xl-9 col-lg-8">
+                <div class="card profile-card card-bx m-b30">
+                    <div class="card-header">
+                        <h6 class="title">Account setup</h6>
+                        <a href="@Url.Action("Profilestatus", "User")"><i class="fas fa-arrow-left"></i> Back To List</a>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" id="txtName" value="@(Model.Name==null?"": Model.Name)">
+                            </div>
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Surname</label>
+                                <input type="text" class="form-control" id="txtSurName" value="@(Model.sSurNME ==null?"": Model.sSurNME)">
+                            </div>
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Date Of Birth</label>
+                                <input type="text" class="form-control" placeholder="dd.MM.yyyy" id="txtDOB" value="@(Model.dtDOB ==null?"": Model.dtDOB)">
+                            </div>
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Email address</label>
+                                <input type="text" class="form-control" placeholder="somthing@mail.com" id="txtEmail" value="@(Model.sEmail ==null?"": Model.sEmail)">
+                            </div>
+
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Select Country</label><br />
+                                @*<input class="form-control" id="countrySelect" style="width:100%"/>*@
+                                <select class="form-control" id="ddlCountry">
+                                    <option value="0" role=separator>Select Country</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Select State</label><br />
+                                <select class="form-control" id="ddlState">
+                                    <option value="0" role=separator>Select State</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Select City</label><br />
+
+                                <select class="form-control" id="ddlCity">
+                                    <option value="0" role=separator>Select City</option>
+                                </select>
+                            </div>
+
+
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Phone Number</label>
+                                <div class="row col-12">
+                                    <div class="col-2">
+                                        <input type="text" class="form-control" id="txtPhoneCodeID" value="NA" style="font-size:15px;width: 80px; background-color: #f1f1f1" disabled readonly />
+                                    </div>
+                                    <div class="col-10">
+                                        <input type="text" class="form-control" id="txtPhone" oninput="numberOnly(this.id);" maxlength="10" value="@(Model.sPhone ==null?"": Model.sPhone)">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Pincode</label>
+                                <input type="text" class="form-control" id="txtPincode" oninput="numberOnly(this.id);" maxlength="6" value="@(Model.sPincode ==null?"": Model.sPincode)">
+                            </div>
+
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Aadhar Number</label>
+                                <input type="text" class="form-control" id="txtAadhaar" oninput="numberOnly(this.id);" maxlength="12" value="@(Model.sAadhaar ==null?"": Model.sAadhaar)">
+                            </div>
+
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">PAN Number</label>
+                                <input type="text" class="form-control" id="txtPan" maxlength="10" value="@(Model.sPan ==null?"": Model.sPan)">
+                            </div>
+
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">GST Number</label>
+                                <input type="checkbox" id="chkIsGST" @(Model.isGSTApplicable == 1 ? "checked" : "") )>
+                                <input type="text" class="form-control" id="txtGST" maxlength="10" value="@(Model.GSTINNo ==null?"": Model.GSTINNo)">
+                            </div>
+
+                            @*<div class="col-sm-6 m-b30">
+                                    <label class="form-label" id="lblAadhaarImg">Choose Image (Aadhaar)</label>
+                                    <input type="file" class="form-control" id="fupAadhaar" onchange="return encodeImageFileAsURL(this,'Aadhaar')">
+                                    <input type="hidden" id="hdnUploadedAadhaarImage" />
+                                </div>
+
+                                <div class="col-sm-6 m-b30">
+                                    <label class="form-label" id="lblPanImg">Choose Image (PAN)</label>
+                                    <input type="file" class="form-control" id="fupPan" onchange="return encodeImageFileAsURL(this,'Pan')">
+                                    <input type="hidden" id="hdnUploadedPanImage" />
+                                </div>*@
+
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" id="txtUsername">
+                            </div>
+
+                            <div class="col-sm-6 m-b30">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control" id="txtpassword">
+                                @*<p style="height: 22px;width:100%;background-color:red;margin-top: 5px;border-radius: 14px;text-align: center;color: white;">weak</p>*@
+                            </div>
+
+
+                            <div class="col-sm-12 m-b30">
+                                <label class="form-label">Full Address</label>
+                                <textarea class="form-control" placeholder="Some where....." rows="3" style="resize:none" id="txtAddress" value="@(Model.sAddress ==null?"": Model.sAddress)"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary" type="button" onclick="SaveDetails()"><i class="fa fa-plus"></i> Add @ViewBag.type</button>
+                        @*<a href="javascript:void(0);" class="btn-link">Forgot your password?</a>*@
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+
 <!--**********************************
     Footer start
 ***********************************-->
@@ -212,6 +386,14 @@
             $('#ddlCity').html('');
             var ds = $('#ddlState').val();
             bindCountryStateCity('City', 0, ds);
+        });
+
+
+        $('#txtName').on('input', function () {
+            var name = $(this).val();
+           /* console.log(name);*/
+            $('#proIMGName').html('');
+            $('#proIMGName').html(name);
         });
     });
 
@@ -284,6 +466,8 @@
 
     function SaveDetails() {
 
+        var parentID ="";
+
         var name = $('#txtName').val();
         var surname = $('#txtSurName').val();
         var dob = $('#txtDOB').val();
@@ -301,21 +485,23 @@
         var username = $('#txtUsername').val();
         var password = $('#txtpassword').val();
         var address = $('#txtAddress').val();
+        var type = '@ViewBag.type' == "Member" ? "Add" : "Update";
+        if('@ViewBag.type'=='Member')
+            parentID = '@Model.sUSRCode';
+        else
+            parentID = 'NULL';
 
         var userMasterModal = {
             sNME: name,
             sSurNME: surname,
             sUSRNME: username,
+            sPrntID: parentID,
             dtDOB: dob,
             sEmail: email,
             sPhone: phonenumber,
             iCountryID: parseInt(country),
             iStateID: parseInt(state),
             iCityID: parseInt(city),
-            sPincode: pincode,
-            sPincode: pincode,
-            sPincode: pincode,
-            sPincode: pincode,
             sPincode: pincode,
             sAadhaar: adhaarNumber,
             sPan: panNumber,
@@ -326,7 +512,8 @@
             iRoleID: parseInt(role),
             aadhaarImg: adhaarImg,
             panImg: pancardImg,
-            type:"@ViewBag.type",
+            type: "@ViewBag.type",
+            sUSRCode:'@Model.sUSRCode'
         }
 
         var d = checkValidate();
@@ -349,11 +536,11 @@
                     console.log('ajax');
                     console.log(data);
                     if (data.StatusCode == 1) {
-                        swal({
+                        Swal.fire({
                             title: "Success",
                             text: "Details Saved Successfully..!",
-                            type: "success",
-                            showCancelButton: !1,
+                            icon: "success",
+                            showCancelButton: false,
                         });
                     }
                 },

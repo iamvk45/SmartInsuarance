@@ -18,7 +18,7 @@
     <link href="~/Content/Template/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
     <link href="~/Content/Template/css/style.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.15/sweetalert2.css" />
 </head>
 
 <body class="body  h-100" style="background-image: url('/Content/Template/images/login-bg-1.jpg'); background-size: cover;">
@@ -85,6 +85,7 @@
     <script src="~/Content/Template/vendor/global/global.min.js"></script>
     <script src="~/Content/Template/js/dlabnav-init.js"></script>
     <script src="~/Content/Template/js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.15/sweetalert2.min.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -93,11 +94,11 @@
             var isuserExists = '@TempData["IsUserDetailsExists"]'
             var message = '@TempData["msg"]'
             if (isuserExists == 1) {
-                swal({
+                Swal.fire({
                     title: "Error",
                     text: message,
-                    type: "warning",
-                    showCancelButton: !1,
+                    icon: "warning",
+                    showCloseButton: true,
                 });
             }
 

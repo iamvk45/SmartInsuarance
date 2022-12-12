@@ -8,6 +8,7 @@
 
 
 <link href="~/Content/Template/select2/css/select2.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.15/sweetalert2.css" />
 @*<link href="~/Content/CountrySelect/build/css/countrySelect.css" rel="stylesheet" />
     <link href="~/Content/CountrySelect/build/css/demo.css" rel="stylesheet" />*@
 
@@ -62,7 +63,7 @@
                                 }
                                 else
                                 {
-                                    <tr><td colspan="8" style="text-align:center" >No Data Available</td></tr>
+                                    <tr><td colspan="8" style="text-align:center">No Data Available</td></tr>
                                 }
                             }
 
@@ -75,6 +76,7 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.15/sweetalert2.min.js"></script>
 @*
     <script src="~/Content/CountrySelect/build/js/countrySelect.js"></script>
     <script>
@@ -94,7 +96,7 @@
                 ActiveTrialUser(EnailAddress, Name);
 
                 setTimeout(function () {
-                    location.reload();
+                    //location.reload();
                 }, 3000);
             }
 
@@ -121,11 +123,11 @@
                 //console.log(data);
 
                 if (data.StatusCode == 1) {
-                    swal({
+                    Swal.fire({
                         title: "Success",
                         text: "Details Updated Successfully..!",
-                        type: "success",
-                        showCancelButton: !1,
+                        icon: "success",
+                        showCancelButton: false,
                     });
                 }
 

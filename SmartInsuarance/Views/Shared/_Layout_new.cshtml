@@ -1,6 +1,12 @@
 @using SmartInsuarance.Models
 @{
     var data = Session["UserDetails"] as UserModelSession;
+    var username = "";
+
+    if(data!= null)
+            {
+        username = $"{data.Name} ({data.Usertype})";
+            }
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -822,11 +828,11 @@
                                                     @{
                                                         if (data != null)
                                                         {
-                                                            <h4 class="mb-0">@data.Name</h4>
+                                                            <h4 class="mb-0">@username</h4>
                                                         }
                                                     }
 
-                                                    <span class="d-block text-end">Admin</span>
+                                                    @*<span class="d-block text-end">Admin</span>*@
                                                 </div>
                                             </div>
                                             <img src="~/Content/Template/images/userlogo.png" alt="">
@@ -1155,8 +1161,8 @@
                 ***********************************-->
                 <div class="footer">
                     <div class="copyright">
-                        @*<p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/" target="_blank">DexignLab</a> 2022</p>*@
-                        <p>S3 Company</p>
+                        <p>Copyright &copy; Designed &amp; Developed by <a href="#" target="_blank">Smart Ensure</a> 2022-2023</p>
+                        @*<p>S3 Company</p>*@
                     </div>
                 </div>
             </div>
