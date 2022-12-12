@@ -6,9 +6,8 @@
     var trailUser = ViewBag.TrailUsers as List<SmartInsuarance.Models.TrailuserModal>;
 }
 
-
-<link href="~/Content/Template/select2/css/select2.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.15/sweetalert2.css" />
+<link href="~/Content/Custom.css" rel="stylesheet" />
 @*<link href="~/Content/CountrySelect/build/css/countrySelect.css" rel="stylesheet" />
     <link href="~/Content/CountrySelect/build/css/demo.css" rel="stylesheet" />*@
 
@@ -17,7 +16,8 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Trial Users Queue</h4>
+                Trial Users Queue
+                @*<h4 class="card-title"></h4>*@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -53,7 +53,18 @@
                                             <td>
                                                 <div class="form-check form-check-inline">
                                                     <label class="form-check-label">
-                                                        <input type="checkbox" id="che_@item.iPk_USRFRTRLID" data-id="@item.sName" data-html="@item.sEmailId" class="form-check-input" @(item.iIsactive == 1 ? "checked" : "")>
+                                                        <label class="col-sm-6 toggle">
+
+                                                            <input type="checkbox" id="che_@item.iPk_USRFRTRLID" data-id="@item.sName" data-html="@item.sEmailId" class="form-check-input toggle-checkbox" @(item.iIsactive == 1 ? "checked" : "") />
+
+                                                            @*<input class="toggle-checkbox" type="checkbox" id="chkIsGST" name="Status" value="@Model.isGSTApplicable" @(Model.isGSTApplicable == 1 ? "checked" : "")>*@
+                                                            <div class="toggle-switch"></div>
+
+                                                        </label>
+
+
+
+                                                        @*<input type="checkbox" id="che_@item.iPk_USRFRTRLID" data-id="@item.sName" data-html="@item.sEmailId" class="form-check-input" @(item.iIsactive == 1 ? "checked" : "")>*@
                                                     </label>
                                                 </div>
                                             </td>
@@ -96,7 +107,7 @@
                 ActiveTrialUser(EnailAddress, Name);
 
                 setTimeout(function () {
-                    //location.reload();
+                    location.reload();
                 }, 3000);
             }
 

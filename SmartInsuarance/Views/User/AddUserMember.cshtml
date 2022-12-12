@@ -4,12 +4,18 @@
     ViewBag.Title = "EditProfile";
     Layout = "~/Views/Shared/_Layout_new.cshtml";
     //var BaseURL = System.Configuration.ConfigurationManager.AppSettings["BaseUrl"];
+    var countryID = Model.iCountryID;
+    var stateID = Model.iStateID;
+    var cityID = Model.iCityID;
+
+    var Name = Model.Name.Split(' ')[0];
 
 }
 
-<link href="~/Content/Template/select2/css/select2.css" rel="stylesheet" />
+@*<link href="~/Content/Template/select2/css/select2.css" rel="stylesheet" />*@
 @*<link href="~/Content/CountrySelect/build/css/countrySelect.css" rel="stylesheet" />
     <link href="~/Content/CountrySelect/build/css/demo.css" rel="stylesheet" />*@
+<link href="~/Content/Custom.css" rel="stylesheet" />
 
 
 @{
@@ -86,20 +92,20 @@
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Select Country</label><br />
                                 @*<input class="form-control" id="countrySelect" style="width:100%"/>*@
-                                <select class="form-control" id="ddlCountry">
+                                <select class="singleselect" id="ddlCountry">
                                     <option value="0" role=separator>Select Country</option>
                                 </select>
                             </div>
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Select State</label><br />
-                                <select class="form-control" id="ddlState">
+                                <select class="singleselect" id="ddlState">
                                     <option value="0" role=separator>Select State</option>
                                 </select>
                             </div>
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Select City</label><br />
 
-                                <select class="form-control" id="ddlCity">
+                                <select class="singleselect" id="ddlCity">
                                     <option value="0" role=separator>Select City</option>
                                 </select>
                             </div>
@@ -130,13 +136,23 @@
 
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">PAN Number</label>
-                                <input type="text" class="form-control" id="txtPan" maxlength="10">
+                                <input type="text" class="form-control" id="txtPan" maxlength="10" style="text-transform:uppercase">
                             </div>
 
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">GST Number</label>
-                                <input type="checkbox" id="chkIsGST">
-                                <input type="text" class="form-control" id="txtGST" maxlength="10">
+                                <div class="row" style="display: flex;align-items: baseline;">
+                                    <div class="col-2">
+                                        <label class="col-sm-6 toggle">
+                                            <input class="toggle-checkbox" type="checkbox" id="chkIsGST" name="Status" value="@Model.isGSTApplicable" @(Model.isGSTApplicable == 1 ? "checked" : "")>
+                                            <div class="toggle-switch"></div>
+
+                                        </label>
+                                    </div>
+                                    <div class="col-10" id="divGST">
+                                        <input type="text" class="form-control" id="txtGST" maxlength="10" style="display:none" value="@(Model.GSTINNo ==null?"": Model.GSTINNo)">
+                                    </div>
+                                </div>
                             </div>
 
                             @*<div class="col-sm-6 m-b30">
@@ -233,38 +249,39 @@
                         <div class="row">
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Name</label>
-                                <input type="text" class="form-control" id="txtName" value="@(Model.Name==null?"": Model.Name)">
+                                <input type="text" class="form-control" id="txtName" value="@(Name==null?"": Name)" readonly="readonly" disabled style="background-color: #f1f1f1">
                             </div>
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Surname</label>
-                                <input type="text" class="form-control" id="txtSurName" value="@(Model.sSurNME ==null?"": Model.sSurNME)">
+                                <input type="text" class="form-control" id="txtSurName" value="@(Model.sSurNME ==null?"": Model.sSurNME)" readonly="readonly" disabled style="background-color: #f1f1f1">
                             </div>
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Date Of Birth</label>
-                                <input type="text" class="form-control" placeholder="dd.MM.yyyy" id="txtDOB" value="@(Model.dtDOB ==null?"": Model.dtDOB)">
+                                <input type="text" class="form-control" placeholder="dd.MM.yyyy" id="txtDOB" value="@(Model.dtDOB ==null?"": Model.dtDOB)" readonly="readonly" disabled style="background-color: #f1f1f1">
                             </div>
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Email address</label>
-                                <input type="text" class="form-control" placeholder="somthing@mail.com" id="txtEmail" value="@(Model.sEmail ==null?"": Model.sEmail)">
+                                <input type="text" class="form-control" placeholder="somthing@mail.com" id="txtEmail" value="@(Model.sEmail ==null?"": Model.sEmail)" readonly="readonly" disabled style="background-color: #f1f1f1">
                             </div>
 
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Select Country</label><br />
                                 @*<input class="form-control" id="countrySelect" style="width:100%"/>*@
-                                <select class="form-control" id="ddlCountry">
+                                <select class="singleselect" id="ddlCountry" readonly="readonly" disabled style="background-color: #f1f1f1">
                                     <option value="0" role=separator>Select Country</option>
                                 </select>
                             </div>
+
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Select State</label><br />
-                                <select class="form-control" id="ddlState">
+                                <select class="singleselect" id="ddlState" readonly="readonly" disabled style="background-color: #f1f1f1">
                                     <option value="0" role=separator>Select State</option>
                                 </select>
                             </div>
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Select City</label><br />
 
-                                <select class="form-control" id="ddlCity">
+                                <select class="singleselect" id="ddlCity" readonly="readonly" disabled style="background-color: #f1f1f1">
                                     <option value="0" role=separator>Select City</option>
                                 </select>
                             </div>
@@ -277,7 +294,7 @@
                                         <input type="text" class="form-control" id="txtPhoneCodeID" value="NA" style="font-size:15px;width: 80px; background-color: #f1f1f1" disabled readonly />
                                     </div>
                                     <div class="col-10">
-                                        <input type="text" class="form-control" id="txtPhone" oninput="numberOnly(this.id);" maxlength="10" value="@(Model.sPhone ==null?"": Model.sPhone)">
+                                        <input type="text" class="form-control" id="txtPhone" oninput="numberOnly(this.id);" maxlength="10" value="@(Model.sPhone ==null?"": Model.sPhone)" style="background-color: #f1f1f1" readonly="readonly" disabled>
                                     </div>
                                 </div>
 
@@ -285,7 +302,7 @@
 
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Pincode</label>
-                                <input type="text" class="form-control" id="txtPincode" oninput="numberOnly(this.id);" maxlength="6" value="@(Model.sPincode ==null?"": Model.sPincode)">
+                                <input type="text" class="form-control" id="txtPincode" oninput="numberOnly(this.id);" maxlength="6" value="@(Model.sPincode ==null?"": Model.sPincode)" readonly="readonly" disabled>
                             </div>
 
                             <div class="col-sm-6 m-b30">
@@ -300,8 +317,20 @@
 
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">GST Number</label>
-                                <input type="checkbox" id="chkIsGST" @(Model.isGSTApplicable == 1 ? "checked" : "") )>
-                                <input type="text" class="form-control" id="txtGST" maxlength="10" value="@(Model.GSTINNo ==null?"": Model.GSTINNo)">
+                                <div class="row" style="display: flex;align-items: baseline;">
+                                    <div class="col-2">
+                                        <label class="col-sm-6 toggle">
+                                            <input class="toggle-checkbox" type="checkbox" id="chkIsGST" name="Status" value="@Model.isGSTApplicable" @(Model.isGSTApplicable == 1 ? "checked" : "")>
+                                            <div class="toggle-switch"></div>
+
+                                        </label>
+                                    </div>
+                                    <div class="col-10" id="divGST">
+                                        <input type="text" class="form-control" id="txtGST" maxlength="10" style="display:none" value="@(Model.GSTINNo ==null?"": Model.GSTINNo)">
+                                    </div>
+                                </div>
+
+
                             </div>
 
                             @*<div class="col-sm-6 m-b30">
@@ -316,26 +345,26 @@
                                     <input type="hidden" id="hdnUploadedPanImage" />
                                 </div>*@
 
-                            <div class="col-sm-6 m-b30">
+                            <!--<div class="col-sm-6 m-b30">
                                 <label class="form-label">Username</label>
                                 <input type="text" class="form-control" id="txtUsername">
                             </div>
 
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Password</label>
-                                <input type="password" class="form-control" id="txtpassword">
-                                @*<p style="height: 22px;width:100%;background-color:red;margin-top: 5px;border-radius: 14px;text-align: center;color: white;">weak</p>*@
-                            </div>
+                                <input type="password" class="form-control" id="txtpassword">-->
+                            @*<p style="height: 22px;width:100%;background-color:red;margin-top: 5px;border-radius: 14px;text-align: center;color: white;">weak</p>*@
+                            <!--</div>-->
 
 
                             <div class="col-sm-12 m-b30">
                                 <label class="form-label">Full Address</label>
-                                <textarea class="form-control" placeholder="Some where....." rows="3" style="resize:none" id="txtAddress" value="@(Model.sAddress ==null?"": Model.sAddress)"></textarea>
+                                <textarea class="form-control" placeholder="Some where....." rows="3" style="resize:none" id="txtAddress">@(Model.sAddress ==null?"": Model.sAddress)</textarea>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary" type="button" onclick="SaveDetails()"><i class="fa fa-plus"></i> Add @ViewBag.type</button>
+                        <button class="btn btn-primary" type="button" onclick="SaveDetails()"><i class="fa fa-plus"></i> Update @ViewBag.type</button>
                         @*<a href="javascript:void(0);" class="btn-link">Forgot your password?</a>*@
                     </div>
 
@@ -366,6 +395,7 @@
 <script type="text/javascript">
     var imagebase64 = "";
     $(document).ready(function () {
+        $(".singleselect").select2();
         getLocation();
         bindCountryStateCity('Country', 0, 0);
         $('#ddlCountry').change(function () {
@@ -395,7 +425,17 @@
             $('#proIMGName').html('');
             $('#proIMGName').html(name);
         });
-    });
+
+        $('#chkIsGST').change(function () {
+            var s = $("#chkIsGST").is(':checked');
+            if (!s) {
+                $('#txtGST').css('display', 'none')
+            }
+            else {
+                $('#txtGST').css('display', 'block')
+            }
+        });
+      });
 
     function bindCountryStateCity(type, cID, sID) {
         var Content = {
@@ -422,33 +462,82 @@
                     var countryData = "<option value=0>Select Country</option>";
                     mainData.forEach(function (item) {
                         /* console.log(item.DDLText);*/
+                        if ('@ViewBag.type' != 'Member') {
+                            if (item.DDLValue == '@countryID') {
+                                countryData += `<option value=${item.DDLValue} selected>${item.DDLText}</option>`;
+                            }
+                            else {
+                            countryData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
+                            }
+                        }
+                        else {
                         countryData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
+                        }
 
                     });
+
                     //console.log(countryData);
                     $('#ddlCountry').html('');
                     $('#ddlCountry').html(countryData);
-                    $('#ddlCountry').select2();
+
+                    if ('@ViewBag.type' != 'Member') {
+                        var ds = $('#ddlCountry').val();
+                        var ds1 = $('#ddlCountry option:selected').text();
+
+                        ds1 = ds1.split('(')[1].replace(')', '').trim();
+                        $('#txtPhoneCodeID').val('');
+                        $('#txtPhoneCodeID').val(ds1);
+
+
+                        bindCountryStateCity('State', ds, 0);
+                    }
                 }
 
                 if (type == 'State') {
                     var stateData = "<option value=0>Select State</option>";
                     mainData.forEach(function (item) {
                         /* console.log(item.DDLText);*/
-                        stateData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
+                      if ('@ViewBag.type' != 'Member') {
+                            if (item.DDLValue == '@stateID') {
+                                stateData += `<option value=${item.DDLValue} selected>${item.DDLText}</option>`;
+                            }
+                            else {
+                                stateData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
+                            }
+                        }
+                        else {
+                          stateData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
+                        }
 
                     });
                     //console.log(countryData);
                     $('#ddlState').html('');
                     $('#ddlState').html(stateData);
                     $('#ddlState').select2();
+
+                    if ('@ViewBag.type' != 'Member') {
+                        var ds = $('#ddlState').val();
+                        bindCountryStateCity('City', 0, ds);
+                    }
+
+
+
                 }
                 if (type == 'City') {
                     var cityData = "<option value=0>Select City</option>";
                     mainData.forEach(function (item) {
                         /* console.log(item.DDLText);*/
-                        cityData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
-
+                          if ('@ViewBag.type' != 'Member') {
+                            if (item.DDLValue == '@cityID') {
+                                cityData += `<option value=${item.DDLValue} selected>${item.DDLText}</option>`;
+                            }
+                            else {
+                                cityData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
+                            }
+                        }
+                        else {
+                              cityData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
+                        }
                     });
                     //console.log(countryData);
                     $('#ddlCity').html('');
@@ -462,7 +551,6 @@
             }
         });
     }
-
 
     function SaveDetails() {
 
@@ -552,7 +640,6 @@
         }
     }
 
-
     function checkValidate() {
         var status = true;
 
@@ -575,101 +662,101 @@
         var address = $('#txtAddress').val();
 
         if (name.length <= 0) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Please Enter Name..!",
-                type: "warning",
-                showCancelButton: !1,
+                icon: "warning",
+                showCancelButton: false,
             });
             status = false;
         }
         else if (surname.length <= 0) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Please Enter Surname..!",
-                type: "warning",
-                showCancelButton: !1,
+                icon: "warning",
+                showCancelButton: false,
             });
             status = false;
         }
         else if (dob.length <= 0) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Please Enter Date of Birth..!",
-                type: "warning",
-                showCancelButton: !1,
+                icon: "warning",
+                showCancelButton: false,
             });
             status = false;
         }
         else if (email.length <= 0) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Please Enter Email Address..!",
-                type: "warning",
-                showCancelButton: !1,
+                icon: "warning",
+                showCancelButton: false,
             });
             status = false;
         }
         else if (country == 0) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Please Select Country..!",
-                type: "warning",
-                showCancelButton: !1,
+                icon: "warning",
+                showCancelButton: false,
             });
             status = false;
         }
         else if (state == 0) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Please Select State..!",
-                type: "warning",
-                showCancelButton: !1,
+                icon: "warning",
+                showCancelButton: false,
             });
             status = false;
         }
         else if (city == 0) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Please Select City..!",
-                type: "warning",
-                showCancelButton: !1,
+                icon: "warning",
+                showCancelButton: false,
             });
             status = false;
         }
         else if (phonenumber.length <= 0) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Please Enter Phone Number..!",
-                type: "warning",
-                showCancelButton: !1,
+                icon: "warning",
+                showCancelButton: false,
             });
             status = false;
         }
         else if (pincode.length <= 0) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Please Enter Pincode..!",
-                type: "warning",
-                showCancelButton: !1,
+                icon: "warning",
+                showCancelButton: false,
             });
             status = false;
         }
         else if (adhaarNumber.length <= 0) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Please Enter Aadhaar Number..!",
-                type: "warning",
-                showCancelButton: !1,
+                icon: "warning",
+                showCancelButton: false,
             });
             status = false;
         }
         else if (panNumber.length <= 0) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Please Enter Pan Number..!",
-                type: "warning",
-                showCancelButton: !1,
+                icon: "warning",
+                showCancelButton: false,
             });
             status = false;
         }
@@ -692,31 +779,34 @@
         //    });
         //    status = false;
         //}
+        else if ('@ViewBag.type' == 'Member')
+        {
+         if (username.length <= 0) {
+                Swal.fire({
+                    title: "Error",
+                    text: "Please Enter Username..!",
+                    icon: "warning",
+                    showCancelButton: false,
+                });
+                status = false;
+            }
+            else if (password.length <= 0) {
+                Swal.fire({
+                    title: "Error",
+                    text: "Please Enter Password..!",
+                    icon: "warning",
+                    showCancelButton: false,
+                });
+                status = false;
+            }
+        }
 
-        else if (username.length <= 0) {
-            swal({
-                title: "Error",
-                text: "Please Enter Username..!",
-                type: "warning",
-                showCancelButton: !1,
-            });
-            status = false;
-        }
-        else if (password.length <= 0) {
-            swal({
-                title: "Error",
-                text: "Please Enter Password..!",
-                type: "warning",
-                showCancelButton: !1,
-            });
-            status = false;
-        }
         else if (address.length <= 0) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Please Enter Address..!",
-                type: "warning",
-                showCancelButton: !1,
+                icon: "warning",
+                showCancelButton: false,
             });
             status = false;
         }
@@ -756,8 +846,6 @@
         return imagebase64;
     }
 
-
-
     function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
@@ -766,6 +854,7 @@
             alert("Geolocation is not supported by this browser.");
         }
     }
+
     function showPosition(position) {
         //alert("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude)
         //var data = {
