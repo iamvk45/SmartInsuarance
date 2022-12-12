@@ -50,9 +50,16 @@ namespace SmartInsuarance.Models
         public string sSbMnuNme { get; set; }
         public decimal dRate { get; set; }
         public int iTyp { get; set; }
-        public DateTime? dtStrDt { get; set; }
+        public string dtInsertStrDt { get; set; }
+        public string dtInsertEndDt { get; set; }
         public int iStts { get; set; }
         public int iClnId { get; set; }
+    
+    }
+    public class RateMasterview:RateMaster
+    {
+        public DateTime? dtStrDt { get; set; }
+        public DateTime? dtEndDt { get; set; }
         public string Typename
         {
             get
@@ -65,7 +72,7 @@ namespace SmartInsuarance.Models
                         return "Month";
                     case 3:
                         return "Year";
-                   
+
                     default:
                         return "";
                 }
@@ -85,6 +92,19 @@ namespace SmartInsuarance.Models
                 }
             }
         }
+        public string EndDate
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(dtEndDt.ToString()))
+                {
+                    return dtEndDt.Value.ToString("ddd dd MMM yyyy");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
     }
-
 }

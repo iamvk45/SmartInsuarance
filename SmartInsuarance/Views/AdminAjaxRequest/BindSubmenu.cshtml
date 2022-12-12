@@ -1,5 +1,5 @@
 ﻿@using SmartInsuarance.Models
-@model List<RateMaster>
+@model List<RateMasterview>
 @{
     ViewBag.Title = "BindSubmenu";
     List<SmartInsuarance.Model.GlobalClass> lst = new List<SmartInsuarance.Model.GlobalClass>();
@@ -29,7 +29,11 @@
             @item.dRate  
             </td>
             <td>
+   
                 @item.StartDate
+            </td>
+            <td>
+                @item.EndDate
             </td>
             <td>
                 <label class="toggle">

@@ -1,0 +1,34 @@
+﻿@using SmartInsuarance.Models
+@model List<CoverLiceTempView>
+    @{ Layout = null;
+            }
+@{
+    var i = 1;
+    foreach (var item in Model)
+    {
+    <tr id="tr_@item.IPk_CovLicTempId">
+        <td>@i</td>
+        <td>@item.sMenuname</td>
+        @*<td>@item.sSubMenuname</td>*@
+        <td>@item.iqty</td>
+        @*<td>
+            @item.Rate
+        </td>*@
+        <td>
+            <label class="toggle">
+                <input class="toggle-checkbox" type="checkbox" id="Status" name="Status" value="@item.iStts" @(item.iStts == 1 ? "checked" : "")>
+                <div class="toggle-switch"></div>
+                @*<span class="toggle-label">Bluetooth</span>*@
+            </label>
+        </td>
+        <td>
+            <div class="d-flex">
+                @*<button href="javascript:;" id="Edit_@item.IPk_CovLicTempId" class="btn btn-primary shadow btn-xs sharp me-1 Edit" onclick="Edit(@item.IPk_CovLicTempId);"><i class="fas fa-edit"></i></button>*@
+
+                <button class="btn btn-danger shadow btn-xs sharp Delete" id="delete_@item.IPk_CovLicTempId" onclick="Delete(@item.IPk_CovLicTempId)"><i class="fa fa-trash"></i></button>
+            </div>
+        </td>
+    </tr>
+        i++;
+    }
+            }

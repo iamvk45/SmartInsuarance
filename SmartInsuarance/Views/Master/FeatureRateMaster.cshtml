@@ -1,0 +1,149 @@
+﻿@using SmartInsuarance.Models
+@{
+    ViewBag.Title = "FeatureRateMaster";
+    Layout = "~/Views/Shared/_Layout_new.cshtml";
+    List<SmartLB.GlobalClass> Featuredata = new List<SmartLB.GlobalClass>();
+    Featuredata = SmartLB.CommonList.GetFeatureList();
+    List<SmartLB.GlobalClass> Uomdata = new List<SmartLB.GlobalClass>();
+    Uomdata = SmartLB.CommonList.GetUOMList();
+    List<FEATRATMSTView> Masterdata = new List<FEATRATMSTView>();
+    if (ViewBag.FinYear != null)
+    {
+        Masterdata = (List<FEATRATMSTView>)ViewBag.FinYear;
+    }
+}
+<style>
+    .Paddingtop1 {
+        padding-top: 10px !important;
+        padding-bottom: 10px !important
+    }
+</style>
+<link href="~/Content/Custom.css" rel="stylesheet" />
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title" style="color: blanchedalmond;font-weight: bold;">Feature Rate Master</h4>
+
+
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("CreateFeatureData", "Master", FormMethod.Post, new { @class = "formcreateupdate", @id = "frmAddUpdate", enctype = "multipart/form-data" }))
+            {
+
+
+                <div class="form-group is-empty row Paddingtop1">
+
+
+                    <div class="col-sm-4">
+
+                        <input type="date" class="form-control" name="dtInsertStrDt" value="" id="dtInsertStrDt" required />
+                        <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Start Date</small>
+                    </div>
+                    <div class="col-sm-4">
+
+                        <input type="date" class="form-control" name="dtInsertEndDt" value="" id="dtInsertEndDt" disabled required />
+                        <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">End Date</small>
+                    </div>
+                    <div class="col-sm-4">
+                        <select class="singleselect" id="iFetId" name="iFK_FetId" required>
+                            <option value="">Select Feature </option>
+                            @{
+                                foreach (var item in Featuredata)
+                                {
+                                    <option value="@item.Id">@item.Text</option>
+                                }
+                            }
+
+                        </select>
+                    </div>
+               
+                    <div class="col-sm-4">
+                        <select class="singleselect" id="iUomId" name="iFK_UomId" required>
+                            <option value="">Select UOM </option>
+                            @{
+                                foreach (var item in Uomdata)
+                                {
+                                    <option value="@item.Id">@item.Text</option>
+                                }
+                            }
+
+
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <input name="dRate" id="dRate" type="text" value="" class="form-control" placeholder="Enter Rate" required>
+                    </div>
+                    <div class="pull-right col-sm-4" style="text-align: end;">
+                        <a href="#" class="btn btn-default" id="reset">Reset</a>
+                        <button class="btn btn-primary"> Save </button>
+                    </div>
+                </div>
+            }
+            <hr style="background-color:black;font-weight:bold;" />
+            <div class="table-responsive">
+                <table class="table table-responsive-md" id="tblCustomers">
+                    <thead>
+                        <tr>
+                            <th>#No</th>
+                            <th>Feature</th>
+                            <th>UOM</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Rate</th>
+                            <th>Active</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                        @{ 
+                            var i = 1;
+                            foreach(var item in Masterdata)
+            {
+                <tr>
+                        <td>@i</td>
+                        <td>@item.FeatureName</td>
+                        <td>@item.UOMeName</td>
+                        <td>@item.StartDate</td>
+                        <td>@item.EndDate</td>
+                        <td>@item.dRate</td>
+                        <td>
+                            <label class="toggle">
+                                <input class="toggle-checkbox" type="checkbox" id="Status" name="Status" value="@item.iStts" @(item.iStts == 1 ? "checked" : "")>
+                                <div class="toggle-switch"></div>
+                                @*<span class="toggle-label">Bluetooth</span>*@
+                            </label>
+                        </td>
+                        </tr>
+            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="~/Content/Template/js/jScript.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".singleselect").select2();
+        $("#dtInsertStrDt").change(function () {
+            debugger;
+            var startdate = $(this).val();
+            $("#dtInsertEndDt").prop('disabled', false);
+            document.getElementById("dtInsertEndDt").min = startdate;
+
+        });
+        $("#reset").click(function () {
+            document.getElementById("dtInsertEndDt").value = '';
+            $("#dtInsertEndDt").prop('disabled', true);
+            document.getElementById("dtInsertEndDt").min = '';
+            document.getElementById("dtInsertStrDt").value = '';
+            document.getElementById("dRate").value = '';
+        });
+    });
+  
+</script>
