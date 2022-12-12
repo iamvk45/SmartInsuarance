@@ -1,0 +1,111 @@
+﻿@using SmartInsuarance.Models
+@{
+    ViewBag.Title = "FinacialYear";
+    Layout = "~/Views/Shared/_Layout_new.cshtml";
+    List<FinYearView> datas = new List<FinYearView>();
+    if (ViewBag.FinYear != null)
+    {
+        datas = (List<FinYearView>)ViewBag.FinYear;
+    }
+    }
+
+    <style>
+        .Paddingtop1 {
+            padding-top: 10px !important;
+            padding-bottom: 10px !important
+        }
+    </style>
+
+    <link href="~/Content/Custom.css" rel="stylesheet" />
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title" style="color: blanchedalmond;font-weight: bold;">Finacial Year</h4>
+
+
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("CreateFinacialyear", "Master", FormMethod.Post, new { @class = "formcreateupdate", @id = "frmAddUpdate", enctype = "multipart/form-data" }))
+                {
+
+
+                    <div class="form-group is-empty row Paddingtop1">
+
+                        <div class="col-sm-3">
+                            <input name="sName" id="Name" type="text" value="" class="form-control" placeholder="Enter Name" required>
+                        </div>
+                        <div class="col-sm-3">
+
+                            <input type="date" class="form-control" name="dtInsertStrDt" value="" id="dtInsertStrDt" required />
+                            <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Start Date</small>
+                        </div>
+                        <div class="col-sm-3">
+
+                            <input type="date" class="form-control" name="dtInsertEndDt" value="" id="dtInsertEndDt" disabled required />
+                            <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">End Date</small>
+                        </div>
+                        <div class="pull-right col-sm-2" style="text-align: end;">
+                            <a href="#" class="btn btn-default" id="reset">Reset</a>
+                            <button class="btn btn-primary"> Save </button>
+                        </div>
+                    </div>
+                }
+                <div class="table-responsive">
+                    <table class="table table-responsive-md" id="tblCustomers">
+                        <thead>
+                            <tr>
+                                <th>#No</th>
+                                <th>Name</th>
+
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Active</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                            @{ 
+                                var i = 1;
+                                foreach(var item in datas)
+
+                                {
+                                                        <tr>
+                                                            <td>@i</td>
+                                                            <td>@item.sName</td>
+                                                            <td>@item.StartDate</td>
+                                                            <td>@item.EndDate</td>
+                                                            <td>
+                                                                <label class="toggle">
+                                                                    <input class="toggle-checkbox" type="checkbox" id="Status" name="Status" value="@item.iStts" @(item.iStts == 1 ? "checked" : "")>
+                                                                    <div class="toggle-switch"></div>
+                                                                    @*<span class="toggle-label">Bluetooth</span>*@
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="~/Content/Template/js/jScript.js"></script>
+    <script type="text/javascript">
+        $("#dtInsertStrDt").change(function () {
+            debugger;
+            var startdate = $(this).val();
+            $("#dtInsertEndDt").prop('disabled', false);
+            document.getElementById("dtInsertEndDt").min = startdate;
+
+        });
+        $("#reset").click(function () {
+            document.getElementById("dtInsertEndDt").value = '';
+            $("#dtInsertEndDt").prop('disabled', true);
+            document.getElementById("dtInsertEndDt").min = '';
+            document.getElementById("dtInsertStrDt").value = '';
+            document.getElementById("Name").value = '';
+        });
+    </script>

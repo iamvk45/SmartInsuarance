@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -128,7 +128,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminAjaxRequestController.cs" />
+    <Compile Include="Controllers\AjaxRequestController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -139,7 +141,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\Api_CommonResponse.cs" />
+    <Compile Include="Helper\CommonFunction.cs" />
     <Compile Include="Models\FillDropDown.cs" />
+    <Compile Include="Models\MasterModel.cs" />
     <Compile Include="Models\Roll.cs" />
     <Compile Include="Models\PaymentTracking.cs" />
     <Compile Include="Models\PendingPayments.cs" />
@@ -6913,9 +6917,15 @@
     <Content Include="Views\Admin\PendingPayments.cshtml" />
     <Content Include="Views\Admin\CollectPayment.cshtml" />
     <Content Include="Views\Admin\PaymentHistory.cshtml" />
+    <Content Include="Views\Master\FinacialYear.cshtml" />
+    <Content Include="Views\Master\FeatureRateMaster.cshtml" />
+    <Content Include="Views\Master\LicenceMaster.cshtml" />
+    <Content Include="Views\AdminAjaxRequest\BindCuverLiceTempTable.cshtml" />
+    <Content Include="Views\Master\LicenceIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\AjaxRequest\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -6929,6 +6939,12 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SmartLB\SmartLB.csproj">
+      <Project>{3497424d-e6e0-4ca7-95f8-ecf201406a62}</Project>
+      <Name>SmartLB</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

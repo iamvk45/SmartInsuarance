@@ -46,6 +46,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
     <link href="~/Content/select2/css/select2.css" rel="stylesheet" />
     <link href="~/Content/Template/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     @RenderSection("styles", false)
     <style type="text/css">
         .logoShadow {
@@ -891,7 +892,7 @@
 
                                             <span class="ms-2">My Payments</span>
                                         </a>
-                                        
+
                                         <a href="javascript:void(0);" class="dropdown-item ai-icon ">
                                             @*<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
                                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -929,16 +930,16 @@
             <div class="dlabnav-scroll">
                 <ul class="metismenu" id="menu">
                     <li>
-                            <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-                                <i class="material-icons-outlined">dashboard</i>
-                                <span class="nav-text">Dashboard</span>
-                            </a>
-                            <ul aria-expanded="false">
-                                <li><a href="@Url.Action("Index","Dashboard")">Dashboard</a></li>
-                            </ul>
+                        <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                            <i class="material-icons-outlined">dashboard</i>
+                            <span class="nav-text">Dashboard</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="@Url.Action("Index","Dashboard")">Dashboard</a></li>
+                        </ul>
 
-                        </li>
-                        @*<li>
+                    </li>
+                    @*<li>
                             <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                                 <i class="material-icons">folder</i>
                                 <span class="nav-text">File Manager</span>
@@ -1048,7 +1049,7 @@
                             <li><a href="@Url.Action("ApproveTrailuser","Admin")">Trial Users List</a></li>
                         </ul>
                     </li>
-                    
+
                     <li>
                         <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                             <i class="material-icons"> widgets </i>
@@ -1156,7 +1157,7 @@
                 <div class="footer">
                     <div class="copyright">
                         @*<p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/" target="_blank">DexignLab</a> 2022</p>*@
-                        <p>S3 Company</p>
+                        <p style="color:cadetblue;font-weight:bold;">Eunoia softtech pvt ltd</p>
                     </div>
                 </div>
             </div>
@@ -1305,7 +1306,7 @@
     <script src="~/Content/Template/js/dlabnav-init.js"></script>
     <script src="~/Content/Template/js/demo.js"></script>
     <script src="~/Content/Template/js/styleSwitcher.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     <script>
 
         $(function () {
