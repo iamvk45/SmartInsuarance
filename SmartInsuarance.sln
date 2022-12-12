@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartInsuarance", "SmartInsuarance\SmartInsuarance.csproj", "{4DC38185-2785-4971-B79A-AF8D6038C20C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartLB", "SmartLB\SmartLB.csproj", "{3497424D-E6E0-4CA7-95F8-ECF201406A62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4DC38185-2785-4971-B79A-AF8D6038C20C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DC38185-2785-4971-B79A-AF8D6038C20C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DC38185-2785-4971-B79A-AF8D6038C20C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3497424D-E6E0-4CA7-95F8-ECF201406A62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3497424D-E6E0-4CA7-95F8-ECF201406A62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3497424D-E6E0-4CA7-95F8-ECF201406A62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3497424D-E6E0-4CA7-95F8-ECF201406A62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

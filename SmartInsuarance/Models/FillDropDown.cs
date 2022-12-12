@@ -43,7 +43,7 @@ namespace SmartInsuarance.Model
             });
             Lst.Add(new GlobalClass
             {
-                Id = 2,
+                Id = 3,
                 Text = "Year",
                 graphbackcolor = "#afeddf"
 

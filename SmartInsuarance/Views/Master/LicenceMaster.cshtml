@@ -1,0 +1,399 @@
+﻿@using SmartInsuarance.Models
+@model LICEMSTViEW
+@{
+    ViewBag.Title = "LicenceMaster";
+    Layout = "~/Views/Shared/_Layout_new.cshtml";
+    List<SmartLB.GlobalClass> Validity = new List<SmartLB.GlobalClass>();
+    Validity = SmartLB.CommonList.GetUOMList();
+    List<SmartLB.GlobalClass> UserType = new List<SmartLB.GlobalClass>();
+    UserType = SmartLB.CommonList.GetUserType();
+    List<SmartInsuarance.Model.FillDropDown> LicenseName = new List<SmartInsuarance.Model.FillDropDown>();
+    LicenseName = SmartInsuarance.Helper.CommonFunction.GetDataForDropdown(4);
+    List<SmartLB.GlobalClass> RegistrationType = new List<SmartLB.GlobalClass>();
+    RegistrationType = SmartLB.CommonList.GetRegistrationType();
+    List<SmartLB.GlobalClass> Type = new List<SmartLB.GlobalClass>();
+    Type = SmartLB.CommonList.GetRegistrationType();
+
+    var LicMstId = (string)ViewBag.id;
+  
+}
+<style>
+    .Paddingtop1 {
+        padding-top: 10px !important;
+        padding-bottom: 10px !important
+    }
+    select[readonly].select2-hidden-accessible + .select2-container {
+        pointer-events: none;
+        touch-action: none;
+    }
+</style>
+<link href="~/Content/Custom.css" rel="stylesheet" />
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title" style="color: blanchedalmond;font-weight: bold;">Licence Master</h4>
+
+
+        </div>
+
+        @using (Html.BeginForm("CreateLicenceMaster", "Master", FormMethod.Post, new { @class = "formcreateupdate", @id = "frmAddUpdate", enctype = "multipart/form-data" }))
+        {
+            <div class="card-body">
+
+                <div class="form-group is-empty row Paddingtop1">
+
+                    <input type="hidden" name="iPK_LicMstId" value="@ViewBag.id" />
+                    <div class="col-sm-4">
+
+                        <input type="date" class="form-control" name="dtInsertStrDt" value="@(Model!=null && Model.EndDate!=null ?Model.dtStrdate.Value.ToString("yyyy-MM-dd"):"")" id="dtInsertStrDt"  required />
+                        <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Start Date</small>
+                    </div>
+                    <div class="col-sm-4">
+
+                        <input type="date" class="form-control" name="dtInsertEndDt" value="@(Model!=null && Model.EndDate!=null ?Model.dtEnddate.Value.ToString("yyyy-MM-dd"):"")" id="dtInsertEndDt" disabled required />
+                        <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">End Date</small>
+                    </div>
+
+
+                    @*<div class="col-sm-4">
+                            <select class="singleselect" id="iUomId" name="iFK_UomId" required>
+                                <option value="">Select UOM </option>
+                                @{
+                                    foreach (var item in Uomdata)
+                                    {
+                                        <option value="@item.Id">@item.Text</option>
+                                    }
+                                }
+
+
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <input name="dRate" id="dRate" type="text" value="" class="form-control" placeholder="Enter Rate" required>
+                        </div>
+                        <div class="pull-right col-sm-4" style="text-align: end;">
+                            <a href="#" class="btn btn-default" id="reset">Reset</a>
+                            <button class="btn btn-primary"> Save </button>
+                        </div>*@
+                </div>
+                <div class="form-group is-empty row Paddingtop1">
+                    <label for="nameInput" class="col-sm-3 control-label">Licence Name</label>
+                    <div class="col-sm-5">
+                        <select class="singleselect" data-tags="true" name="iLicNameId" id="iLicNameId">
+                            <option value="">Select License Type </option>
+                            @{
+                                foreach (var item in LicenseName)
+                                {
+                                    <option @(Model!=null && Convert.ToInt32(Model.iLicNameId)==item.DDLValue?"selected":"") value="@item.DDLValue">@item.DDLText</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group is-empty row Paddingtop1">
+                    <label for="nameInput" class="col-sm-3 control-label">User Type</label>
+                    <div class="col-sm-5">
+                        <select class="singleselect " name="iUsrTypId" id="iUsrTypId">
+                            <option value="">Select User Type </option>
+                            @{
+                                foreach (var item in UserType)
+                                {
+                                    <option @(Model!=null && Model.iUsrTypId==item.Id?"selected":"")  value="@item.Id">@item.Text</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group is-empty row Paddingtop1">
+                    <label for="nameInput" class="col-sm-3 control-label">Validity</label>
+                    <div class="col-sm-2">
+                        <input type="number" name="iValidityvalue" value="" id="ivalidityvalue" placeholder="Enter Number" class="form-control">
+                    </div>
+                    <div class="col-sm-3">
+                        <select class="singleselect" name="iValidityId" id="iValidityId">
+                            <option value="">Select Validity </option>
+                            @{
+                                foreach (var item in Validity)
+                                {
+                                    <option value="@item.Id">@item.Text</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+             
+                <div class="form-group is-empty row Paddingtop1">
+                    <label for="nameInput" class="col-sm-3 control-label">Number Of Registration</label>
+                    <div class="col-sm-2">
+                        <input type="number" name="iNumReg" value="" id="iNumReg" placeholder="" class="form-control">
+                    </div>
+                    <div class="col-sm-3">
+                        <select class="singleselect " name="iTypId" id="iTypId">
+                            <option value="">Select Type </option>
+                            @{
+                                foreach (var item in Type)
+                                {
+                                    <option value="@item.Id">@item.Text</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                                   </div>
+
+                <div class="card Card--shadow--medium radiuscard reversecard" style="box-shadow: 0 8px 6px -6px black;">
+                    <header class="card-heading card-default" style="padding: 5px;background: darkgray;">
+                        <h2 class="card-title">
+                            Package Overview
+                            <span style="color: aliceblue; font-size: small; "> Covered License*</span>
+                        </h2>
+
+                    </header>
+                    <div>
+                        <div class="form-group is-empty row Paddingtop1">
+                            @*<label for="nameInput" class="col-sm-2 control-label">Covered License</label>*@
+                            <input type="hidden" name="IPk_CovLicTempId" id="IPk_CovLicTempId" value="0" >
+                            <div class="col-sm-3">
+                                <select class="singleselect " name="iMnuId" id="iMnuId">
+                                    <option value="">Select Menu </option>
+                                   
+                                </select>
+
+                            </div>
+                            <div class="col-sm-3" style="display:none;">
+                                <select class="singleselect hidden" name="iSubMnuId" id="iSubMnuId">
+                                    <option value="">Select Submenus </option>
+
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="number" name="iQty" id="iQty" value="" placeholder="Enter Qty" class="form-control">
+                            </div>
+                            <a href="javascript:;" class="btn btn-primary col-sm-2" id="Add">Add</a>
+                        </div>
+                        <div class="table-responsive  col-sm-12">
+                            <table class="table table-responsive-md" id="tblCustomers">
+                                <thead>
+                                    <tr>
+                                        <th>#No</th>
+                                        <th>Menu Name</th>
+                                        @*<th>SubMenu Name </th>*@
+                                        <th>Qty</th>
+                                        @*<th>Rate</th>*@
+                                        <th>Active</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="form-footer" style="text-align: end;background: black;">
+                <div class="pull-right">
+                    <a href="@Url.Action("Index", "Deal")" class="btn btn-default" style="color: antiquewhite;">DISCARD</a>
+                    <button class="btn btn-primary" id="save">SAVE</button>
+                </div>
+            </footer>
+
+        }
+
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="~/Content/Template/js/jScript.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".singleselect").select2();
+        //var selectvalidity = $("#iValidityId").val();
+        //if (selectvalidity != "") {
+        //    BindSubmenus(0, selectvalidity);
+        //}
+        $("#dtInsertStrDt").change(function () {
+            debugger;
+            var startdate = $(this).val();
+            $("#dtInsertEndDt").prop('disabled', false);
+            document.getElementById("dtInsertEndDt").min = startdate;
+
+        });
+        $("#iValidityId").change(function () {
+            BindSubmenus(0, $(this).val(),'@LicMstId');
+        });
+        //$("#iMnuId").change(function () {
+        //    var type = $("#iValidityId").val();
+        //    BindSubmenus($(this).val(),type);
+        //});
+        BindCuverLiceTempTable('@LicMstId');
+    });
+
+    function BindSubmenus(MenuId,Type) {
+
+        var Model = {
+            MenuId: MenuId,
+            Type: Type,
+            LicMstId:'@LicMstId'
+        }
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            url: "/Master/GetSelectMenuSubmenulist",
+            dataType: 'json',
+            type: 'Post',
+            cache: false,
+            data: JSON.stringify(Model),
+            success: function (data) {
+
+                var submenuList = data.Data;
+                //console.table(submenuList)
+                if (MenuId != 0) {
+                    var selectBody = "<option value=0>Select Submenus</option> ";
+                }
+                else {
+                    var selectBody = "<option value=0>Select Menus</option> ";
+                }
+                submenuList.forEach(item => {
+
+                    selectBody += `<option value=${item.Id}>${item.Text}</option>`
+
+                });
+                if (MenuId != 0) {
+                    $('#iSubMnuId').html('')
+                    $('#iSubMnuId').append(selectBody);
+
+                }
+                else {
+                    $('#iMnuId').html('')
+                    $('#iMnuId').append(selectBody);
+                    $('#iSubMnuId').html('<option value=0>Select Submenus</option>');
+                }
+            },
+            error: function (d) {
+                console.log(d);
+            }
+        });
+
+    }
+    $("#Add").click(function () {
+        debugger;
+        var MnuId = $("#iMnuId").val();
+        var SubMnuId = $("#iSubMnuId").val();
+        var Qty = $("#iQty").val();
+        if (MnuId == "") {
+            alert("Please Select Menu");
+            return false;
+        }
+        //if (SubMnuId == "") {
+        //    alert("Please Select SubMenu");
+        //    return false;
+        //}
+        if (Qty == "") {
+            alert("Please Enter Qty");
+            return false;
+        }
+        var IPk_CovLicTempId = $("#IPk_CovLicTempId").val();
+        var Params = JSON.stringify(
+                {
+                MenuId: MnuId,
+                Id: '@LicMstId',
+                qty: Qty,
+                SubMenuId: SubMnuId,
+                IPk_CovLicTempId: IPk_CovLicTempId
+
+                });
+
+            $.ajax({
+                url: "/AjaxRequest/InsertCoverLicenseTemp",//GetglobalDomain() +
+                type: 'POST',
+                dataType: "json",
+                contentType: "application/json",
+                data: Params,
+                success: function (response) {
+                    debugger;
+                    if (response.isvalid == 1) {
+
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: response.msg,
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                        BindCuverLiceTempTable('@LicMstId');
+                       
+
+                    }
+                }
+            });
+        $("#IPk_CovLicTempId").val('0');
+    });
+    function Delete(Id)
+    {
+        $.confirm({
+
+            title: 'Remove Confirmation',
+            content: 'Are you sure to remove record',
+            type: 'red',
+            typeAnimated: true,
+            animation: 'rotate',
+            closeAnimation: 'scale',
+            buttons: {
+                Confirm: {
+                    text: 'YES',
+                    btnClass: 'btn-red',
+                    action: function () {
+
+
+
+                        var Params = JSON.stringify({
+                            TableName: 'COVELICEMSTTemp',
+                            Id: Id,
+                            type: 2
+
+
+                        });
+                        /* ShowBALoader("LoaderBASinup1");*/
+                        $.ajax({
+                            url:"/AjaxRequest/ChangeStatus",
+                            type: 'POST',
+                            dataType: "json",
+                            data: Params,
+                            contentType: "application/json",
+                            success: function (response) {
+
+
+                                debugger;
+                                if (response.IsValid = 1) {
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: 'Delete Successfully',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    })
+                                    $("#tr_" + Id).remove();
+                                }
+                                var validityid = $("#iValidityId").val();
+                                BindSubmenus(0, validityid);
+                            },
+
+                        });
+
+                    }
+                },
+                close: {
+                    text: 'NO',
+                    action: function () { }
+                }
+            }
+        });
+
+    }
+</script>
