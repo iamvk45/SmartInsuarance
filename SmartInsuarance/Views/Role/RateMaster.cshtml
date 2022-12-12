@@ -13,10 +13,11 @@
 }
 <style>
     .Paddingtop1 {
-        padding-top: 10px !important ;
+        padding-top: 10px !important;
         padding-bottom: 10px !important
     }
 </style>
+
 <link href="~/Content/Custom.css" rel="stylesheet" />
 
 @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">*@
@@ -69,13 +70,18 @@
                 </div>
                 <div class="form-group is-empty row Paddingtop1">
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <input name="dRate" id="Rate" type="text" value="" class="form-control" placeholder="Enter Rate" required>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
 
-                        <input type="date" class="form-control" name="dtStrDt" value="" id="StrDate" required />
-                        <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Effective  Date</small>
+                        <input type="date" class="form-control" name="dtInsertStrDt" value="" id="dtInsertStrDt" min="2022-01-01" required />
+                        <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Start Date</small>
+                    </div>
+                    <div class="col-sm-3">
+
+                        <input type="date" class="form-control" name="dtInsertEndDt" value="" id="dtInsertEndDt" max="2022-12-31" required />
+                        <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">End Date</small>
                     </div>
                     <div class="pull-right col-sm-4" style="text-align: end;">
                         <a href="#" class="btn btn-default">Reset</a>
@@ -92,7 +98,8 @@
                             <th>SubMenu Name </th>
                             <th>Type</th>
                             <th>Rate</th>
-                            <th>Date</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
                             <th>Active</th>
                             <th>Action</th>
                         </tr>
@@ -151,9 +158,9 @@
                 var selectBody = "<option value=0>Select Submenus</option> ";
 
                 submenuList.forEach(item => {
-                
-                        selectBody += `<option value=${item.Id}>${item.Text}</option>`
-                 
+
+                    selectBody += `<option value=${item.Id}>${item.Text}</option>`
+
                 });
 
                 $('#SubMenuName').html('')
@@ -165,7 +172,7 @@
         });
 
     }
-   
+
 
 
 </script>
