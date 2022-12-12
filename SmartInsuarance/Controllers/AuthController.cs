@@ -41,9 +41,9 @@ namespace SmartInsuarance.Controllers
                 {
                     _CommonResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
 
-                    userModel = JsonConvert.DeserializeObject<List<UserModelSession>>(_CommonResponse.data.ToString());
                     if (_CommonResponse.data != null)
                     {
+                    userModel = JsonConvert.DeserializeObject<List<UserModelSession>>(_CommonResponse.data.ToString());
                         if (userModel[0].sUSRCode == "A000001")
                         {
                             //if (permissions != null)
@@ -62,7 +62,7 @@ namespace SmartInsuarance.Controllers
                         else
                         {
                             Session["UserDetails"] = userModel[0];
-                            return RedirectToAction("Index", "Dashboard");
+                            return RedirectToAction("Index", "Welcome");
                             //return RedirectToAction("EditProfile", "User");
                         }
                     }

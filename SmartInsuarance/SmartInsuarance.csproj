@@ -128,6 +128,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminAjaxRequestController.cs" />
+    <Compile Include="Controllers\WelcomeController.cs" />
     <Compile Include="Controllers\AjaxRequestController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
@@ -6917,6 +6918,8 @@
     <Content Include="Views\Admin\PendingPayments.cshtml" />
     <Content Include="Views\Admin\CollectPayment.cshtml" />
     <Content Include="Views\Admin\PaymentHistory.cshtml" />
+    <Content Include="Views\Welcome\Index.cshtml" />
+    <Content Include="Views\User\Profilestatus.cshtml" />
     <Content Include="Views\Master\FinacialYear.cshtml" />
     <Content Include="Views\Master\FeatureRateMaster.cshtml" />
     <Content Include="Views\Master\LicenceMaster.cshtml" />
