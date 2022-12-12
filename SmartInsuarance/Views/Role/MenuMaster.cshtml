@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "Menu Master";
+    Layout = "~/Views/Shared/_Layout_new.cshtml";
+}
+<link href="~/Content/Custom.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-lg-12">
+        @using (Html.BeginForm("MenuMaster", "Role", FormMethod.Post, new { @class = "formcreateupdate", @id = "frmAddUpdate", enctype = "multipart/form-data" }))
+        {
+            <input name="MenuId" id="MenuId" type="hidden" value="@(Model != null ? Model.MenuId.ToString() : "0")" />
+            <div class="card">
+                <div class="card-header">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">Smart Insurance</li>
+                        <li class="breadcrumb-item">Create Menu</li>
+
+                    </ol>
+                    <a class="btn btn-success float-right" href="@Url.Action("MenuIndex", "Role")"><i class="fas fa-list"></i> Menu Index</a>
+
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group is-empty row Paddingtop">
+                            <label for="nameInput" class="col-sm-3 control-label">Menu Name<span style="color:red;">*</span></label>
+                            <div class="col-sm-6">
+                                <input name="MenuName" id="MenuName" type="text" value="" class="form-control" placeholder="Enter Menu Name" required>
+                            </div>
+                        </div>
+                        <div class="form-group is-empty row Paddingtop">
+                            <label for="nameInput" class="col-sm-3 control-label">Controller Name</label>
+                            <div class="col-sm-6">
+                                <input name="ControllerName" id="ControllerName" type="text" value="" class="form-control" placeholder="Enter Controller Name">
+                            </div>
+                        </div>
+                        <div class="form-group is-empty row Paddingtop">
+                            <label for="nameInput" class="col-sm-3 control-label">Action Name</label>
+                            <div class="col-sm-6">
+                                <input name="ActionMethod" id="ActionMethod" type="text" value="" class="form-control" placeholder="Enter Action Name">
+                            </div>
+                        </div>
+                        <div class="form-group is-empty row Paddingtop ">
+                            <label for="nameInput" class="col-sm-4 control-label">Active</label>
+                            <label class="col-sm-6 toggle">
+                                <input class="toggle-checkbox" type="checkbox" id="Status" name="Status" value="1" checked>
+                                <div class="toggle-switch"></div>
+                                @*<span class="toggle-label">Bluetooth</span>*@
+                            </label>
+                            @*<div class="col-sm-2 custom-control custom-switch switch-success">
+                                <input type="checkbox" class="custom-control-input" id="Status" name="Status" value="">
+                                <label class="custom-control-label" for="Status"></label>
+                            </div>*@
+                        </div>
+                        @*<label class="toggle">
+                            <input class="toggle-checkbox" type="checkbox" checked>
+                            <div class="toggle-switch"></div>
+                            <span class="toggle-label">Bluetooth</span>
+                        </label>*@
+                       
+                    </div>
+                    </div>
+            </div>
+
+
+            <footer class="form-footer">
+                <div class="pull-right" style="text-align: end;">
+                    <a href="@Url.Action("MenuIndex", "Role")" class="btn btn-default">DISCARD</a>
+                    <button class="btn btn-primary"> Save </button>
+                </div>
+            </footer>
+        }
+    </div>
+    </div>
+
