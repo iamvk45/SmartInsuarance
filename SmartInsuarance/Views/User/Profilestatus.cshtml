@@ -17,6 +17,9 @@
 
     var childsList = ViewBag.childData as List<ChildUsers>;
 
+    var parentData = childsList.Where(wh => wh.sPrntID == null).FirstOrDefault();
+    var isParentProfileComplete = parentData.Color;
+
 }
 <link href="~/Content/Template/select2/css/select2.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.15/sweetalert2.css" />
@@ -34,25 +37,60 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Add Member Details</h4>
+                <a href="@Url.Action("Index", "Welcome")"><i class="fas fa-arrow-left"></i> Back To Welcome</a>
             </div>
             <div class="card-body">
-                <table class="table table-borderless" style="width:80%">
-                    <tr style="display: flex;align-items: baseline;"><th>@username</th><td>-</td><td><a href="@Url.Action("AddUserMember", "User", new {type="User",parentID=userID})" class="btn btn-sm"><i class="fa fa-pencil"></i>  Edit</a></td></tr>
-
+                <div style="width:100%;text-align:right">
                     @{
-                        if (childsList != null)
+                        if (!isParentProfileComplete.Contains("danger"))
                         {
-                            foreach (var item in childsList)
-                            {
-                                <tr style="display: flex;align-items: baseline;"><th>@item.Name</th><td>-</td><td><a href="@Url.Action("AddUserMember", "User", new {type="User",parentID=item.sUSRCode})" class="btn btn-sm"><i class="fa fa-pencil"></i>  Edit</a></td></tr>
-                            }
+                            <a href="@Url.Action("AddUserMember", "User", new {type="Member",parentID=userID})" class="btn btn-sm btn-outline-primary"><i class="fa fa-plus"></i>  Add New Member</a>
                         }
                     }
-                    <tr style="display: flex;align-items: baseline;"><td><a href="@Url.Action("AddUserMember", "User", new {type="Member",parentID=userID})" class="btn btn-sm btn-outline-primary"><i class="fa fa-plus"></i>  Add New Member</a></td></tr>
-                </table>
+
+                </div>
+                <div class="table-responsive mt-2">
+                    <table class="table table-responsive-md">
+                        <thead>
+                            <tr>
+                                <th><strong>#</strong></th>
+                                <th><strong>MEMBER NAME</strong></th>
+                                <th><strong>USER PROFILE STATUS</strong></th>
+                                <th><strong>ACTION</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                if (childsList != null && childsList.Count > 0)
+                                {
+                                    var i = 1;
+                                    foreach (var item in childsList)
+                                    {
+                                        <tr>
+                                            <th>@i.</th>
+                                            <th>@item.FullName</th>
+                                            <th>
+                                                <div class="bootstrap-badge">
+                                                    <span class="@item.Color">@item.ProfileStatus</span>
+                                                </div>
+                                            </th>
+                                            <td><a href="@Url.Action("AddUserMember", "User", new {type="User",parentID=item.sUSRCode})" class="btn btn-sm"><i class="fa fa-pencil"></i>  Edit</a></td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+                                else
+                                {
+                                    <tr><td colspan="4" style="text-align:center">No Data Available</td></tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="card-footer" style="text-align: end;">
-                <button class="btn btn-success">Continue to configuration</button>
+                <a href="@Url.Action("LicenseConfiguration","Admin")" class="btn btn-success"> Continue to configuration <i class="fas fa-arrow-right"></i> </a>
             </div>
         </div>
     </div>
