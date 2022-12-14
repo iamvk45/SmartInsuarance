@@ -25,16 +25,16 @@ namespace SmartInsuarance.Controllers
             ViewBag.pendingPayments = GetPendingPayments();
             return View();
         }
-        
+
         public ActionResult PaymentHistory()
         {
 
             var userSession = (UserModelSession)Session["UserDetails"];
-            if(userSession!= null)
+            if (userSession != null)
             {
-               if(userSession.sUSRCode == "A000001")
+                if (userSession.sUSRCode == "A000001")
                     ViewBag.paymentHistory = GetPaymentHistory();
-               else
+                else
                     ViewBag.paymentHistory = GetPaymentHistory(userSession.sUSRCode);
             }
             else
@@ -43,8 +43,32 @@ namespace SmartInsuarance.Controllers
             }
             return View();
         }
-        
-        public ActionResult CollectPayment(string orderID="")
+        public ActionResult LicenseConfiguration()
+        {
+            AuthController admin = new AuthController();
+            var userData = (UserModelSession)Session["UserDetails"];
+            var insuaranceDetails = admin.GetInsuaranceData(userData.sUSRCode, userData.iFK_LicMstId);
+
+            ViewBag.insuarances = insuaranceDetails;
+
+            return View();
+        }
+        public ActionResult UserLicenseConfiguration(string insuarance)
+        {
+            ViewBag.insuarance = insuarance;
+
+            CommonController common = new CommonController();
+            var CompanyList = common.GetDataForDropdown(1005);
+            var userSession = (UserModelSession)Session["UserDetails"];
+            var childData = common.GetChildID(userSession.sUSRCode);
+
+            ViewBag.childData = childData;
+            ViewBag.companyList = CompanyList;
+
+            return View();
+        }
+
+        public ActionResult CollectPayment(string orderID = "")
         {
             CommonController common = new CommonController();
 
@@ -77,7 +101,7 @@ namespace SmartInsuarance.Controllers
         }
         public List<PaymentHistory> GetPaymentHistory(string userID = "0")
         {
-            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/GetPaymentHistory?userID="+ userID);
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/GetPaymentHistory?userID=" + userID);
             var request = new RestRequest(Method.GET);
             request.AddHeader("cache-control", "no-cache");
             //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
@@ -99,7 +123,7 @@ namespace SmartInsuarance.Controllers
         }
         public JsonResult GetuserDetails(string userID)
         {
-            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/GetuserMasterDetails?userID="+ userID);
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/GetuserMasterDetails?userID=" + userID);
             var request = new RestRequest(Method.GET);
             request.AddHeader("cache-control", "no-cache");
             //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
@@ -148,7 +172,7 @@ namespace SmartInsuarance.Controllers
         }
         public List<CollectPaymentData> GetOrderDetailsForPayment(string order)
         {
-            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/GetOrderDetailsForPayment?orderID="+ order);
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/GetOrderDetailsForPayment?orderID=" + order);
             var request = new RestRequest(Method.GET);
             request.AddHeader("cache-control", "no-cache");
             //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");

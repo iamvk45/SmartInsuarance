@@ -84,6 +84,7 @@ namespace SmartInsuarance.Models
         public string sPhone { get; set; }
         public string IsActive { get; set; }
         public string profileImage { get; set; }
+        public string iFK_LicMstId { get; set; }
         public int? iStateID { get; set; }
         public int? iCountryID { get; set; }
         public int? iCityID { get; set; }
@@ -112,6 +113,12 @@ namespace SmartInsuarance.Models
     public class ChildUsers
     {
         public string sUSRCode { get; set; }
-        public string Name { get; set; }
+        public string sPrntID { get; set; }
+        public string sNME { get; set; }
+        public string FullName { get; set; }
+        public string sPan { get; set; }
+        public string sAadhaar { get; set; }
+        public string ProfileStatus { get; set; }
+        public string Color { get; set; }
     }
 }

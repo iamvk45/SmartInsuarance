@@ -16,8 +16,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                Trial Users Queue
-                @*<h4 class="card-title"></h4>*@
+                <h4 class="card-title">Trial Users Queue</h4>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -51,15 +50,13 @@
                                             <td>@item.userTypeName</td>
                                             <td>@item.dtDateOfReg</td>
                                             <td>
-                                                <div class="form-check form-check-inline">
+                                                <div class="form-check form-check-inline" id="div_@item.iPk_USRFRTRLID">
                                                     <label class="form-check-label">
                                                         <label class="col-sm-6 toggle">
 
-                                                            <input type="checkbox" id="che_@item.iPk_USRFRTRLID" data-id="@item.sName" data-html="@item.sEmailId" class="form-check-input toggle-checkbox" @(item.iIsactive == 1 ? "checked" : "") />
-
+                                                            <input type="checkbox" id="che_@item.iPk_USRFRTRLID" data-id="@item.sName" data-html="@item.sEmailId" data-content="@item.iPk_USRFRTRLID" class="form-check-input toggle-checkbox" @(item.iIsactive == 1 ? "checked" : "") />
                                                             @*<input class="toggle-checkbox" type="checkbox" id="chkIsGST" name="Status" value="@Model.isGSTApplicable" @(Model.isGSTApplicable == 1 ? "checked" : "")>*@
                                                             <div class="toggle-switch"></div>
-
                                                         </label>
 
 
@@ -67,6 +64,7 @@
                                                         @*<input type="checkbox" id="che_@item.iPk_USRFRTRLID" data-id="@item.sName" data-html="@item.sEmailId" class="form-check-input" @(item.iIsactive == 1 ? "checked" : "")>*@
                                                     </label>
                                                 </div>
+                                                <span id="spn_@item.iPk_USRFRTRLID" style="display:none"><i class="fa-2x fa fa-circle-pause fa-beat-fade"></i></span>
                                             </td>
 
                                         </tr>
@@ -104,7 +102,12 @@
             if (d) {
                 var Name = $(this).data("id");
                 var EnailAddress = $(this).data("html");
-                ActiveTrialUser(EnailAddress, Name);
+                var content = $(this).data("content");
+              
+                $('#div_' + content).css('display', 'none');
+                $('#spn_' + content).css('display', 'block');
+
+                ActiveTrialUser(EnailAddress, Name, content);
 
                 setTimeout(function () {
                     location.reload();
@@ -113,7 +116,7 @@
 
         });
     });
-    function ActiveTrialUser(email, name) {
+    function ActiveTrialUser(email, name,itemData) {
         var Content = {
             sEmailId: email,
             sName: name,
@@ -141,6 +144,8 @@
                         showCancelButton: false,
                     });
                 }
+                $('#div_' + content).css('display', 'block');
+                $('#spn_' + content).css('display', 'none');
 
             },
             error: function (d) {

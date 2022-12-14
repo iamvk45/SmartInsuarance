@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
 using SmartInsuarance.Helper;
+using SmartInsuarance.Model;
 using SmartInsuarance.Models;
 using System;
 using System.Collections.Generic;
@@ -61,7 +62,11 @@ namespace SmartInsuarance.Controllers
                         }
                         else
                         {
+                            var LicencseDetails  = GetLicenseData(userModel[0].sUSRCode, userModel[0].iFK_LicMstId);
+                            var insuaranceDetails  = GetInsuaranceData(userModel[0].sUSRCode, userModel[0].iFK_LicMstId);
                             Session["UserDetails"] = userModel[0];
+                            Session["LicenseDetails"] = LicencseDetails;
+                            Session["InsuaranceDetails"] = insuaranceDetails;
                             return RedirectToAction("Index", "Welcome");
                             //return RedirectToAction("EditProfile", "User");
                         }
@@ -94,7 +99,62 @@ namespace SmartInsuarance.Controllers
         public ActionResult Logout()
         {
             Session["UserDetails"] = null;
+            Session["LicenseDetails"] = null;
+            Session["InsuaranceDetails"] = null;
             return RedirectToAction("Login");
         }
+
+        public List<License> GetLicenseData(string usrID, string licensID,string type= "Licence")
+        {
+            //var json = JsonConvert.SerializeObject(geographical);
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/GetLicense_InsuaranceData?type=" + type + "&usrID="+ usrID + "&licensID="+ licensID);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            Api_CommonResponse _CommonResponse = new Api_CommonResponse();
+            List<License> licenses = new List<License>();
+
+            if (response.StatusCode.ToString() == "OK")
+            {
+                _CommonResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if (_CommonResponse.data != null)
+                {
+                    licenses = JsonConvert.DeserializeObject<List<License>>(_CommonResponse.data.ToString());
+                }
+            }
+            return licenses;
+        }
+        public List<Insuarance> GetInsuaranceData(string usrID, string licensID,string type= "Insuarance")
+        {
+            //var json = JsonConvert.SerializeObject(geographical);
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/GetLicense_InsuaranceData?type=" + type + "&usrID="+ usrID + "&licensID="+ licensID);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            Api_CommonResponse _CommonResponse = new Api_CommonResponse();
+            List<Insuarance> insuarances = new List<Insuarance>();
+
+            if (response.StatusCode.ToString() == "OK")
+            {
+                _CommonResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if (_CommonResponse.data != null)
+                {
+                    insuarances = JsonConvert.DeserializeObject<List<Insuarance>>(_CommonResponse.data.ToString());
+                }
+            }
+            return insuarances;
+        }
+
+
+
+
     }
 }

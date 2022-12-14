@@ -145,6 +145,7 @@
     <Compile Include="Helper\CommonFunction.cs" />
     <Compile Include="Models\FillDropDown.cs" />
     <Compile Include="Models\MasterModel.cs" />
+    <Compile Include="Models\License.cs" />
     <Compile Include="Models\Roll.cs" />
     <Compile Include="Models\PaymentTracking.cs" />
     <Compile Include="Models\PendingPayments.cs" />
@@ -6925,6 +6926,8 @@
     <Content Include="Views\Master\LicenceMaster.cshtml" />
     <Content Include="Views\AdminAjaxRequest\BindCuverLiceTempTable.cshtml" />
     <Content Include="Views\Master\LicenceIndex.cshtml" />
+    <Content Include="Views\Admin\LicenseConfiguration.cshtml" />
+    <Content Include="Views\Admin\UserLicenseConfiguration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
