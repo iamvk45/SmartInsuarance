@@ -46,41 +46,41 @@
                     <input type="hidden" name="iPK_LicMstId" value="@ViewBag.id" />
                     <div class="col-sm-4">
 
-                        <input type="date" class="form-control" name="dtInsertStrDt" value="@(Model!=null && Model.EndDate!=null ?Model.dtStrdate.Value.ToString("yyyy-MM-dd"):"")" id="dtInsertStrDt"  required />
+                        <input type="date" class="form-control" name="dtInsertStrDt" value="@(Model!=null && Model.EndDate!=null ?Model.dtStrdate.Value.ToString("yyyy-MM-dd"):"")" id="dtInsertStrDt" @(Model != null && Model.EndDate != null ? "readonly" : "") required />
                         <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Start Date</small>
                     </div>
                     <div class="col-sm-4">
 
-                        <input type="date" class="form-control" name="dtInsertEndDt" value="@(Model!=null && Model.EndDate!=null ?Model.dtEnddate.Value.ToString("yyyy-MM-dd"):"")" id="dtInsertEndDt" disabled required />
+                        <input type="date" class="form-control" name="dtInsertEndDt" value="@(Model!=null && Model.EndDate!=null ?Model.dtEnddate.Value.ToString("yyyy-MM-dd"):"")" id="dtInsertEndDt" @(Model != null && Model.EndDate != null ? "readonly" : "disable") required />
                         <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">End Date</small>
                     </div>
 
 
                     @*<div class="col-sm-4">
-                            <select class="singleselect" id="iUomId" name="iFK_UomId" required>
-                                <option value="">Select UOM </option>
-                                @{
-                                    foreach (var item in Uomdata)
-                                    {
-                                        <option value="@item.Id">@item.Text</option>
-                                    }
-                                }
+            <select class="singleselect" id="iUomId" name="iFK_UomId" required>
+                <option value="">Select UOM </option>
+                @{
+                    foreach (var item in Uomdata)
+                    {
+                        <option value="@item.Id">@item.Text</option>
+                    }
+                }
 
 
-                            </select>
-                        </div>
-                        <div class="col-sm-4">
-                            <input name="dRate" id="dRate" type="text" value="" class="form-control" placeholder="Enter Rate" required>
-                        </div>
-                        <div class="pull-right col-sm-4" style="text-align: end;">
-                            <a href="#" class="btn btn-default" id="reset">Reset</a>
-                            <button class="btn btn-primary"> Save </button>
-                        </div>*@
+            </select>
+        </div>
+        <div class="col-sm-4">
+            <input name="dRate" id="dRate" type="text" value="" class="form-control" placeholder="Enter Rate" required>
+        </div>
+        <div class="pull-right col-sm-4" style="text-align: end;">
+            <a href="#" class="btn btn-default" id="reset">Reset</a>
+            <button class="btn btn-primary"> Save </button>
+        </div>*@
                 </div>
                 <div class="form-group is-empty row Paddingtop1">
                     <label for="nameInput" class="col-sm-3 control-label">Licence Name</label>
                     <div class="col-sm-5">
-                        <select class="singleselect" data-tags="true" name="iLicNameId" id="iLicNameId">
+                        <select class="singleselect" data-tags="true" name="iLicNameId" id="iLicNameId" @(Model!=null && Model.iLicNameId!=null ?"readonly":"")>
                             <option value="">Select License Type </option>
                             @{
                                 foreach (var item in LicenseName)
@@ -108,15 +108,15 @@
                 <div class="form-group is-empty row Paddingtop1">
                     <label for="nameInput" class="col-sm-3 control-label">Validity</label>
                     <div class="col-sm-2">
-                        <input type="number" name="iValidityvalue" value="" id="ivalidityvalue" placeholder="Enter Number" class="form-control">
+                        <input type="number" name="iValidityvalue" value="@(Model!=null ?Model.iValidityvalue.ToString():"")" id="ivalidityvalue" placeholder="Enter Number" class="form-control">
                     </div>
                     <div class="col-sm-3">
-                        <select class="singleselect" name="iValidityId" id="iValidityId">
+                        <select class="singleselect" name="iValidityId" id="iValidityId"  @(Model!=null && Model.iValidityId.ToString()!="0" ?"readonly":"")>
                             <option value="">Select Validity </option>
                             @{
                                 foreach (var item in Validity)
                                 {
-                                    <option value="@item.Id">@item.Text</option>
+                                    <option  @(Model!=null && Model.iValidityId==item.Id?"selected":"")  value="@item.Id">@item.Text</option>
                                 }
                             }
                         </select>
@@ -134,7 +134,7 @@
                             @{
                                 foreach (var item in Type)
                                 {
-                                    <option value="@item.Id">@item.Text</option>
+                                    <option  @(Model!=null && Model.iTypId==item.Id?"selected":"")  value="@item.Id">@item.Text</option>
                                 }
                             }
                         </select>
@@ -208,6 +208,7 @@
 <script src="~/Content/Template/js/jScript.js"></script>
 
 <script type="text/javascript">
+     BindCuverLiceTempTable('@LicMstId');
     $(document).ready(function () {
 
         $(".singleselect").select2();
@@ -229,9 +230,33 @@
         //    var type = $("#iValidityId").val();
         //    BindSubmenus($(this).val(),type);
         //});
-        BindCuverLiceTempTable('@LicMstId');
+       
     });
+    function BindCuverLiceTempTable(Id) {
+        debugger;
+        var iTypid = 2;
+        $.ajax({
+            url: '/AdminAjaxRequest/BindCuverLiceTempTable?Id=' + Id + '&iTypid=' + iTypid,
+            type: 'POST',
+            dataType: "text",
+            success: function (response) {
 
+                $("#tbody").html(response);
+                var rowCount = $('#tbody tr').length;
+
+
+                if (rowCount != 0) {
+                    $("#iValidityId").attr("readonly", "readonly");
+                }
+                else {
+                    $("#iValidityId").prop("disabled", false);
+                }
+                var id = $("#iValidityId").val();
+
+            }
+        });
+
+    }
     function BindSubmenus(MenuId,Type) {
 
         var Model = {
@@ -334,6 +359,8 @@
             });
         $("#IPk_CovLicTempId").val('0');
     });
+   
+
     function Delete(Id)
     {
         $.confirm({
@@ -380,8 +407,8 @@
                                     })
                                     $("#tr_" + Id).remove();
                                 }
-                                var validityid = $("#iValidityId").val();
-                                BindSubmenus(0, validityid);
+                                //var validityid = $("#iValidityId").val();
+                                //BindSubmenus(0, validityid);
                             },
 
                         });

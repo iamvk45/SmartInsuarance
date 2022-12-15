@@ -45,6 +45,12 @@ namespace SmartLB
                 Text = "User",
 
             });
+            Lst.Add(new GlobalClass
+            {
+                Id = 6,
+                Text = "System User",
+
+            });
             return Lst;
 
         }

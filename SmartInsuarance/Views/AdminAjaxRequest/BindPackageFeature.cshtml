@@ -1,0 +1,29 @@
+﻿@using SmartInsuarance.Models
+@model List<PACKFEATUESPEView>
+@{
+    Layout = null;
+}
+@{ foreach (var item in Model)
+    {
+        <tr id="tr_@item.iPK_PackFeatId">
+
+            <td>
+
+                <div class="d-flex">
+
+                    <a href="javascript:;" class="btn btn-danger shadow btn-xs sharp Delete" data-id="@item.iPK_PackFeatId" id="delete_@item.iPK_PackFeatId" onclick="Delete(@item.iPK_PackFeatId)"><i class="fa fa-trash"></i></a>
+                </div>
+
+            </td>
+            <td>@item.FeatureName</td>
+            
+            <td>@item.ValidityName</td>
+            <td>@item.ivalidityvalue</td>
+            <td>@item.drate</td>
+            <td>@item.iisdiscount</td>
+            <td>@item.DisType</td>
+            <td>@item.ddisvalue</td>
+            <td>@item.ddisplayvalue</td>
+        </tr>
+    }
+}
