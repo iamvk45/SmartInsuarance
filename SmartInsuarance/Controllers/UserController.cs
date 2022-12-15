@@ -22,7 +22,7 @@ namespace SmartInsuarance.Controllers
         {
             CommonController common = new CommonController();
             var userSession = (UserModelSession)Session["UserDetails"];
-           var childData =  common.GetChildID(userSession.sUSRCode);
+            var childData = common.GetChildID(userSession.sUSRCode);
 
             ViewBag.childData = childData;
 

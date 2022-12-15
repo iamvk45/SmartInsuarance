@@ -1,5 +1,5 @@
 ﻿@using SmartInsuarance.Models
-@model List <PackageManagementView>
+@model List<PackageManagementView>
 @{
     ViewBag.Title = "PackageList";
     Layout = "~/Views/Shared/_Layout_new.cshtml";
@@ -39,36 +39,37 @@
                     <tbody id="tbody">
                         @{
                             var i = 1;
-                     
-                                foreach(var item in Model)
-            {
-                <tr id="tr_@item.iPk_PackId">
-                            <td>@i</td>
-                            <td>@item.sPackName</td>
-                            <td>@item.UsereName</td>
-                            <td>@item.LicenseName</td>
-                            <td>
-                                <label class="toggle">
-                                    <input class="toggle-checkbox" type="checkbox" id="Status" name="Status" value="@item.iStts" @(item.iStts == 1 ? "checked" : "")>
-                                    <div class="toggle-switch"></div>
-                                    @*<span class="toggle-label">Bluetooth</span>*@
-                                </label>
-                            </td>
-                            <td>
-                                <div class="d-flex">
-                                    @*<a href="@Url.Action("PackageCreate", "Master", new {Id=item.iPk_PackId})" class="btn btn-primary shadow btn-xs sharp me-1 Edit"><i class="fa fa-edit"></i></a>*@
-                                    <a href="@Url.Action("PackageFunctionality", "Master", new {Id=item.iPk_PackId,Licenseid=item.iFk_LiceId,ivalidityname=item.ValidityName,ivalidityvalue=item.iValidityvalue,ivalidityid=item.iValidityId})" title="Add Functionality" class="btn btn-primary shadow btn-xs sharp me-1 Edit" style="background-color:deeppink;"><i class="fa fa-tasks"></i></a>
-                                    <a href="@Url.Action("SpecialFeatureackage", "Master", new {Id=item.iPk_PackId,ivalidityname=item.ValidityName,ivalidityvalue=item.iValidityvalue,ivalidityid=item.iValidityId})" title="Add Special Feature" class="btn btn-primary shadow btn-xs sharp me-1 Edit" style="background-color: green;color:white;"><i class="fa fa-cog"></i></a>
-                                    <a href="@Url.Action("PackTaxandDis", "Master", new {Id=item.iPk_PackId})" title="Package Discount" class="btn btn-primary shadow btn-xs sharp me-1 Edit" ><i class="fa fa-money"></i></a>
 
-                                    @*<button class="btn btn-danger shadow btn-xs sharp Delete" id="delete_@item.iPk_PackId" onclick="Delete(@item.iPk_PackId)"><i class="fa fa-trash"></i></button>*@
-                                </div>
-                            </td>
-                            </tr>
-            }
+                            foreach (var item in Model)
+                            {
+                                <tr id="tr_@item.iPk_PackId">
+                                    <td>@i</td>
+                                    <td>@item.sPackName</td>
+                                    <td>@item.UsereName</td>
+                                    <td>@item.LicenseName</td>
+                                    <td>
+                                        <label class="toggle">
+                                            <input class="toggle-checkbox" type="checkbox" id="Status" name="Status" value="@item.iStts" @(item.iStts == 1 ? "checked" : "")>
+                                            <div class="toggle-switch"></div>
+                                            @*<span class="toggle-label">Bluetooth</span>*@
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex">
+                                            @*<a href="@Url.Action("PackageCreate", "Master", new {Id=item.iPk_PackId})" class="btn btn-primary shadow btn-xs sharp me-1 Edit"><i class="fa fa-edit"></i></a>*@
+                                            <a href="@Url.Action("PackageFunctionality", "Master", new {Id=item.iPk_PackId,Licenseid=item.iFk_LiceId,ivalidityname=item.ValidityName,ivalidityvalue=item.iValidityvalue,ivalidityid=item.iValidityId})" title="Add Functionality" class="btn btn-primary shadow btn-xs sharp me-1 Edit" style="background-color:deeppink;"><i class="fa fa-tasks"></i></a>
+                                            <a href="@Url.Action("SpecialFeatureackage", "Master", new {Id=item.iPk_PackId,ivalidityname=item.ValidityName,ivalidityvalue=item.iValidityvalue,ivalidityid=item.iValidityId})" title="Add Special Feature" class="btn btn-primary shadow btn-xs sharp me-1 Edit" style="background-color: green;color:white;"><i class="fa fa-cog"></i></a>
+                                            <a href="@Url.Action("PackTaxandDis", "Master", new {Id=item.iPk_PackId})" title="Package Discount" class="btn btn-primary shadow btn-xs sharp me-1 Edit"><i class="fa fa-money"></i></a>
+
+                                            @*<button class="btn btn-danger shadow btn-xs sharp Delete" id="delete_@item.iPk_PackId" onclick="Delete(@item.iPk_PackId)"><i class="fa fa-trash"></i></button>*@
+                                        </div>
+                                    </td>
+                                </tr>
+                                i++;
                             }
-                          
-                    
+                        }
+
+
                     </tbody>
                 </table>
             </div>
