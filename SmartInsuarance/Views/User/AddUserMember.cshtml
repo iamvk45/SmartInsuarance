@@ -249,39 +249,39 @@
                         <div class="row">
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Name</label>
-                                <input type="text" class="form-control" id="txtName" value="@(Name==null?"": Name)" readonly="readonly" disabled style="background-color: #f1f1f1">
+                                <input type="text" class="form-control" id="txtName" value="@(Name==null?"": Name)">
                             </div>
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Surname</label>
-                                <input type="text" class="form-control" id="txtSurName" value="@(Model.sSurNME ==null?"": Model.sSurNME)" readonly="readonly" disabled style="background-color: #f1f1f1">
+                                <input type="text" class="form-control" id="txtSurName" value="@(Model.sSurNME ==null?"": Model.sSurNME)">
                             </div>
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Date Of Birth</label>
-                                <input type="text" class="form-control" placeholder="dd.MM.yyyy" id="txtDOB" value="@(Model.dtDOB ==null?"": Model.dtDOB)" readonly="readonly" disabled style="background-color: #f1f1f1">
+                                <input type="text" class="form-control" placeholder="dd.MM.yyyy" id="txtDOB" value="@(Model.dtDOB ==null?"": Model.dtDOB)">
                             </div>
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Email address</label>
-                                <input type="text" class="form-control" placeholder="somthing@mail.com" id="txtEmail" value="@(Model.sEmail ==null?"": Model.sEmail)" readonly="readonly" disabled style="background-color: #f1f1f1">
+                                <input type="text" class="form-control" placeholder="somthing@mail.com" id="txtEmail" value="@(Model.sEmail ==null?"": Model.sEmail)">
                             </div>
 
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Select Country</label><br />
                                 @*<input class="form-control" id="countrySelect" style="width:100%"/>*@
-                                <select class="singleselect" id="ddlCountry" readonly="readonly" disabled style="background-color: #f1f1f1">
+                                <select class="singleselect" id="ddlCountry">
                                     <option value="0" role=separator>Select Country</option>
                                 </select>
                             </div>
 
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Select State</label><br />
-                                <select class="singleselect" id="ddlState" readonly="readonly" disabled style="background-color: #f1f1f1">
+                                <select class="singleselect" id="ddlState">
                                     <option value="0" role=separator>Select State</option>
                                 </select>
                             </div>
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Select City</label><br />
 
-                                <select class="singleselect" id="ddlCity" readonly="readonly" disabled style="background-color: #f1f1f1">
+                                <select class="singleselect" id="ddlCity">
                                     <option value="0" role=separator>Select City</option>
                                 </select>
                             </div>
@@ -294,7 +294,7 @@
                                         <input type="text" class="form-control" id="txtPhoneCodeID" value="NA" style="font-size:15px;width: 80px; background-color: #f1f1f1" disabled readonly />
                                     </div>
                                     <div class="col-10">
-                                        <input type="text" class="form-control" id="txtPhone" oninput="numberOnly(this.id);" maxlength="10" value="@(Model.sPhone ==null?"": Model.sPhone)" style="background-color: #f1f1f1" readonly="readonly" disabled>
+                                        <input type="text" class="form-control" id="txtPhone" oninput="numberOnly(this.id);" maxlength="10" value="@(Model.sPhone ==null?"": Model.sPhone)">
                                     </div>
                                 </div>
 
@@ -302,7 +302,7 @@
 
                             <div class="col-sm-6 m-b30">
                                 <label class="form-label">Pincode</label>
-                                <input type="text" class="form-control" id="txtPincode" oninput="numberOnly(this.id);" maxlength="6" value="@(Model.sPincode ==null?"": Model.sPincode)" readonly="readonly" disabled>
+                                <input type="text" class="form-control" id="txtPincode" oninput="numberOnly(this.id);" maxlength="6" value="@(Model.sPincode ==null?"": Model.sPincode)">
                             </div>
 
                             <div class="col-sm-6 m-b30">
@@ -628,6 +628,17 @@
                             title: "Success",
                             text: "Details Saved Successfully..!",
                             icon: "success",
+                            showCancelButton: false,
+                        });
+                        setTimeout(function () {
+                            location.href = '@Url.Action("Profilestatus","User")';
+                        }, 2500)
+                    }
+                    else {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Facing some internal issues..!",
+                            icon: "error",
                             showCancelButton: false,
                         });
                     }

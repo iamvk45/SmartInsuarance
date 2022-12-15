@@ -22,4 +22,10 @@ namespace SmartInsuarance.Models
         public string InsuaranceName { get; set; }
         public string QuantityAvailable { get; set; }
     }
+    public class LicenseConfigDetails
+    {
+        public string Insurance { get; set; }
+        public string User { get; set; }
+        public string Company { get; set; }
+    }
 }

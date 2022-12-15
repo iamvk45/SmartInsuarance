@@ -4,16 +4,23 @@
     Layout = "~/Views/Shared/_Layout_new.cshtml";
 
     var userSession = (UserModelSession)Session["UserDetails"];
+
+    var licences = (List<License>)Session["LicenseDetails"];
+
     var username = "";
     var usertype = "";
     var userID = "";
+    var membersToAdded = 0;
     if (userSession != null)
     {
         username = userSession.Name;
         usertype = userSession.Usertype;
         userID = userSession.sUSRCode;
     }
-
+    if (licences.Count > 0)
+    {
+        membersToAdded = (int)licences[0].NoOfRegistraion;
+    }
 
     var childsList = ViewBag.childData as List<ChildUsers>;
 
@@ -42,7 +49,7 @@
             <div class="card-body">
                 <div style="width:100%;text-align:right">
                     @{
-                        if (!isParentProfileComplete.Contains("danger"))
+                        if (!isParentProfileComplete.Contains("danger") && childsList.Count != membersToAdded)
                         {
                             <a href="@Url.Action("AddUserMember", "User", new {type="Member",parentID=userID})" class="btn btn-sm btn-outline-primary"><i class="fa fa-plus"></i>  Add New Member</a>
                         }
@@ -90,7 +97,13 @@
                 </div>
             </div>
             <div class="card-footer" style="text-align: end;">
-                <a href="@Url.Action("LicenseConfiguration","Admin")" class="btn btn-success"> Continue to configuration <i class="fas fa-arrow-right"></i> </a>
+
+                @{
+                    if (!isParentProfileComplete.Contains("danger"))
+                    {
+                        <a href="@Url.Action("LicenseConfiguration","Admin")" class="btn btn-success"> Continue to configuration <i class="fas fa-arrow-right"></i> </a>
+                    }
+                }
             </div>
         </div>
     </div>
