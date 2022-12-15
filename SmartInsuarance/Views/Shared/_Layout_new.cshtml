@@ -1,6 +1,13 @@
 @using SmartInsuarance.Models
 @{
     var data = Session["UserDetails"] as UserModelSession;
+    var username = "";
+
+    if (data != null)
+    {
+        //username = $"{data.Name} ({data.Usertype})";
+        username = $"{data.Name}";
+    }
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -823,11 +830,11 @@
                                                     @{
                                                         if (data != null)
                                                         {
-                                                            <h4 class="mb-0">@data.Name</h4>
+                                                            <h4 class="mb-0">@username</h4>
                                                         }
                                                     }
 
-                                                    <span class="d-block text-end">Admin</span>
+                                                    @*<span class="d-block text-end">Admin</span>*@
                                                 </div>
                                             </div>
                                             <img src="~/Content/Template/images/userlogo.png" alt="">

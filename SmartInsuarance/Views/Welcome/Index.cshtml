@@ -1,0 +1,98 @@
+﻿@using SmartInsuarance.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout_new.cshtml";
+
+    var userSession = (UserModelSession)Session["UserDetails"];
+    var licences = (License)ViewBag.licences;
+    var insuarances = (List<Insuarance>)ViewBag.insuarances;
+
+
+    var username = "";
+    var usertype = "";
+    if (userSession != null)
+    {
+        username = userSession.Name;
+        usertype = userSession.Usertype;
+    }
+
+}
+<link href="~/Content/Template/select2/css/select2.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.15/sweetalert2.css" />
+<style type="text/css">
+    #spnusertype::before {
+        content: '('
+    }
+
+    #spnusertype::after {
+        content: ')'
+    }
+
+    h4.card-title {
+        padding: 4px;
+        border-bottom: 1px solid #0a7bbc;
+        width: 30%;
+        border-bottom-width: 10px;
+        border-radius: 16px
+    }
+
+    #pdisclaimer {
+        color: red
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Welcome,<span id="spnusername" style="color: #0a7bbc;">@username </span><span id="spnusertype" style="font-size: 16px;color: seagreen;display:none">@usertype</span></h4>
+            </div>
+            <div class="card-body">
+                <h6>Welcome to smart ensure,enjoy your trial period</h6>
+
+                @{
+                    if (licences != null && insuarances != null)
+                    {
+                        var i = 1;
+                        <div class="card" id="card-title" style="background: #586c8c;color: white;width:30%">
+                            <div class="card-header border-0 pb-0">
+                                <h5 class="card-title" style="color: #f8f8f8;text-decoration: underline;width: 100%;text-align: center;">@licences.LicenseeName</h5>
+                            </div>
+                            <div class="card-body">
+                                <p style="width: 100%;background: #b9c1ce;padding: 6px;border-radius: 7px;">License Details</p>
+                                <table class="table table-borderless" style="width:40%;color:white">
+                                    <tr><td>License Validity</td><td>@licences.Validity Days</td></tr>
+                                    <tr><td>Start Date</td><td>@licences.TrialPeriodStartDate</td></tr>
+                                    <tr><td>Expiry Date</td><td>@licences.TrialPeriodvalidTill</td></tr>
+                                    <tr><td>No Of Registration</td><td>@licences.NoOfRegistraion Members</td></tr>
+                                </table>
+
+                                <p style="width: 100%;background: #b9c1ce;padding: 6px;border-radius: 7px;">License Covers</p>
+                                <table class="table table-borderless" style="width:40%;color:white">
+                                    <thead>
+                                        <tr><th>#</th><th>Insurance Name</th><th>No of Quantity</th></tr>
+                                    </thead>
+                                    @foreach (var item in insuarances)
+                                    {
+                                        <tr><td>@i</td><td>@item.InsuaranceName</td><td>@item.QuantityAvailable</td></tr>
+
+                                        i++;
+                                    }
+
+                                </table>
+                            </div>
+                        </div>
+                    }
+                }
+
+                <p id="pdisclaimer">Disclaimer: If verification is not completed you can't get access to the system</p>
+            </div>
+            <div class="card-footer" style="text-align: end;">
+                <a href="@Url.Action("Profilestatus","User")" class="btn btn-success">Continue to configuration <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.15/sweetalert2.min.js"></script>

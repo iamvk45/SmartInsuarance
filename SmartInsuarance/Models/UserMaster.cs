@@ -45,23 +45,26 @@ namespace SmartInsuarance.Models
         public string sUSRCode { get; set; }
         public string sPrntID { get; set; }
         public string Name { get; set; }
+        public string sSurNME { get; set; }
         public string sUSRNME { get; set; }
-        public int iUsrTypeID { get; set; }
+        public int? iUsrTypeID { get; set; }
         public string UserType { get; set; }
         public string dtDOB { get; set; }
         public string sEmail { get; set; }
         public string sPhone { get; set; }
-        public int iCountryID { get; set; }
+        public int? iCountryID { get; set; }
         public string sContryName { get; set; }
-        public int iStateID { get; set; }
+        public int? iStateID { get; set; }
         public string sStateName { get; set; }
-        public int iCityID { get; set; }
+        public int? iCityID { get; set; }
         public string sCityName { get; set; }
         public string sPincode { get; set; }
         public string sAadhaar { get; set; }
         public string sPan { get; set; }
         public string sAddress { get; set; }
-        public int iRoleID { get; set; }
+        public int? isGSTApplicable { get; set; }
+        public string GSTINNo { get; set; }
+        public int? iRoleID { get; set; }
         public string Role { get; set; }
         public string location { get; set; }
         public string sCrtedBy { get; set; }
@@ -74,16 +77,17 @@ namespace SmartInsuarance.Models
     public class UserModelSession
     {
         public string sUSRCode { get; set; }
-
         public string Name { get; set; }
+        public string Usertype { get; set; }
         public string Username { get; set; }
         public string sEmail { get; set; }
         public string sPhone { get; set; }
         public string IsActive { get; set; }
         public string profileImage { get; set; }
-        public int iStateID { get; set; }
-        public int iCountryID { get; set; }
-        public int iCityID { get; set; }
+        public string iFK_LicMstId { get; set; }
+        public int? iStateID { get; set; }
+        public int? iCountryID { get; set; }
+        public int? iCityID { get; set; }
     }
     public class LoginModal
     {
@@ -105,5 +109,16 @@ namespace SmartInsuarance.Models
         public string userTypeName { get; set; }
         public DateTime? dtDateOfReg { get; set; }
         public int iIsactive { get; set; }
+    }
+    public class ChildUsers
+    {
+        public string sUSRCode { get; set; }
+        public string sPrntID { get; set; }
+        public string sNME { get; set; }
+        public string FullName { get; set; }
+        public string sPan { get; set; }
+        public string sAadhaar { get; set; }
+        public string ProfileStatus { get; set; }
+        public string Color { get; set; }
     }
 }
