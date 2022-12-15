@@ -10,6 +10,7 @@
         padding-top: 10px !important;
         padding-bottom: 10px !important
     }
+
     .top:hover, .top:active {
         background-color: red;
     }
@@ -38,40 +39,41 @@
                         </tr>
                     </thead>
                     <tbody id="tbody">
-                        @{ 
+                        @{
                             var i = 1;
-                            foreach(var item in Model)
-            {
-                <tr id="tr_@item.iPK_LicMstId" style="font-weight:bold;">
-                        <td>@i</td>
-                        <td>
-                            @item.LicenseName <br />
-                                                <span style="color:red">Start Date:</span> @item.StartDate<br />
-                                                                                        <span style="color:red">End Date:</span> @item.EndDate
-                                            </td>
-                        <td>@item.UsereName</td>
-                        <td>@item.iValidityvalue @item.ValidityName</td>
-                        <td>@item.iNumReg </td>
-                        <td>@item.RegistrationName</td>
-                        <td>
-                            <label class="toggle">
-                                <input class="toggle-checkbox" type="checkbox" id="Status" name="Status" value="@item.iStts" @(item.iStts == 1 ? "checked" : "")>
-                                <div class="toggle-switch"></div>
-                                @*<span class="toggle-label">Bluetooth</span>*@
-                            </label>
-                        </td>
-                        <td>
-                            <div class="d-flex">
-                                <a href="@Url.Action("LicenceMaster", "Master", new {Id=item.iPK_LicMstId})" class="btn btn-primary shadow btn-xs sharp me-1 Edit"><i class="fa fa-edit"></i></a>
-                                <button class="btn btn-danger shadow btn-xs sharp Delete" id="delete_@item.iPK_LicMstId" onclick="Delete(@item.iPK_LicMstId)"><i class="fa fa-trash"></i></button>
-                                </div>
-                        </td>
-                        </tr>
-            }
-                                }
+                            foreach (var item in Model)
+                            {
+                                <tr id="tr_@item.iPK_LicMstId" style="font-weight:bold;">
+                                    <td>@i</td>
+                                    <td>
+                                        @item.LicenseName <br />
+                                        <span style="color:red">Start Date:</span> @item.StartDate<br />
+                                        <span style="color:red">End Date:</span> @item.EndDate
+                                    </td>
+                                    <td>@item.UsereName</td>
+                                    <td>@item.iValidityvalue @item.ValidityName</td>
+                                    <td>@item.iNumReg </td>
+                                    <td>@item.RegistrationName</td>
+                                    <td>
+                                        <label class="toggle">
+                                            <input class="toggle-checkbox" type="checkbox" id="Status" name="Status" value="@item.iStts" @(item.iStts == 1 ? "checked" : "")>
+                                            <div class="toggle-switch"></div>
+                                            @*<span class="toggle-label">Bluetooth</span>*@
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <a href="@Url.Action("LicenceMaster", "Master", new {Id=item.iPK_LicMstId})" class="btn btn-primary shadow btn-xs sharp me-1 Edit"><i class="fa fa-edit"></i></a>
+                                            <button class="btn btn-danger shadow btn-xs sharp Delete" id="delete_@item.iPK_LicMstId" onclick="Delete(@item.iPK_LicMstId)"><i class="fa fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    </div>
+</div>

@@ -4,11 +4,11 @@
     padding-top: 10px
 }
 
-/*.card-header {
+.card-header {
     background-color: black;
     color: wheat;
     height: 61px;
-}*/
+}
 
 .toggle {
     cursor: pointer;
