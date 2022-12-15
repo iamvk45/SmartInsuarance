@@ -7,33 +7,45 @@
             $("#tbody").html(response);
         }
     });
-
+    
 }
-function BindCuverLiceTempTable(Id) {
-    debugger;
-    var iTypid = 2;
+
+function BindPackageFunction(Id, Licenseid) {
     $.ajax({
-        url: '/AdminAjaxRequest/BindCuverLiceTempTable?Id=' + Id + '&iTypid=' + iTypid,
+        url: '/AdminAjaxRequest/BindPackageFunction?Id=' + Id + '&Licenseid=' + Licenseid,
         type: 'POST',
         dataType: "text",
         success: function (response) {
-           
             $("#tbody").html(response);
-            var rowCount = $('#tbody tr').length;
-           
-
-            if (rowCount != 0) {
-                $("#iValidityId").attr("readonly", "readonly");
-            }
-            else {
-                $("#iValidityId").prop("disabled", false);
-            }
-            var id = $("#iValidityId").val();
-          
         }
     });
 
 }
+function BindPackageFeature(Id) {
+    $.ajax({
+        url: '/AdminAjaxRequest/BindPackageFeature?Id=' + Id,
+        type: 'POST',
+        dataType: "text",
+        success: function (response) {
+            $("#tbody").html(response);
+        }
+    });
+
+}
+function BindFuncPackage() {
+    debugger;
+    var iFk_PackMstId = $("#iPK_PackageMstId").val();
+    $.ajax({
+        url: '/AdminAjaxRequest/BindFuncPackage?iFk_PackMstId=' + iFk_PackMstId,
+        type: 'POST',
+        dataType: "text",
+        success: function (response) {
+            $("#tbody").html(response);
+        }
+    });
+}
+
+
 //function BindSubmenus(MenuId, Type,MstId) {
 //    alert("hshd");
 //    var Model = {

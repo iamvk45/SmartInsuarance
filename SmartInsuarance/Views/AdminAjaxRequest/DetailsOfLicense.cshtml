@@ -1,0 +1,72 @@
+﻿@using SmartInsuarance.Models
+@model LICEMSTViEW
+@{
+
+    Layout = null;
+    List<Dropdown> groups = new List<Dropdown>();
+    if (ViewBag.group != null)
+    {
+        groups = (List<Dropdown>)ViewBag.group;
+    }
+
+}
+<style>
+    .headerclass {
+        font-size: initial;
+        color: darkorange;
+        font-weight: bold;
+    }
+
+    .inner {
+        color: black;
+        font-weight: bold;
+    }
+</style>
+@{
+    if (Model != null)
+    {
+        <label for="nameInput" class="col-sm-12">License Specification</label>
+        <div class="col-sm-2">
+            <label for="nameInput" class="col-sm-12">Validity     : @Model.iValidityvalue @Model.ValidityName</label>
+            <label for="nameInput" class="col-sm-12">Mode         : @Model.RegistrationName</label>
+            <label for="nameInput" class="col-sm-12">Registration : @Model.iNumReg</label>
+        </div>
+
+
+            <div class="table-responsive  col-sm-6">
+                <table class="table table-responsive-md">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Model</th>
+                            <th>Qty</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="tbody1">
+                        @{
+                            var i = 1;
+                            foreach (var item in groups)
+                            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@item.Text</td>
+                                    <td>@item.Qty</td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        @*</div>*@
+
+
+        @*<label for="nameInput" class="col-sm-12 control-label headerclass">License Specification</label>
+            <label for="nameInput" class="col-sm-12 control-label inner">Validity      : @Model.iValidityvalue @Model.ValidityName</label>
+            <label for="nameInput" class="col-sm-12 control-label inner">Mode          : @Model.RegistrationName</label>
+             <label for="nameInput" class="col-sm-12 control-label inner">Registration : @Model.iNumReg </label>*@
+    }
+
+}

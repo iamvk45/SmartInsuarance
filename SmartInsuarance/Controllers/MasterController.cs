@@ -1,9 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
 using RestSharp;
 using SmartInsuarance.Helper;
 using SmartInsuarance.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
 using System.Web;
@@ -148,7 +150,7 @@ namespace SmartInsuarance.Controllers
         public ActionResult LicenceMaster(string Id)
         {
             LICEMSTViEW seldata = new LICEMSTViEW();
-            seldata = GetSelectLicence(Id);
+            seldata = CommonFunction.GetSelectLicence(Id);
             ViewBag.id = Id;
            
 
@@ -247,28 +249,106 @@ namespace SmartInsuarance.Controllers
             return groups;
         }
 
-        public LICEMSTViEW GetSelectLicence(string Id)
+     
+
+        #endregion
+
+        #region Package Master
+        public ActionResult PackageList()
         {
-            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Master/GetSelectLicence?Id="+ Id);
-            var request = new RestRequest(Method.GET);
+            List<PackageManagementView> groups = new List<PackageManagementView>();
+            groups = CommonFunction.PackageManagementViewList(0);
+            return View(groups);
+        }
+        public ActionResult PackageCreate(int Id)
+        {
+           
+            ViewBag.id = Id;
+            PackageManagementView groups = new PackageManagementView();
+            if (Id > 0)
+            {
+                groups = CommonFunction.PackageManagementViewList(Id).FirstOrDefault();
+            }
+            return View();
+        }
+        public ActionResult SavePackage(PackageManagement package)
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Master/InsertPackage");
+            var request = new RestRequest(Method.POST);
             request.AddHeader("cache-control", "no-cache");
-            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
-            request.AddParameter("application/json", "", ParameterType.RequestBody);
-            request.AddHeader("Content-Type", "application/json");
-            request.AddHeader("Accept", "application/json");
+
+            request.AddParameter("application/json", _JsonSerializer.Serialize(package), ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
-            LICEMSTViEW groups = new LICEMSTViEW();
             if (response.StatusCode.ToString() == "OK")
             {
-                Api_CommonResponse objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
-                if (objResponse.data != null)
+                Api_CommonResponse CommonResponse = new Api_CommonResponse();
+                CommonResponse = _JsonSerializer.Deserialize<Api_CommonResponse>(response.Content);
+                if (CommonResponse.statusCode == 1)
                 {
-                    groups = JsonConvert.DeserializeObject<List<LICEMSTViEW>>(objResponse.data.ToString()).FirstOrDefault();
+                    TempData["SwalStatusMsg"] = "success";
+                    TempData["SwalTitleMsg"] = "Success!";
+                    if (CommonResponse.message == "Allready Exists In table")
+                    {
+                        TempData["SwalStatusMsg"] = "warning";
+                        TempData["SwalTitleMsg"] = "warning!";
+                    }
+                    TempData["SwalMessage"] = CommonResponse.message;
+
+
+                }
+                else
+                {
+                    TempData["SwalStatusMsg"] = "error";
+                    TempData["SwalMessage"] = "Something wrong";
+                    TempData["SwalTitleMsg"] = "error!";
+
                 }
             }
-            return groups;
+            return RedirectToAction("PackageList", "Master");
         }
 
+        public ActionResult PackageFunctionality(int Id,string Licenseid,int ivalidityvalue,string ivalidityname,int ivalidityid)
+        {
+            List<Dropdown> groups = new List<Dropdown>();
+            groups = CommonFunction.GetLicenceCoverList(Licenseid);
+            ViewBag.groups=groups;
+            ViewBag.Id = Id;
+            ViewBag.Licenseid = Licenseid;
+            ViewBag.ivalidityvalue = ivalidityvalue;
+            ViewBag.ivalidityname = ivalidityname;
+            ViewBag.ivalidityid = ivalidityid;
+            return View();
+        }
+        public ActionResult SpecialFeatureackage(int Id, int ivalidityvalue, string ivalidityname, int ivalidityid)
+        {
+            List<FEATRATMSTView> Fealst = new List<FEATRATMSTView>();
+            Fealst = GetFeatureRatelist();
+            List<FEATRATMSTDROP> Lst = new List<FEATRATMSTDROP>();
+            foreach(var item in Fealst)
+            {
+                FEATRATMSTDROP obj = new FEATRATMSTDROP();
+                obj.iPk_FetRatMstId=item.iPk_FetRatMstId;
+                obj.dRate = item.dRate;
+                obj.FeatureName = item.FeatureName;
+                Lst.Add(obj);
+
+
+            }
+            ViewBag.Fealst = Lst;
+            ViewBag.Id = Id;
+            ViewBag.ivalidityvalue = ivalidityvalue;
+            ViewBag.ivalidityname = ivalidityname;
+            ViewBag.ivalidityid = ivalidityid;
+            return View();
+        }
+
+        public ActionResult PackTaxandDis(int Id)
+        {
+            PACKTAXDIS obj = new PACKTAXDIS();
+            obj = CommonFunction.PackageTaxDisList(Id).FirstOrDefault();
+            ViewBag.Pack = obj;
+            return View(obj);
+        }
         #endregion
 
     }

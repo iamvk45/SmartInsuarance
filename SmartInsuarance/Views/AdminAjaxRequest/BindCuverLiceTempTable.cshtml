@@ -25,10 +25,73 @@
             <div class="d-flex">
                 @*<button href="javascript:;" id="Edit_@item.IPk_CovLicTempId" class="btn btn-primary shadow btn-xs sharp me-1 Edit" onclick="Edit(@item.IPk_CovLicTempId);"><i class="fas fa-edit"></i></button>*@
 
-                <button class="btn btn-danger shadow btn-xs sharp Delete" id="delete_@item.IPk_CovLicTempId" onclick="Delete(@item.IPk_CovLicTempId)"><i class="fa fa-trash"></i></button>
+                <a href="javascript:;" class="btn btn-danger shadow btn-xs sharp Delete" data-id="@item.IPk_CovLicTempId" id="delete_@item.IPk_CovLicTempId" onclick="Delete(@item.IPk_CovLicTempId)" ><i class="fa fa-trash"></i></a>
             </div>
         </td>
     </tr>
         i++;
     }
             }
+@*<script type="text/javascript">
+    $(".Delete").click(function () {
+    var Id=$(this).data
+        $.confirm({
+
+            title: 'Remove Confirmation',
+            content: 'Are you sure to remove record',
+            type: 'red',
+            typeAnimated: true,
+            animation: 'rotate',
+            closeAnimation: 'scale',
+            buttons: {
+                Confirm: {
+                    text: 'YES',
+                    btnClass: 'btn-red',
+                    action: function () {
+
+
+
+                        var Params = JSON.stringify({
+                            TableName: 'COVELICEMSTTemp',
+                            Id: Id,
+                            type: 2
+
+
+                        });
+                        /* ShowBALoader("LoaderBASinup1");*/
+                        $.ajax({
+                            url: "/AjaxRequest/ChangeStatus",
+                            type: 'POST',
+                            dataType: "json",
+                            data: Params,
+                            contentType: "application/json",
+                            success: function (response) {
+
+
+                                debugger;
+                                if (response.IsValid = 1) {
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: 'Delete Successfully',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    })
+                                    $("#tr_" + Id).remove();
+                                }
+                                var validityid = $("#iValidityId").val();
+                                BindSubmenus(0, validityid);
+                            },
+
+                        });
+
+                    }
+                },
+                close: {
+                    text: 'NO',
+                    action: function () { }
+                }
+            }
+        });
+    });
+</script>*@

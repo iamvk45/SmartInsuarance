@@ -99,5 +99,6 @@ namespace SmartInsuarance.Controllers
             }
             return menus;
         }
+       
     }
 }
