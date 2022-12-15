@@ -43,8 +43,8 @@
                     }
                 </ul>
                 <hr />
-                <a href="@Url.Action("UserLicenseConfiguration", "Admin", new {insuarance="Life"})" class="btn btn-sm btn-success">Configure <i class="fas fa-arrow-right"></i></a>
-                <div class="table-responsive">
+                <div style="text-align:right"><a href="@Url.Action("UserLicenseConfiguration", "Admin", new {insuarance="Life"})" class="btn btn-sm btn-success">Configure <i class="fas fa-arrow-right"></i></a></div>
+                <div class="table-responsive mt-2">
                     <table class="table table-responsive-md">
                         <thead>
                             <tr>
@@ -58,42 +58,6 @@
                         </thead>
                         <tbody>
                             <tr><td colspan="8" style="text-align:center">No Data Available</td></tr>
-
-
-
-                            <!--@{
-                if (LicenseconfigDetails != null && LicenseconfigDetails.Count > 0)
-                {
-                    var i = 1;
-                    foreach (var item in LicenseconfigDetails)
-                    {
-                        <tr>
-                            <th style="width:80px;"><strong>@i</strong></th>
-                            <th>@item.Insurance</th>
-                            <th>@item.User</th>
-                            <th>@item.Company</th>
-                            <th><a href="@Url.Action("UserLicenseConfiguration", "Admin", new {insuarance=@item.Insurance})" class="btn btn-sm btn-success">Configure <i class="fas fa-arrow-right"></i></a></th>
-                            <th>
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <label class="col-sm-6 toggle">
-                                            <input type="checkbox" id="che_@i" class="form-check-input toggle-checkbox" />-->
-                            @*<input class="toggle-checkbox" type="checkbox" id="chkIsGST" name="Status" value="@Model.isGSTApplicable" @(Model.isGSTApplicable == 1 ? "checked" : "")>*@
-                            <!--<div class="toggle-switch"></div>
-                </label>-->
-                            @*<input type="checkbox" id="che_@item.iPk_USRFRTRLID" data-id="@item.sName" data-html="@item.sEmailId" class="form-check-input" @(item.iIsactive == 1 ? "checked" : "")>*@
-                            <!--</label>
-                                    </div>
-                                </th>
-                            </tr>
-                            i++;
-                        }
-                    }
-                    else
-                    {
-                        <tr><td colspan="8" style="text-align:center">No Data Available</td></tr>
-                    }
-                }-->
 
                         </tbody>
                     </table>
