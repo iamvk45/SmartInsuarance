@@ -1,0 +1,264 @@
+﻿@using SmartInsuarance.Models
+@{
+    ViewBag.Title = "SpecialFeatureackage";
+    Layout = "~/Views/Shared/_Layout_new.cshtml";
+    List<FEATRATMSTDROP> Fealst = new List<FEATRATMSTDROP>();
+    if (ViewBag.Fealst != null)
+    {
+        Fealst = (List<FEATRATMSTDROP>)ViewBag.Fealst;
+    }
+}
+
+<style>
+    .Paddingtop1 {
+        padding-top: 10px !important;
+        padding-bottom: 10px !important
+    }
+
+    select[readonly].select2-hidden-accessible + .select2-container {
+        pointer-events: none;
+        touch-action: none;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+<link href="~/Content/Custom.css" rel="stylesheet" />
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title" style="color: blanchedalmond;font-weight: bold;">ADD SPECIAL FEATURE</h4>
+        </div>
+        @*@using (Html.BeginForm("CreatePackageFunctionality", "Master", FormMethod.Post, new { @class = "formcreateupdate", @id = "frmAddUpdate", enctype = "multipart/form-data" }))
+
+            {*@
+        <input type="hidden" id="iPK_PackFeatId" value="0" class="form-control" name="iPK_PackFeatId" readonly />
+        <input type="hidden" id="iLicenseid" value="@ViewBag.Licenseid" class="form-control" name="iLicenseid" readonly />
+        <input type="hidden" id="iPk_packid" value="@ViewBag.Id" class="form-control" name="iPk_packid" readonly />
+        <div class="card-body">
+            <div class="form-group is-empty row Paddingtop1">
+                <div class="col-sm-4">
+                    <select class="singleselect " name="iFetId" id="iFetId" required>
+                        <option value="">Select Feature Name </option>
+                        @{
+                            foreach (var item in Fealst)
+                            {
+                                <option data-id="@item.dRate" value="@item.iPk_FetRatMstId">@item.FeatureName</option>
+                            }
+                        }
+
+                    </select>
+
+                </div>
+
+                <div class="col-sm-3">
+                    <input type="text" id="ivalidityvalue" value="@ViewBag.ivalidityvalue" class="form-control" name="ivalidityvalue" readonly />
+                    <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Period</small>
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" id="ivalidityname" value="@ViewBag.ivalidityname" class="form-control" name="ivalidityname" readonly />
+                    <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">UOM</small>
+                    <input type="hidden" id="ivalidityid" value="@ViewBag.ivalidityid" class="form-control" name="ivalidityid" readonly />
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" id="drate" value="0" class="form-control" name="drate" readonly />
+                    <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Rate(per @ViewBag.ivalidityname)</small>
+                </div>
+            </div>
+            <div class="form-group is-empty row Paddingtop1">
+                <div class="col-sm-2">
+                    <input type="checkbox" id="iisdiscount" name="iisdiscount" value="0">
+                    <label for="vehicle1">Discount</label><br>
+                </div>
+                <div class="col-sm-4 Discountdetail hidden" id="Discountdetail">
+                    <select class="singleselect col-sm-8" name="idistyp" id="idistyp">
+                        <option value="">Select </option>
+                        <option value="1">In Persentage</option>
+                        <option value="2">In Amount</option>
+                    </select>
+
+                </div>
+                <div class="col-sm-2 Discountdetail hidden">
+                    <input type="text" id="ddisvalue" value="" class="form-control col-sm-4" placeholder="Enter Value" name="ddisvalue">
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" id="ddisplayvalue" name="ddisplayvalue" class="form-control" value="0" readonly>
+                    <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Display value</small>
+                </div>
+                <div class="pull-right col-sm-2" style="text-align:end;">
+                    <a href="#" id="Reset" class="btn btn-default">Reset</a>
+                    <button class="btn btn-primary" id="save"> Save </button>
+                </div>
+            </div>
+        </div>
+
+        @*}*@
+        <div class="table-responsive">
+            <table class="table table-responsive-md" id="tblCustomers">
+                <thead>
+                    <tr>
+                        <th>#No</th>
+                        <th>Feature Name</th>
+                        <th>UOM</th>
+                        <th>Period</th>
+                        <th>Rate</th>
+                        <th>Discount</th>
+                        <th>Dis.Type</th>
+                        <th>Dis.Value</th>
+                        <th>Final Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="~/Content/Template/js/jScript.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".singleselect").select2();
+        var Id = $("#iPk_packid").val();
+    
+        BindPackageFeature(Id);
+        $("#iFetId").change(function () {
+            var Id = $(this).val();
+            if (Id == "") {
+                $("#drate").val('0');
+                $("#ddisvalue").val('0');
+            }
+            else {
+                let rate = $(this).find(':selected').data('id');
+                $("#drate").val(rate);
+                Display();
+            }
+        });
+
+        $("#iisdiscount").change(function () {
+            debugger;
+            if ($(this).is(':checked')) {
+                $(this).val('1');
+                $("#idistyp").prop("required", true);
+                $("#ddisvalue").attr("required", true);
+                $(".Discountdetail").removeClass('hidden');
+
+
+            }
+            else {
+                $(this).val('0');
+                $("#idistyp").val('');
+                $("#idistyp").trigger('change');
+                $("#ddisvalue").val("");
+                $("#idistyp").prop("required", false);
+                $("#ddisvalue").attr("required", false);
+                $(".Discountdetail").addClass('hidden');
+
+            }
+            Display();
+        });
+        $("#ddisvalue").blur(function () {
+            Display();
+        });
+        $("#idistyp").change(function () {
+            Display();
+        });
+        function Display() {
+            debugger;
+            var drate = $("#drate").val();
+            var ivalidityvalue = $("#ivalidityvalue").val();
+            var idistyp = $("#idistyp").val();
+            var iisdiscount = $("#iisdiscount").val();
+            var ddisvalue = $("#ddisvalue").val();
+            var displayvalue = drate * ivalidityvalue;
+            if (parseInt(iisdiscount) == 1) {
+                if (parseInt(idistyp) == 1) {
+                    displayvalue = (displayvalue - (displayvalue * ddisvalue) / 100);
+                }
+                else {
+                    displayvalue = displayvalue - ddisvalue;
+                }
+
+            }
+            $("#ddisplayvalue").val(displayvalue);
+        }
+
+        function ResetField() {
+            $("#drate").val('');
+            $('#iisdiscount').prop('checked', false);
+            $('#iisdiscount').val('0');
+            $("#iFetId").val('');
+            $("#iFetId").trigger('change');
+            $("#idistyp").val('');
+            $("#idistyp").trigger('change');
+            $("#ddisvalue").val("");
+            $("#idistyp").prop("required", false);
+            $("#ddisvalue").attr("required", false);
+            $(".Discountdetail").addClass('hidden');
+            Display();
+        }
+        $("#save").click(function () {
+            debugger;
+            var iFetId = $("#iFetId").val();
+         
+            var ivalidityvalue = $("#ivalidityvalue").val();
+            var ivalidityid = $("#ivalidityid").val();
+            var drate = $("#drate").val();
+            var iisdiscount = $("#iisdiscount").val() == '0' ? false : true;
+            var idistyp = $("#idistyp").val();
+            
+            var iPk_packid = $("#iPk_packid").val();
+            var ddisvalue = $("#ddisvalue").val();
+            var ddisplayvalue = $("#ddisplayvalue").val();
+            var iPK_PackFeatId = $("#iPK_PackFeatId").val();
+            var Master = []
+            Master.push({
+                iFetId: iFetId,
+                ivalidityvalue: ivalidityvalue,
+                ivalidityid: ivalidityid,
+                drate: drate,
+                iisdiscount: iisdiscount,
+                idistyp: idistyp,
+                iFk_packid: iPk_packid,
+                ddisvalue: ddisvalue,
+                ddisplayvalue: ddisplayvalue,
+                iPK_PackFeatId: iPK_PackFeatId
+            });
+
+            var Params = JSON.stringify({
+                Master: Master
+
+            });
+            $.ajax({
+                url: "/AjaxRequest/InsertPackageFeature",
+                type: 'POST',
+                dataType: "json",
+                data: Params,
+                contentType: "application/json",
+                success: function (response) {
+
+                    if (response.IsValid = 1) {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: response.msg,
+                            showConfirmButton: false,
+                            timer: 6000
+                        })
+                        var Id = $("#iPk_packid").val();
+                        BindPackageFeature(Id);
+                       /* var Id = $("#iPk_packid").val();*/
+                        //var iLicenseid = $("#iLicenseid").val();
+                        //BindPackageFunction(Id, iLicenseid)
+                        ResetField();
+                    }
+
+
+                }
+            });
+        })
+    });
+</script>

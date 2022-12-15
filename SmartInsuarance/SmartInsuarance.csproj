@@ -6926,6 +6926,15 @@
     <Content Include="Views\Master\LicenceMaster.cshtml" />
     <Content Include="Views\AdminAjaxRequest\BindCuverLiceTempTable.cshtml" />
     <Content Include="Views\Master\LicenceIndex.cshtml" />
+    <Content Include="Views\Master\PackageCreate.cshtml" />
+    <Content Include="Views\AdminAjaxRequest\DetailsOfLicense.cshtml" />
+    <Content Include="Views\AdminAjaxRequest\BindFuncPackage.cshtml" />
+    <Content Include="Views\Master\PackageList.cshtml" />
+    <Content Include="Views\Master\PackageFunctionality.cshtml" />
+    <Content Include="Views\AdminAjaxRequest\BindPackageFunction.cshtml" />
+    <Content Include="Views\Master\SpecialFeatureackage.cshtml" />
+    <Content Include="Views\AdminAjaxRequest\BindPackageFeature.cshtml" />
+    <Content Include="Views\Master\PackTaxandDis.cshtml" />
     <Content Include="Views\Admin\LicenseConfiguration.cshtml" />
     <Content Include="Views\Admin\UserLicenseConfiguration.cshtml" />
   </ItemGroup>

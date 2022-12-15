@@ -40,6 +40,7 @@ namespace SmartInsuarance.Models
         public string Text { get; set; }
         public string ID1 { get; set; }
         public string PartyId { get; set; }
+        public string Qty { get; set; }
     }
     public class RateMaster
     {

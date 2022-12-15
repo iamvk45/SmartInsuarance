@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
 using SmartInsuarance.Model;
+using SmartInsuarance.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -37,6 +38,102 @@ namespace SmartInsuarance.Helper
             }
 
             return dropDowns;
+        }
+
+        public static LICEMSTViEW GetSelectLicence(string Id)
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Master/GetSelectLicence?Id=" + Id);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            LICEMSTViEW groups = new LICEMSTViEW();
+            if (response.StatusCode.ToString() == "OK")
+            {
+                Api_CommonResponse objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if (objResponse.data != null)
+                {
+                    groups = JsonConvert.DeserializeObject<List<LICEMSTViEW>>(objResponse.data.ToString()).FirstOrDefault();
+                }
+            }
+            return groups;
+        }
+        public static List<Dropdown>GetLicenceCoverList(string Id)
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Master/GetPackageFillMenuandSubMenulist?Id=" + Id);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            List<Dropdown> groups = new List<Dropdown>();
+            if (response.StatusCode.ToString() == "OK")
+            {
+                Api_CommonResponse objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if (objResponse.data != null)
+                {
+                    groups = JsonConvert.DeserializeObject<List<Dropdown>>(objResponse.data.ToString());
+                }
+            }
+            return groups;
+        }
+
+        public static List<PackageManagementView> PackageManagementViewList(int Id=0)
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Master/GetPackageManagementViewlist?Id=" + Id);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            List<PackageManagementView> groups = new List<PackageManagementView>();
+            if (response.StatusCode.ToString() == "OK")
+            {
+                Api_CommonResponse objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if (objResponse.data != null)
+                {
+                   
+                        groups = JsonConvert.DeserializeObject<List<PackageManagementView>>(objResponse.data.ToString());
+                    
+                }
+        }
+          
+            return groups;
+            
+            
+        }
+        public static List<PACKTAXDIS> PackageTaxDisList(int Id = 0)
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Master/GetPackageTaxDis?Id=" + Id);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            List<PACKTAXDIS> groups = new List<PACKTAXDIS>();
+            if (response.StatusCode.ToString() == "OK")
+            {
+                Api_CommonResponse objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if (objResponse.data != null)
+                {
+
+                    groups = JsonConvert.DeserializeObject<List<PACKTAXDIS>>(objResponse.data.ToString());
+
+                }
+            }
+
+            return groups;
+
+
         }
     }
 }
