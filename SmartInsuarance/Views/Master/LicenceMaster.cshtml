@@ -15,13 +15,14 @@
     Type = SmartLB.CommonList.GetRegistrationType();
 
     var LicMstId = (string)ViewBag.id;
-  
+
 }
 <style>
     .Paddingtop1 {
         padding-top: 10px !important;
         padding-bottom: 10px !important
     }
+
     select[readonly].select2-hidden-accessible + .select2-container {
         pointer-events: none;
         touch-action: none;
@@ -57,35 +58,35 @@
 
 
                     @*<div class="col-sm-4">
-            <select class="singleselect" id="iUomId" name="iFK_UomId" required>
-                <option value="">Select UOM </option>
-                @{
-                    foreach (var item in Uomdata)
-                    {
-                        <option value="@item.Id">@item.Text</option>
-                    }
-                }
+                            <select class="singleselect" id="iUomId" name="iFK_UomId" required>
+                                <option value="">Select UOM </option>
+                                @{
+                                    foreach (var item in Uomdata)
+                                    {
+                                        <option value="@item.Id">@item.Text</option>
+                                    }
+                                }
 
 
-            </select>
-        </div>
-        <div class="col-sm-4">
-            <input name="dRate" id="dRate" type="text" value="" class="form-control" placeholder="Enter Rate" required>
-        </div>
-        <div class="pull-right col-sm-4" style="text-align: end;">
-            <a href="#" class="btn btn-default" id="reset">Reset</a>
-            <button class="btn btn-primary"> Save </button>
-        </div>*@
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <input name="dRate" id="dRate" type="text" value="" class="form-control" placeholder="Enter Rate" required>
+                        </div>
+                        <div class="pull-right col-sm-4" style="text-align: end;">
+                            <a href="#" class="btn btn-default" id="reset">Reset</a>
+                            <button class="btn btn-primary"> Save </button>
+                        </div>*@
                 </div>
                 <div class="form-group is-empty row Paddingtop1">
                     <label for="nameInput" class="col-sm-3 control-label">Licence Name</label>
                     <div class="col-sm-5">
-                        <select class="singleselect" data-tags="true" name="iLicNameId" id="iLicNameId" @(Model!=null && Model.iLicNameId!=null ?"readonly":"")>
+                        <select class="singleselect" data-tags="true" name="iLicNameId" id="iLicNameId" @(Model != null && Model.iLicNameId != null ? "readonly" : "")>
                             <option value="">Select License Type </option>
                             @{
                                 foreach (var item in LicenseName)
                                 {
-                                    <option @(Model!=null && Convert.ToInt32(Model.iLicNameId)==item.DDLValue?"selected":"") value="@item.DDLValue">@item.DDLText</option>
+                                    <option @(Model != null && Convert.ToInt32(Model.iLicNameId) == item.DDLValue ? "selected" : "") value="@item.DDLValue">@item.DDLText</option>
                                 }
                             }
                         </select>
@@ -99,7 +100,7 @@
                             @{
                                 foreach (var item in UserType)
                                 {
-                                    <option @(Model!=null && Model.iUsrTypId==item.Id?"selected":"")  value="@item.Id">@item.Text</option>
+                                    <option @(Model != null && Model.iUsrTypId == item.Id ? "selected" : "") value="@item.Id">@item.Text</option>
                                 }
                             }
                         </select>
@@ -111,18 +112,18 @@
                         <input type="number" name="iValidityvalue" value="@(Model!=null ?Model.iValidityvalue.ToString():"")" id="ivalidityvalue" placeholder="Enter Number" class="form-control">
                     </div>
                     <div class="col-sm-3">
-                        <select class="singleselect" name="iValidityId" id="iValidityId"  @(Model!=null && Model.iValidityId.ToString()!="0" ?"readonly":"")>
+                        <select class="singleselect" name="iValidityId" id="iValidityId" @(Model != null && Model.iValidityId.ToString() != "0" ? "readonly" : "")>
                             <option value="">Select Validity </option>
                             @{
                                 foreach (var item in Validity)
                                 {
-                                    <option  @(Model!=null && Model.iValidityId==item.Id?"selected":"")  value="@item.Id">@item.Text</option>
+                                    <option @(Model != null && Model.iValidityId == item.Id ? "selected" : "") value="@item.Id">@item.Text</option>
                                 }
                             }
                         </select>
                     </div>
                 </div>
-             
+
                 <div class="form-group is-empty row Paddingtop1">
                     <label for="nameInput" class="col-sm-3 control-label">Number Of Registration</label>
                     <div class="col-sm-2">
@@ -134,12 +135,12 @@
                             @{
                                 foreach (var item in Type)
                                 {
-                                    <option  @(Model!=null && Model.iTypId==item.Id?"selected":"")  value="@item.Id">@item.Text</option>
+                                    <option @(Model != null && Model.iTypId == item.Id ? "selected" : "") value="@item.Id">@item.Text</option>
                                 }
                             }
                         </select>
                     </div>
-                                   </div>
+                </div>
 
                 <div class="card Card--shadow--medium radiuscard reversecard" style="box-shadow: 0 8px 6px -6px black;">
                     <header class="card-heading card-default" style="padding: 5px;background: darkgray;">
@@ -152,11 +153,11 @@
                     <div>
                         <div class="form-group is-empty row Paddingtop1">
                             @*<label for="nameInput" class="col-sm-2 control-label">Covered License</label>*@
-                            <input type="hidden" name="IPk_CovLicTempId" id="IPk_CovLicTempId" value="0" >
+                            <input type="hidden" name="IPk_CovLicTempId" id="IPk_CovLicTempId" value="0">
                             <div class="col-sm-3">
                                 <select class="singleselect " name="iMnuId" id="iMnuId">
                                     <option value="">Select Menu </option>
-                                   
+
                                 </select>
 
                             </div>
@@ -193,7 +194,7 @@
             </div>
             <footer class="form-footer" style="text-align: end;background: black;">
                 <div class="pull-right">
-                    <a href="@Url.Action("Index", "Deal")" class="btn btn-default" style="color: antiquewhite;">DISCARD</a>
+                    <a href="@Url.Action("LicenceIndex", "Master")" class="btn btn-default" style="color: antiquewhite;">DISCARD</a>
                     <button class="btn btn-primary" id="save">SAVE</button>
                 </div>
             </footer>
@@ -230,7 +231,7 @@
         //    var type = $("#iValidityId").val();
         //    BindSubmenus($(this).val(),type);
         //});
-       
+
     });
     function BindCuverLiceTempTable(Id) {
         debugger;
@@ -352,14 +353,14 @@
                             timer: 3000
                         })
                         BindCuverLiceTempTable('@LicMstId');
-                       
+
 
                     }
                 }
             });
         $("#IPk_CovLicTempId").val('0');
     });
-   
+
 
     function Delete(Id)
     {
