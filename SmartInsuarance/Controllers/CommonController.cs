@@ -95,6 +95,30 @@ namespace SmartInsuarance.Controllers
             }
             return dropDowns;
         }
+        public List<LicenseConfigDetails> GetLicenseConfigData(string parentID, string licensID)
+        {
+            //var json = JsonConvert.SerializeObject(geographical);
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/GetLicenseConfigData?parentID=" + parentID+ "&licensID="+licensID);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            Api_CommonResponse _CommonResponse = new Api_CommonResponse();
+            List<LicenseConfigDetails> licenses = new List<LicenseConfigDetails>();
+
+            if (response.StatusCode.ToString() == "OK")
+            {
+                _CommonResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if(_CommonResponse.data != null)
+                {
+                    licenses = JsonConvert.DeserializeObject<List<LicenseConfigDetails>>(_CommonResponse.data.ToString());
+                }
+            }
+            return licenses;
+        }
         public List<ShowMenuDropDown> GetMenulist()
         {
             List<ShowMenuDropDown> menus = new List<ShowMenuDropDown>();

@@ -3,20 +3,20 @@
     ViewBag.Title = "License Configuration";
     Layout = "~/Views/Shared/_Layout_new.cshtml";
 
-    //var userSession = (UserModelSession)Session["UserDetails"];
-    var insuarances = (List<Insuarance>)ViewBag.insuarances;
+    var LicenseconfigDetails = (List<LicenseConfigDetails>)ViewBag.licenseConfigData;
+    var licences = (List<License>)Session["LicenseDetails"];
+    var insuarances = (List<Insuarance>)Session["InsuaranceDetails"];
 
-
-    //var username = "";
-    //var usertype = "";
-    //if (userSession != null)
-    //{
-    //    username = userSession.Name;
-    //    usertype = userSession.Usertype;
-    //}
+    var TotalRegistration = 0;
+    var usertype = "";
+    if (licences.Count > 0)
+    {
+        TotalRegistration = (int)licences[0].NoOfRegistraion;
+    }
 
 }
 <link href="~/Content/Template/select2/css/select2.css" rel="stylesheet" />
+<link href="~/Content/Custom.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.15/sweetalert2.css" />
 <style type="text/css">
 </style>
@@ -30,36 +30,70 @@
             </div>
 
             <div class="card-body">
+                <h5>Registration - @TotalRegistration Members</h5>
+                <ul style="display: flex;gap: 51px;margin-bottom: 16px;">
+                    @{
+                        if (insuarances != null)
+                        {
+                            foreach (var iten in insuarances)
+                            {
+                                <li><h6> @iten.InsuaranceName - @iten.QuantityAvailable</h6></li>
+                            }
+                        }
+                    }
+                </ul>
+                <hr />
+                <a href="@Url.Action("UserLicenseConfiguration", "Admin", new {insuarance="Life"})" class="btn btn-sm btn-success">Configure <i class="fas fa-arrow-right"></i></a>
                 <div class="table-responsive">
                     <table class="table table-responsive-md">
                         <thead>
                             <tr>
                                 <th style="width:80px;"><strong>#</strong></th>
                                 <th><strong>INSURANCE NAME</strong></th>
-                                <th><strong>QUANTITY</strong></th>
-                                <th><strong>CONFIGURE</strong></th>
+                                <th><strong>USER</strong></th>
+                                <th><strong>COMPANY</strong></th>
+                                <th><strong>ACTION</strong></th>
+                                <th><strong>STATUS</strong></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @{
-                                if (insuarances != null && insuarances.Count > 0)
-                                { var i = 1;
-                                    foreach (var item in insuarances)
-                                    {
-                                        <tr>
-                                            <th style="width:80px;"><strong>@i</strong></th>
-                                            <th>@item.InsuaranceName</th>
-                                            <th>@item.QuantityAvailable</th>
-                                            <th><a href="@Url.Action("UserLicenseConfiguration", "Admin", new {insuarance=@item.InsuaranceName})" class="btn btn-sm btn-success">Configure <i class="fas fa-arrow-right"></i></a></th>
-                                        </tr>
-                                        i++;
-                                    }
-                                }
-                                else
-                                {
-                                    <tr><td colspan="8" style="text-align:center">No Data Available</td></tr>
-                                }
-                            }
+                            <tr><td colspan="8" style="text-align:center">No Data Available</td></tr>
+
+
+
+                            <!--@{
+                if (LicenseconfigDetails != null && LicenseconfigDetails.Count > 0)
+                {
+                    var i = 1;
+                    foreach (var item in LicenseconfigDetails)
+                    {
+                        <tr>
+                            <th style="width:80px;"><strong>@i</strong></th>
+                            <th>@item.Insurance</th>
+                            <th>@item.User</th>
+                            <th>@item.Company</th>
+                            <th><a href="@Url.Action("UserLicenseConfiguration", "Admin", new {insuarance=@item.Insurance})" class="btn btn-sm btn-success">Configure <i class="fas fa-arrow-right"></i></a></th>
+                            <th>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <label class="col-sm-6 toggle">
+                                            <input type="checkbox" id="che_@i" class="form-check-input toggle-checkbox" />-->
+                            @*<input class="toggle-checkbox" type="checkbox" id="chkIsGST" name="Status" value="@Model.isGSTApplicable" @(Model.isGSTApplicable == 1 ? "checked" : "")>*@
+                            <!--<div class="toggle-switch"></div>
+                </label>-->
+                            @*<input type="checkbox" id="che_@item.iPk_USRFRTRLID" data-id="@item.sName" data-html="@item.sEmailId" class="form-check-input" @(item.iIsactive == 1 ? "checked" : "")>*@
+                            <!--</label>
+                                    </div>
+                                </th>
+                            </tr>
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        <tr><td colspan="8" style="text-align:center">No Data Available</td></tr>
+                    }
+                }-->
 
                         </tbody>
                     </table>

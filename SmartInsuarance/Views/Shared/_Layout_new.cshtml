@@ -3,10 +3,11 @@
     var data = Session["UserDetails"] as UserModelSession;
     var username = "";
 
-    if(data!= null)
-            {
-        username = $"{data.Name} ({data.Usertype})";
-            }
+    if (data != null)
+    {
+        //username = $"{data.Name} ({data.Usertype})";
+        username = $"{data.Name}";
+    }
 }
 <!DOCTYPE html>
 <html lang="en">

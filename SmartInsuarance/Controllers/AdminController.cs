@@ -45,11 +45,11 @@ namespace SmartInsuarance.Controllers
         }
         public ActionResult LicenseConfiguration()
         {
-            AuthController admin = new AuthController();
+            CommonController common = new CommonController();
             var userData = (UserModelSession)Session["UserDetails"];
-            var insuaranceDetails = admin.GetInsuaranceData(userData.sUSRCode, userData.iFK_LicMstId);
+            var licenseConfigData = common.GetLicenseConfigData(userData.sUSRCode, userData.iFK_LicMstId);
 
-            ViewBag.insuarances = insuaranceDetails;
+            ViewBag.licenseConfigData = licenseConfigData;
 
             return View();
         }
