@@ -120,5 +120,6 @@ namespace SmartInsuarance.Models
         public string sAadhaar { get; set; }
         public string ProfileStatus { get; set; }
         public string Color { get; set; }
+        public string UserRelation { get; set; }
     }
 }

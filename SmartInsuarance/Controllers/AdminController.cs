@@ -47,23 +47,23 @@ namespace SmartInsuarance.Controllers
         {
             CommonController common = new CommonController();
             var userData = (UserModelSession)Session["UserDetails"];
-            var licenseConfigData = common.GetLicenseConfigData(userData.sUSRCode, userData.iFK_LicMstId);
+            var licenseConfigData = common.GetLicenseConfigData();
 
             ViewBag.licenseConfigData = licenseConfigData;
 
             return View();
         }
-        public ActionResult UserLicenseConfiguration(string insuarance)
+        public ActionResult UserLicenseConfiguration()
         {
-            ViewBag.insuarance = insuarance;
-
             CommonController common = new CommonController();
-            var CompanyList = common.GetDataForDropdown(1005);
+            var CompanyList = common.GetDataForDropdown("Companies");
             var userSession = (UserModelSession)Session["UserDetails"];
+            var InsuranceList = common.GetInsuranceForLicense(userSession.sUSRCode);
             var childData = common.GetChildID(userSession.sUSRCode);
 
             ViewBag.childData = childData;
             ViewBag.companyList = CompanyList;
+            ViewBag.InsuranceList = InsuranceList;
 
             return View();
         }
@@ -72,7 +72,7 @@ namespace SmartInsuarance.Controllers
         {
             CommonController common = new CommonController();
 
-            ViewBag.paymentMethod = common.GetDataForDropdown(5);
+            ViewBag.paymentMethod = common.GetDataForDropdown("PaymentMethod");
             ViewBag.orderDetails = GetOrderDetailsForPayment(orderID);
             return View();
         }
@@ -196,6 +196,32 @@ namespace SmartInsuarance.Controllers
         {
             var json = JsonConvert.SerializeObject(trailuser);
             var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/ActiveTrialUser");
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", json, ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            Api_CommonResponse objResponse = new Api_CommonResponse();
+
+            if (response.StatusCode.ToString() == "OK")
+            {
+                objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+            }
+
+            return new JsonResult
+            {
+                Data = new { StatusCode = objResponse.statusCode, Data = objResponse, Failure = false, Message = objResponse.message },
+                ContentEncoding = System.Text.Encoding.UTF8,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        
+        public JsonResult ConfigLicencse(UserLicenseConfigRequest userLicense)
+        {
+            var json = JsonConvert.SerializeObject(userLicense);
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/ConfigLicencse");
             var request = new RestRequest(Method.POST);
             request.AddHeader("cache-control", "no-cache");
             //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
