@@ -24,6 +24,10 @@ namespace SmartInsuarance.Controllers
             ViewBag.FinYear = GetFinacialyearlist();
             return View();
         }
+        public ActionResult AdminFlowDiagram()
+        {
+            return View();
+        }
         public ActionResult CreateFinacialyear(FinYear Master)
         {
             var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Master/InsertFinYear");
@@ -146,13 +150,13 @@ namespace SmartInsuarance.Controllers
         }
 
         #region Licence Master
-       // This page use to store information Licence
+        // This page use to store information Licence
         public ActionResult LicenceMaster(string Id)
         {
             LICEMSTViEW seldata = new LICEMSTViEW();
             seldata = CommonFunction.GetSelectLicence(Id);
             ViewBag.id = Id;
-           
+
 
             return View(seldata);
         }
@@ -162,7 +166,7 @@ namespace SmartInsuarance.Controllers
             lstMst = GetLicenceSublist();
             return View(lstMst);
         }
-        public JsonResult GetSelectMenuSubmenulist(int Type, int MenuId,string LicMstId)
+        public JsonResult GetSelectMenuSubmenulist(int Type, int MenuId, string LicMstId)
         {
             List<Dropdown> lst = new List<Dropdown>();
             lst = GetMenuSublist(Type, MenuId, LicMstId);
@@ -173,9 +177,9 @@ namespace SmartInsuarance.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-        public List<Dropdown> GetMenuSublist(int Type, int MenuId = 0,string LicMstId=null)
+        public List<Dropdown> GetMenuSublist(int Type, int MenuId = 0, string LicMstId = null)
         {
-            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Master/GetFillMenuandSubMenulist?MenuId=" + MenuId + "&Type="+ Type + "&LicMstId="+ LicMstId);
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Master/GetFillMenuandSubMenulist?MenuId=" + MenuId + "&Type=" + Type + "&LicMstId=" + LicMstId);
             var request = new RestRequest(Method.GET);
             request.AddHeader("cache-control", "no-cache");
             //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
@@ -249,7 +253,7 @@ namespace SmartInsuarance.Controllers
             return groups;
         }
 
-     
+
 
         #endregion
 
@@ -262,7 +266,7 @@ namespace SmartInsuarance.Controllers
         }
         public ActionResult PackageCreate(int Id)
         {
-           
+
             ViewBag.id = Id;
             PackageManagementView groups = new PackageManagementView();
             if (Id > 0)
@@ -307,11 +311,11 @@ namespace SmartInsuarance.Controllers
             return RedirectToAction("PackageList", "Master");
         }
 
-        public ActionResult PackageFunctionality(int Id,string Licenseid,int ivalidityvalue,string ivalidityname,int ivalidityid)
+        public ActionResult PackageFunctionality(int Id, string Licenseid, int ivalidityvalue, string ivalidityname, int ivalidityid)
         {
             List<Dropdown> groups = new List<Dropdown>();
             groups = CommonFunction.GetLicenceCoverList(Licenseid);
-            ViewBag.groups=groups;
+            ViewBag.groups = groups;
             ViewBag.Id = Id;
             ViewBag.Licenseid = Licenseid;
             ViewBag.ivalidityvalue = ivalidityvalue;
@@ -324,10 +328,10 @@ namespace SmartInsuarance.Controllers
             List<FEATRATMSTView> Fealst = new List<FEATRATMSTView>();
             Fealst = GetFeatureRatelist();
             List<FEATRATMSTDROP> Lst = new List<FEATRATMSTDROP>();
-            foreach(var item in Fealst)
+            foreach (var item in Fealst)
             {
                 FEATRATMSTDROP obj = new FEATRATMSTDROP();
-                obj.iPk_FetRatMstId=item.iPk_FetRatMstId;
+                obj.iPk_FetRatMstId = item.iPk_FetRatMstId;
                 obj.dRate = item.dRate;
                 obj.FeatureName = item.FeatureName;
                 Lst.Add(obj);

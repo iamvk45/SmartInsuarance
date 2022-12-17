@@ -49,41 +49,52 @@
             </div>
             <div class="card-body">
                 <h6>Welcome to smart ensure,enjoy your trial period</h6>
+                <div class="row">
+                    <div class="col-4">
+                        @{
+                            if (licences != null && insuarances != null)
+                            {
+                                var i = 1;
+                                <div class="card" id="card-title" style="background: #586c8c;color: white;width:100%">
+                                    <div class="card-header border-0 pb-0">
+                                        <h5 class="card-title" style="color: #f8f8f8;text-decoration: underline;width: 100%;text-align: center;">@licences.LicenseeName</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p style="width: 100%;background: #b9c1ce;padding: 6px;border-radius: 7px;">License Details</p>
+                                        <table class="table table-borderless" style="width:40%;color:white">
+                                            <tr><td>License Validity</td><td>@licences.Validity Days</td></tr>
+                                            <tr><td>Start Date</td><td>@licences.TrialPeriodStartDate</td></tr>
+                                            <tr><td>Expiry Date</td><td>@licences.TrialPeriodvalidTill</td></tr>
+                                            <tr><td>No Of Registration</td><td>@licences.NoOfRegistraion Members</td></tr>
+                                        </table>
 
-                @{
-                    if (licences != null && insuarances != null)
-                    {
-                        var i = 1;
-                        <div class="card" id="card-title" style="background: #586c8c;color: white;width:30%">
-                            <div class="card-header border-0 pb-0">
-                                <h5 class="card-title" style="color: #f8f8f8;text-decoration: underline;width: 100%;text-align: center;">@licences.LicenseeName</h5>
-                            </div>
+                                        <p style="width: 100%;background: #b9c1ce;padding: 6px;border-radius: 7px;">License Covers</p>
+                                        <table class="table table-borderless" style="width:40%;color:white">
+                                            <thead>
+                                                <tr><th>#</th><th>Insurance Name</th><th>No of Quantity</th></tr>
+                                            </thead>
+                                            @foreach (var item in insuarances)
+                                            {
+                                                <tr><td>@i</td><td>@item.InsuaranceName</td><td>@item.QuantityAvailable</td></tr>
+
+                                                i++;
+                                            }
+
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="col-6">
+                        <div class="card" style="margin-top: -60px;">
                             <div class="card-body">
-                                <p style="width: 100%;background: #b9c1ce;padding: 6px;border-radius: 7px;">License Details</p>
-                                <table class="table table-borderless" style="width:40%;color:white">
-                                    <tr><td>License Validity</td><td>@licences.Validity Days</td></tr>
-                                    <tr><td>Start Date</td><td>@licences.TrialPeriodStartDate</td></tr>
-                                    <tr><td>Expiry Date</td><td>@licences.TrialPeriodvalidTill</td></tr>
-                                    <tr><td>No Of Registration</td><td>@licences.NoOfRegistraion Members</td></tr>
-                                </table>
-
-                                <p style="width: 100%;background: #b9c1ce;padding: 6px;border-radius: 7px;">License Covers</p>
-                                <table class="table table-borderless" style="width:40%;color:white">
-                                    <thead>
-                                        <tr><th>#</th><th>Insurance Name</th><th>No of Quantity</th></tr>
-                                    </thead>
-                                    @foreach (var item in insuarances)
-                                    {
-                                        <tr><td>@i</td><td>@item.InsuaranceName</td><td>@item.QuantityAvailable</td></tr>
-
-                                        i++;
-                                    }
-
-                                </table>
+                                <img src="~/Content/Template/images/InsuranceWelcome.jpeg"style="width:59rem" />
                             </div>
                         </div>
-                    }
-                }
+                    </div>
+                </div>
+
 
                 <p id="pdisclaimer">Disclaimer: If verification is not completed you can't get access to the system</p>
             </div>

@@ -12,7 +12,7 @@
 }
 
 
-<link href="~/Content/Template/select2/css/select2.css" rel="stylesheet" />
+<link href="~/Content/Custom.css" rel="stylesheet" />
 @*<link href="~/Content/CountrySelect/build/css/countrySelect.css" rel="stylesheet" />
     <link href="~/Content/CountrySelect/build/css/demo.css" rel="stylesheet" />*@
 
@@ -21,8 +21,8 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Collect Amount - <span id="spnOrdID"> @pendingPayments[0].orderID</span></h4>
-                <a href="@Url.Action("PendingPayments", "Admin")"><i class="fas fa-arrow-left"></i> Back To List</a>
+                <h4 class="card-title" style="color: blanchedalmond;font-weight: bold;">Collect Amount - <span id="spnOrdID"> @pendingPayments[0].orderID</span></h4>
+                <a href="@Url.Action("PendingPayments", "Admin")" style="color: blanchedalmond;font-weight: bold;"><i class="fas fa-arrow-left"></i> Back To List</a>
                 <input type="hidden" id="hdnuserID" value="@pendingPayments[0].userID" />
             </div>
             <div class="card-body">
@@ -59,7 +59,7 @@
                     <tr>
                         <td><strong>Payment Method : </strong>  </td>
                         <td>
-                            <select class="selectpicker" id="ddlpayMethod">
+                            <select class="singleselect" id="ddlpayMethod">
                                 <option value="0">Select Payment Method</option>
                                 @{
                                     if (paymentMethods != null)
@@ -70,11 +70,6 @@
                                         }
                                     }
                                 }
-
-                                @*<option value="14">GPay</option>
-                                    <option value="15">Phone Pay</option>
-                                    <option value="16">Net Banking</option>
-                                    <option value="17">Cash</option>*@
                             </select>
                         </td>
                         <td><strong>Reference Number : </strong>  </td>
@@ -124,7 +119,7 @@
     </script>*@
 <script>
     $(document).ready(function () {
-
+        $(".singleselect").select2();
         $('#btnsaveData').click(function () {
 
             CollectPayment();
@@ -176,11 +171,11 @@
                 //console.log(data);
 
                 if (data.StatusCode == 1) {
-                    swal({
+                    Swal.fire({
                         title: "Success",
                         text: "Details Updated Successfully..!",
-                        type: "success",
-                        showCancelButton: !1,
+                        icon: "success",
+                        showCancelButton: false,
                     });
                 }
 
