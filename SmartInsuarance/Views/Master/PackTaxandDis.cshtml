@@ -50,7 +50,7 @@
                                 <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Feature Amount</small>
                             </div>
                             <div class="col-sm-4 Discountdetail" id="Discountdetail" >
-                                <select class="singleselect col-sm-8" id="iPackFunt_DisTyp" name="iPackFunt_DisTyp" readonly>
+                                <select class="singleselect col-sm-8" id="iPackFunt_DisTyp" name="iPackFunt_DisTyp" @(Model.iPackFunt_iStts != null && Model.iPackFunt_iStts != 1 ? "readonly" : "")>
                                     <option value="">Select </option>
                                     <option @(Model.iPackFunt_DisTyp != null && Model.iPackFunt_DisTyp == 1 ? "selected" : "") value="1">In Persentage</option>
                                     <option @(Model.iPackFunt_DisTyp != null && Model.iPackFunt_DisTyp == 2  ? "selected" : "") value="2">In Amount</option>
@@ -58,7 +58,7 @@
 
                             </div>
                             <div class="col-sm-2 Discountdetail">
-                                <input type="text" id="dPackFunt_Val" value="@(Model.dPackFunt_Val != null ? Model.dPackFunt_Val : 0)" class="form-control col-sm-4" placeholder="Enter Value" name="dPackFunt_Val" readonly>
+                                <input type="text" id="dPackFunt_Val" value="@(Model.dPackFunt_Val != null ? Model.dPackFunt_Val : 0)" class="form-control col-sm-4" placeholder="Enter Value" name="dPackFunt_Val" @(Model.iPackFunt_iStts != null && Model.iPackFunt_iStts != 1 ? "readonly" : "")>
                             </div>
                             <div class="col-sm-2">
 
@@ -85,7 +85,7 @@
                                 <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Function Amount</small>
                             </div>
                             <div class="col-sm-4 Discountdetail" id="Discountdetail">
-                                <select class="singleselect col-sm-8" id="iPackFeat_DisTyp" name="iPackFeat_DisTyp" readonly>
+                                <select class="singleselect col-sm-8" id="iPackFeat_DisTyp" name="iPackFeat_DisTyp" @(Model.iPackFeat_iStts != null && Model.iPackFeat_iStts != 1 ? "readonly" : "")>
                                     <option value="">Select </option>
                                     <option @(Model.iPackFeat_DisTyp != null && Model.iPackFeat_DisTyp == 1 ? "selected" : "") value="1">In Persentage</option>
                                     <option @(Model.iPackFeat_DisTyp != null && Model.iPackFeat_DisTyp == 2 ? "selected" : "") value="2">In Amount</option>
@@ -93,7 +93,7 @@
 
                             </div>
                             <div class="col-sm-2 Discountdetail">
-                                <input type="text" id="dPackFeat_Val" value="@(Model.dPackFeat_Val != null ? Model.dPackFeat_Val : 0)" class="form-control col-sm-4" placeholder="Enter Value" name="dPackFeat_Val" readonly>
+                                <input type="text" id="dPackFeat_Val" value="@(Model.dPackFeat_Val != null ? Model.dPackFeat_Val : 0)" class="form-control col-sm-4" placeholder="Enter Value" name="dPackFeat_Val" @(Model.iPackFeat_iStts != null && Model.iPackFeat_iStts != 1 ? "readonly" : "")>
                             </div>
                             <div class="col-sm-2">
 
@@ -148,13 +148,13 @@
 
                         <div class="form-group is-empty row Paddingtop1 row">
                              
-                            <input type="checkbox" class="col-sm-1 customcheckbox" data-id="Total" id="iTotalDis_iStts" name="iTotalDis_iStts" value="@Model.iPackSysUsr_iStts" @(Model.iTotalDis_iStts != null && Model.iTotalDis_iStts == 1 ? "checked" : "")>
+                            <input type="checkbox" class="col-sm-1 customcheckbox" data-id="Total" id="iTotalDis_iStts" name="iTotalDis_iStts" value="@Model.iTotalDis_iStts" @(Model.iTotalDis_iStts != null && Model.iTotalDis_iStts == 1 ? "checked" : "")>
                             <div class="col-sm-2"> 
                                 <input type="text" id="dTotalFunAmt" name="dTotalFunAmt" class="form-control" value="@Model.Total" readonly>
                                 <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">System Amount</small>
                             </div>
                             <div class="col-sm-4 Discountdetail" id="Discountdetail">
-                                <select class="singleselect col-sm-8" id="iTotalDis_Typ" name="iTotalDis_Typ" readonly>
+                                <select class="singleselect col-sm-8" id="iTotalDis_Typ" name="iTotalDis_Typ" @(Model.iTotalDis_iStts != null && Model.iTotalDis_iStts != 1 ? "readonly" : "")>
                                     <option value="">Select </option>
                                     <option @(Model.iTotalDis_Typ != null && Model.iTotalDis_Typ == 1 ? "selected" : "") value="1">In Persentage</option>
                                     <option @(Model.iTotalDis_Typ != null && Model.iTotalDis_Typ == 2 ? "selected" : "") value="2">In Amount</option>
@@ -162,7 +162,7 @@
 
                             </div>
                             <div class="col-sm-2 Discountdetail">
-                                <input type="text" id="dTotalDis_Val" value="@(Model.dTotalDis_Val != null ? Model.dTotalDis_Val : 0)" class="form-control col-sm-4" placeholder="Enter Value" name="dTotalDis_Val" readonly>
+                                <input type="text" id="dTotalDis_Val" value="@(Model.dTotalDis_Val != null ? Model.dTotalDis_Val : 0)" class="form-control col-sm-4" placeholder="Enter Value" name="dTotalDis_Val" @(Model.iTotalDis_iStts != null && Model.iTotalDis_iStts != 1 ? "readonly" : "")>
                             </div>
                             <div class="col-sm-2">
 
