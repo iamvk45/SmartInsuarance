@@ -45,10 +45,10 @@ namespace SmartInsuarance.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }        
-        public List<FillDropDown> GetDataForDropdown(int enumNum)
+        public List<FillDropDown> GetDataForDropdown(string selectionType)
         {
             //var json = JsonConvert.SerializeObject(geographical);
-            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Common/GetFillDropDowns?EnumId=" + enumNum);
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Common/GetFillDropDowns?selectionType=" + selectionType);
             var request = new RestRequest(Method.GET);
             request.AddHeader("cache-control", "no-cache");
             //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
@@ -146,6 +146,40 @@ namespace SmartInsuarance.Controllers
                 }
             }
             return menus;
+        }
+        public List<Dropdown> GetInsuranceForLicense(string UserID)
+        {
+            List<Dropdown> insurance = new List<Dropdown>();
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/GetInsuranceFromLicenseConfigData?sUSRCode="+ UserID);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            if (response.StatusCode.ToString() == "OK")
+            {
+                _CommonResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if (_CommonResponse.data != null)
+                    insurance = JsonConvert.DeserializeObject<List<Dropdown>>(_CommonResponse.data.ToString());
+            }
+            return insurance;
+        }
+        public List<LicenseConfigDetails> GetLicenseConfigData()
+        {
+            List<LicenseConfigDetails> licenseConfigList = new List<LicenseConfigDetails>();
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/GetLicenseConfigList");
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            if (response.StatusCode.ToString() == "OK")
+            {
+                _CommonResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if (_CommonResponse.data != null)
+                    licenseConfigList = JsonConvert.DeserializeObject<List<LicenseConfigDetails>>(_CommonResponse.data.ToString());
+            }
+            return licenseConfigList;
         }
        
     }

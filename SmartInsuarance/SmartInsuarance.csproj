@@ -5126,6 +5126,7 @@
     <Content Include="Content\Template\images\1.jpg" />
     <Content Include="Content\Template\images\2.jpg" />
     <Content Include="Content\Template\images\3.jpg" />
+    <Content Include="Content\Template\images\Adminflow.jpeg" />
     <Content Include="Content\Template\images\announcement.svg" />
     <Content Include="Content\Template\images\avatar\1.jpg" />
     <Content Include="Content\Template\images\avatar\1.png" />
@@ -5226,6 +5227,7 @@
     <Content Include="Content\Template\images\favicon.ico" />
     <Content Include="Content\Template\images\favicon.png" />
     <Content Include="Content\Template\images\Glazey..svg" />
+    <Content Include="Content\Template\images\InsuranceWelcome.jpeg" />
     <Content Include="Content\Template\images\like.png" />
     <Content Include="Content\Template\images\log.png" />
     <Content Include="Content\Template\images\login-bg-1.jpg" />
@@ -6937,6 +6939,7 @@
     <Content Include="Views\Master\PackTaxandDis.cshtml" />
     <Content Include="Views\Admin\LicenseConfiguration.cshtml" />
     <Content Include="Views\Admin\UserLicenseConfiguration.cshtml" />
+    <Content Include="Views\Master\AdminFlowDiagram.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
