@@ -55,8 +55,12 @@
 </tr>
 <tr class="trresult" style="border: solid; background: black; color: azure; font-weight: bold;">
     <td colspan="9" style="text-align:end;">Total(as per Qty)</td>
-
-    <td>@(i*2)</td>
+    @{ 
+        decimal finalamount = 0;
+        finalamount = i * Convert.ToDecimal(firstitem.Qty);
+            }
+ 
+    <td>@finalamount</td>
 </tr>
 
                 }

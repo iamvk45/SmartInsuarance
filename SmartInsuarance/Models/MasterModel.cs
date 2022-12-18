@@ -175,6 +175,7 @@ namespace SmartInsuarance.Models
         public int iTypId { get; set; }
         public int iValidityvalue { get; set; }
         public string LicenseName { get; set; }
+        public int? iLiceTypeId { get; set; }
     }
     public class LICEMSTViEW: LICEMST
     {
@@ -266,6 +267,24 @@ namespace SmartInsuarance.Models
             }
         }
 
+        public string LiceType
+        {
+            get
+            {
+                switch (iLiceTypeId)
+                {
+                    case 1000:
+                        return "Paid";
+                    case 1001:
+                        return "Trial";
+
+                
+                    default:
+                        return "";
+                }
+            }
+        }
+
     }
 
     public class PackFunctTemp
@@ -319,6 +338,9 @@ namespace SmartInsuarance.Models
         public int iStts { get; set; }
         public int iFk_FinyearId { get; set; }
         public Boolean? iisgstapplicable { get; set; }
+        public Boolean? ipkgsts { get; set; }
+        public decimal? iGstval { get; set; }
+        public Boolean? bCompSts { get; set; }
     }
     public class PackageManagementView: PackageManagement
     {
@@ -553,6 +575,9 @@ namespace SmartInsuarance.Models
         public decimal? dPackFunAmt { get; set; }
         public decimal? dPackFeaAmt { get; set; }
         public decimal?dPackSysAmt { get; set; }
+        public decimal? PackFunt_displayvalue { get; set; }
+        public decimal? PackFeat_displayvalue { get; set; }
+        public decimal? Total_displayvalue { get; set; }
 
         public decimal Total
         {
