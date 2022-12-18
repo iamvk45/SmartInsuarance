@@ -41,10 +41,23 @@
         @using (Html.BeginForm("CreateLicenceMaster", "Master", FormMethod.Post, new { @class = "formcreateupdate", @id = "frmAddUpdate", enctype = "multipart/form-data" }))
         {
             <div class="card-body">
+                <div class="form-group is-empty row Paddingtop1">
+                    <label for="nameInput" class="col-sm-3 control-label"> License Type</label>
+                    <div class="col-sm-5">
+                        <select class="singleselect " name="iLiceTypeId" id="iLiceTypeId">
+                            <option value="">Select license Type </option>
+                            @{
+                                <option value="1000">Paid</option>
+                                <option value="1001">Trial</option>
+                            }
+                        </select>
+                    </div>
+                </div>
 
                 <div class="form-group is-empty row Paddingtop1">
 
                     <input type="hidden" name="iPK_LicMstId" value="@ViewBag.id" />
+
                     <div class="col-sm-4">
 
                         <input type="date" class="form-control" name="dtInsertStrDt" value="@(Model!=null && Model.EndDate!=null ?Model.dtStrdate.Value.ToString("yyyy-MM-dd"):"")" id="dtInsertStrDt" @(Model != null && Model.EndDate != null ? "readonly" : "") required />
@@ -192,17 +205,17 @@
                     </div>
                 </div>
             </div>
-            <footer class="form-footer" style="text-align: end;background: black;">
-                <div class="pull-right">
-                    <a href="@Url.Action("LicenceIndex", "Master")" class="btn btn-default" style="color: antiquewhite;">DISCARD</a>
-                    <button class="btn btn-primary" id="save">SAVE</button>
-                </div>
-            </footer>
+                <footer class="form-footer" style="text-align: end;background: black;">
+                    <div class="pull-right">
+                        <a href="@Url.Action("LicenceIndex", "Master")" class="btn btn-default" style="color: antiquewhite;">DISCARD</a>
+                        <button class="btn btn-primary" id="save">SAVE</button>
+                    </div>
+                </footer>
 
-        }
+            }
 
     </div>
-</div>
+    </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

@@ -227,7 +227,7 @@ namespace SmartInsuarance.Controllers
 
                 }
             }
-            return RedirectToAction("LicenceMaster", "Master");
+            return RedirectToAction("LicenceIndex", "Master");
         }
 
         public List<LICEMSTViEW> GetLicenceSublist()
@@ -244,7 +244,10 @@ namespace SmartInsuarance.Controllers
             if (response.StatusCode.ToString() == "OK")
             {
                 Api_CommonResponse objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
-                groups = JsonConvert.DeserializeObject<List<LICEMSTViEW>>(objResponse.data.ToString());
+                if (objResponse.data != null)
+                {
+                    groups = JsonConvert.DeserializeObject<List<LICEMSTViEW>>(objResponse.data.ToString());
+                }
             }
             return groups;
         }
@@ -347,7 +350,45 @@ namespace SmartInsuarance.Controllers
             PACKTAXDIS obj = new PACKTAXDIS();
             obj = CommonFunction.PackageTaxDisList(Id).FirstOrDefault();
             ViewBag.Pack = obj;
+            ViewBag.iFkpackId = Id;
             return View(obj);
+        }
+
+        public ActionResult SaveTaxandDist(PACKTAXDIS paCKTAXDIS)
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Master/InsertPackageDiscount");
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("cache-control", "no-cache");
+
+            request.AddParameter("application/json", _JsonSerializer.Serialize(paCKTAXDIS), ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            if (response.StatusCode.ToString() == "OK")
+            {
+                Api_CommonResponse CommonResponse = new Api_CommonResponse();
+                CommonResponse = _JsonSerializer.Deserialize<Api_CommonResponse>(response.Content);
+                if (CommonResponse.statusCode == 1)
+                {
+                    TempData["SwalStatusMsg"] = "success";
+                    TempData["SwalTitleMsg"] = "Success!";
+                    if (CommonResponse.message == "Allready Exists In table")
+                    {
+                        TempData["SwalStatusMsg"] = "warning";
+                        TempData["SwalTitleMsg"] = "warning!";
+                    }
+                    TempData["SwalMessage"] = CommonResponse.message;
+
+
+                }
+                else
+                {
+                    TempData["SwalStatusMsg"] = "error";
+                    TempData["SwalMessage"] = "Something wrong";
+                    TempData["SwalTitleMsg"] = "error!";
+
+                }
+            }
+
+            return RedirectToAction("PackageList");
         }
         #endregion
 
