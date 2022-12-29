@@ -4,12 +4,21 @@
     ViewBag.Title = "EditProfile";
     Layout = "~/Views/Shared/_Layout_new.cshtml";
     //var BaseURL = System.Configuration.ConfigurationManager.AppSettings["BaseUrl"];
+
+    //var countryID = 0;
+    //var stateID = 0;
+    //var cityID = 0;
+    //var Name = "";
+
+    //var type = (string)ViewBag.type;
+    //if(type!="User")
+    //{
     var countryID = Model.iCountryID;
     var stateID = Model.iStateID;
     var cityID = Model.iCityID;
 
     var Name = Model.Name.Split(' ')[0];
-
+    //}
 }
 
 @*<link href="~/Content/Template/select2/css/select2.css" rel="stylesheet" />*@
@@ -66,8 +75,8 @@
             <div class="col-xl-9 col-lg-8">
                 <div class="card profile-card card-bx m-b30">
                     <div class="card-header">
-                        <h6 class="title"  style="color: blanchedalmond;font-weight: bold;">Account setup</h6>
-                        <a href="@Url.Action("Profilestatus", "User")"  style="color: blanchedalmond;font-weight: bold;"><i class="fas fa-arrow-left"></i> Back To List</a>
+                        <h6 class="title" style="color: blanchedalmond;font-weight: bold;">Account setup</h6>
+                        <a href="@Url.Action("Profilestatus", "User")" style="color: blanchedalmond;font-weight: bold;"><i class="fas fa-arrow-left"></i> Back To List</a>
                     </div>
 
                     <div class="card-body">
@@ -241,8 +250,8 @@
             <div class="col-xl-9 col-lg-8">
                 <div class="card profile-card card-bx m-b30">
                     <div class="card-header">
-                        <h6 class="title"  style="color: blanchedalmond;font-weight: bold;">Account setup</h6>
-                        <a href="@Url.Action("Profilestatus", "User")"  style="color: blanchedalmond;font-weight: bold;"><i class="fas fa-arrow-left"></i> Back To List</a>
+                        <h6 class="title" style="color: blanchedalmond;font-weight: bold;">Account setup</h6>
+                        <a href="@Url.Action("Profilestatus", "User")" style="color: blanchedalmond;font-weight: bold;"><i class="fas fa-arrow-left"></i> Back To List</a>
                     </div>
 
                     <div class="card-body">
@@ -384,6 +393,7 @@
 ***********************************-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="~/Content/globalDomain.js"></script>
 @*
     <script src="~/Content/CountrySelect/build/js/countrySelect.js"></script>
     <script>
@@ -448,7 +458,7 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            url: "/Common/GetCountryStateCity",
+            url: GetglobalDomain()+"/Common/GetCountryStateCity",
             dataType: 'json',
             type: 'Post',
             cache: false,
@@ -615,7 +625,7 @@
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                url: "/User/SaveUserDetails",
+                url: GetglobalDomain()+"/User/SaveUserDetails",
                 dataType: 'json',
                 type: 'Post',
                 cache: false,

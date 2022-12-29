@@ -26,6 +26,34 @@ namespace SmartInsuarance.Controllers
             return View();
         }
 
+        public ActionResult RegisteredUser()
+        {
+            var sessionData = (UserModelSession)Session["UserDetails"];
+            List<UsersList> users = new List<UsersList>();
+            if (sessionData != null)
+            {
+                if (sessionData.sUSRCode != "A000001")
+                {
+                    users = GetUsersListToActiveInactive(sessionData.sUSRCode, "Childs");
+                }
+                else
+                {
+                    users = GetUsersListToActiveInactive(sessionData.sUSRCode);
+                }
+            }
+
+            ViewBag.registeredUsers = users;
+            return View();
+        }
+        public ActionResult RegistrationReport()
+        {
+            return View();
+        }
+        public ActionResult EarningReport()
+        {
+            return View();
+        }
+
         public ActionResult PaymentHistory()
         {
 
@@ -47,7 +75,7 @@ namespace SmartInsuarance.Controllers
         {
             CommonController common = new CommonController();
             var userData = (UserModelSession)Session["UserDetails"];
-            var licenseConfigData = common.GetLicenseConfigData();
+            var licenseConfigData = common.GetLicenseConfigData(userData.sUSRCode);
 
             ViewBag.licenseConfigData = licenseConfigData;
 
@@ -98,6 +126,30 @@ namespace SmartInsuarance.Controllers
             }
 
             return trailuserModals;
+        }
+
+        public List<UsersList> GetUsersListToActiveInactive(string userCode, string selectiontype = "OnlyParents")
+        {
+            //var json = JsonConvert.SerializeObject(new { type = selectiontype, userID = userCode });
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/GetUsersList?userID=" + userCode + "&type=" + selectiontype);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            Api_CommonResponse objResponse = new Api_CommonResponse();
+            List<UsersList> registeredUsers = new List<UsersList>();
+            if (response.StatusCode.ToString() == "OK")
+            {
+                objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if (objResponse.data != null)
+                    registeredUsers = JsonConvert.DeserializeObject<List<UsersList>>(objResponse.data.ToString());
+
+            }
+
+            return registeredUsers;
         }
         public List<PaymentHistory> GetPaymentHistory(string userID = "0")
         {
@@ -217,7 +269,32 @@ namespace SmartInsuarance.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-        
+        public JsonResult ActiveInActiveUser(string userCode, int isActive)
+        {
+
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/UpdateStatus?status=" + isActive + "&userID=" + userCode);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            Api_CommonResponse objResponse = new Api_CommonResponse();
+
+            if (response.StatusCode.ToString() == "OK")
+            {
+                objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+            }
+
+            return new JsonResult
+            {
+                Data = new { StatusCode = objResponse.statusCode, Data = objResponse, Failure = false, Message = objResponse.message },
+                ContentEncoding = System.Text.Encoding.UTF8,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         public JsonResult ConfigLicencse(UserLicenseConfigRequest userLicense)
         {
             var json = JsonConvert.SerializeObject(userLicense);

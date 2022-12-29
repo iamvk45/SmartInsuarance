@@ -223,7 +223,8 @@ namespace SmartInsuarance.Controllers
             if (response.StatusCode.ToString() == "OK")
             {
                 Api_CommonResponse objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
-                groups = JsonConvert.DeserializeObject<List<Dropdown>>(objResponse.data.ToString());
+                if(objResponse.data!= null)
+                    groups = JsonConvert.DeserializeObject<List<Dropdown>>(objResponse.data.ToString());
             }
             return groups;
         }

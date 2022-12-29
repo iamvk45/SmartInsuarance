@@ -122,4 +122,20 @@ namespace SmartInsuarance.Models
         public string Color { get; set; }
         public string UserRelation { get; set; }
     }
+
+    public class UsersList
+    {
+        public string Name { get; set; }
+        public string UserCode { get; set; }
+        public string Username { get; set; }
+        public string UserType { get; set; }
+        public string EmailAddress { get; set; }
+        public string PhoneNumber { get; set; }
+        public string IsEmailVarified { get; set; }
+        public string IsMobileVarified { get; set; }
+        public string PurchasedPackage { get; set; }
+        public string PurchasedLicense { get; set; }
+        public bool iIsactive { get; set; }
+
+    }
 }

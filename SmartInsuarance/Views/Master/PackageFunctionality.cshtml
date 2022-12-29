@@ -19,8 +19,9 @@
         pointer-events: none;
         touch-action: none;
     }
-    .hidden{
-        display:none;
+
+    .hidden {
+        display: none;
     }
 </style>
 <link href="~/Content/Custom.css" rel="stylesheet" />
@@ -28,16 +29,18 @@
     <div class="card">
         <div class="card-header">
             <h4 class="card-title" style="color: blanchedalmond;font-weight: bold;">ADD FUNCTIONALITY TO PACKAGE</h4>
-            <a href="@Url.Action("PackageList", "Master")" class="btn btn-default pull-right" style="color: white;">Back</a>
+            @*<a href="@Url.Action("PackageList", "Master")" class="btn btn-default pull-right" style="color: white;">Back</a>*@
+
+            <a href="@Url.Action("PackageList", "Master")" style="color: blanchedalmond;font-weight: bold;"><i class="fas fa-arrow-left"></i> Back</a>
         </div>
         @*@using (Html.BeginForm("CreatePackageFunctionality", "Master", FormMethod.Post, new { @class = "formcreateupdate", @id = "frmAddUpdate", enctype = "multipart/form-data" }))
 
-        {*@
+            {*@
         <input type="hidden" id="iPk_PackFunctId" value="0" class="form-control" name="iPk_PackFunctId" readonly />
         <input type="hidden" id="iLicenseid" value="@ViewBag.Licenseid" class="form-control" name="iLicenseid" readonly />
         <input type="hidden" id="iPk_packid" value="@ViewBag.Id" class="form-control" name="iPk_packid" readonly />
         <div class="card-body">
-         
+
             <div class="form-group is-empty row Paddingtop1">
                 <div class="col-sm-3">
                     <select class="singleselect " name="iMnuId" id="iMnuId" required>
@@ -122,17 +125,18 @@
             </table>
         </div>
     </div>
-    </div>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script src="~/Content/Template/js/jScript.js"></script>
+<script src="~/Content/globalDomain.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script type="text/javascript">
 
     $(document).ready(function () {
         var Id = $("#iPk_packid").val();
         var iLicenseid = $("#iLicenseid").val();
-        BindPackageFunction(Id, iLicenseid) 
+        BindPackageFunction(Id, iLicenseid)
         debugger;
         $(".singleselect").select2();
         $("#iMnuId").change(function () {
@@ -143,7 +147,7 @@
             var iMnuId = $("#iMnuId").val();
             var iSubMnuId = $(this).val();
             FindRate(iMnuId, iSubMnuId);
-            
+
         });
         $("#iisdiscount").change(function () {
             debugger;
@@ -152,7 +156,7 @@
                 $("#idistyp").prop("required", true);
                 $("#ddisvalue").attr("required", true);
                 $(".Discountdetail").removeClass('hidden');
-               
+
 
             }
             else {
@@ -177,52 +181,52 @@
             ResetField();
         });
 
-         function BindSubmenus(Id,Type) {
+        function BindSubmenus(Id, Type) {
 
-        var Model = {
-            Id: Id
+            var Model = {
+                Id: Id
 
-        }
-        $.ajax({
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            url: "/AjaxRequest/GetPackageSelectMenuSubmenulist",
-            dataType: 'json',
-            type: 'Post',
-            cache: false,
-            data: JSON.stringify(Model),
-            success: function (data) {
-                debugger;
-                var submenuList = data.Data;
-                //console.table(submenuList)
-                if (Type != 0) {
-                    var selectBody = "<option value=0>Select Submenus</option> ";
-                }
-                else {
-                    var selectBody = "<option value=0>Select Menus</option> ";
-                }
-                submenuList.forEach(item => {
-
-                    selectBody += `<option value=${item.Id}>${item.Text}</option>`
-
-                });
-                if (Type != 0) {
-                    $('#iSubMnuId').html('')
-                    $('#iSubMnuId').append(selectBody);
-
-                }
-                else {
-                    $('#iMnuId').html('')
-                    $('#iMnuId').append(selectBody);
-                    $('#iSubMnuId').html('<option value=0>Select Submenus</option>');
-                }
-            },
-            error: function (d) {
-                console.log(d);
             }
-        });
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: GetglobalDomain()+"/AjaxRequest/GetPackageSelectMenuSubmenulist",
+                dataType: 'json',
+                type: 'Post',
+                cache: false,
+                data: JSON.stringify(Model),
+                success: function (data) {
+                    debugger;
+                    var submenuList = data.Data;
+                    //console.table(submenuList)
+                    if (Type != 0) {
+                        var selectBody = "<option value=0>Select Submenus</option> ";
+                    }
+                    else {
+                        var selectBody = "<option value=0>Select Menus</option> ";
+                    }
+                    submenuList.forEach(item => {
+
+                        selectBody += `<option value=${item.Id}>${item.Text}</option>`
+
+                    });
+                    if (Type != 0) {
+                        $('#iSubMnuId').html('')
+                        $('#iSubMnuId').append(selectBody);
+
+                    }
+                    else {
+                        $('#iMnuId').html('')
+                        $('#iMnuId').append(selectBody);
+                        $('#iSubMnuId').html('<option value=0>Select Submenus</option>');
+                    }
+                },
+                error: function (d) {
+                    console.log(d);
+                }
+            });
 
         }
         function FindRate(iMnuId, iSubMnuId) {
@@ -230,9 +234,9 @@
                 iMnuId: iMnuId,
                 iSubMnuId: iSubMnuId
             });
-           
+
             $.ajax({
-                url: "/AjaxRequest/FindRate",
+                url: GetglobalDomain()+ "/AjaxRequest/FindRate",
                 type: 'POST',
                 dataType: "json",
                 data: Params,
@@ -262,9 +266,9 @@
             var iisdiscount = $("#iisdiscount").val();
             var ddisvalue = $("#ddisvalue").val();
             var displayvalue = drate * ivalidityvalue;
-            if (parseInt(iisdiscount)== 1) {
+            if (parseInt(iisdiscount) == 1) {
                 if (parseInt(idistyp) == 1) {
-                    displayvalue =( displayvalue-(displayvalue * ddisvalue) / 100);
+                    displayvalue = (displayvalue - (displayvalue * ddisvalue) / 100);
                 }
                 else {
                     displayvalue = displayvalue - ddisvalue;
@@ -273,10 +277,9 @@
             }
             $("#ddisplayvalue").val(displayvalue);
         }
-        function ResetField()
-        {
+        function ResetField() {
             $("#drate").val('');
-            $('#iisdiscount').prop('checked', false); 
+            $('#iisdiscount').prop('checked', false);
             $('#iisdiscount').val('0');
             $("#iSubMnuId").val('');
             $("#iSubMnuId").trigger('change');
@@ -325,13 +328,13 @@
 
             });
             $.ajax({
-                url: "/AjaxRequest/InsertPackageFunctionality",
+                url: GetglobalDomain()+"/AjaxRequest/InsertPackageFunctionality",
                 type: 'POST',
                 dataType: "json",
                 data: Params,
                 contentType: "application/json",
                 success: function (response) {
-                    
+
                     if (response.IsValid = 1) {
                         Swal.fire({
                             position: 'center',
@@ -343,7 +346,7 @@
 
                         var Id = $("#iPk_packid").val();
                         var iLicenseid = $("#iLicenseid").val();
-                        BindPackageFunction(Id, iLicenseid) 
+                        BindPackageFunction(Id, iLicenseid)
                         ResetField();
                     }
 
@@ -351,8 +354,8 @@
                 }
             });
         })
-       
+
 
 
     });
-    </script>
+</script>

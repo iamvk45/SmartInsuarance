@@ -31,20 +31,19 @@
             {
 
 
-                <div class="form-group is-empty row Paddingtop1">
+                <div class="form-group is-empty row">
 
 
                     <div class="col-sm-4">
-
+                        <label class="form-label">Start Date</label>
                         <input type="date" class="form-control" name="dtInsertStrDt" value="" id="dtInsertStrDt" required />
-                        <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Start Date</small>
                     </div>
                     <div class="col-sm-4">
-
+                        <label class="form-label">End Date</label>
                         <input type="date" class="form-control" name="dtInsertEndDt" value="" id="dtInsertEndDt" disabled required />
-                        <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">End Date</small>
                     </div>
                     <div class="col-sm-4">
+                        <label class="form-label">Select Feature</label>
                         <select class="singleselect" id="iFetId" name="iFK_FetId" required>
                             <option value="">Select Feature </option>
                             @{
@@ -56,10 +55,14 @@
 
                         </select>
                     </div>
-                    <div class="col-sm-3">
+                </div>
+                @*<div class="col-sm-3">
                         <input name="iQty" id="iQty" type="text" value="1" class="form-control" placeholder="Enter Qty" readonly>
-                    </div>
+                    </div>*@
+
+                <div class="form-group is-empty row mt-3">
                     <div class="col-sm-3">
+                        <label class="form-label">Select UOM</label>
                         <select class="singleselect" id="iUomId" name="iFK_UomId" required>
                             <option value="">Select UOM </option>
                             @{
@@ -73,10 +76,11 @@
                         </select>
                     </div>
                     <div class="col-sm-2">
+                        <label class="form-label">Enter Rate</label>
                         <input name="dRate" id="dRate" type="text" value="" class="form-control" placeholder="Enter Rate" required>
                     </div>
-
-                    <div class="pull-right col-sm-3" style="text-align: end;">
+                    <div class="pull-right col-sm-3">
+                        <br />
                         <a href="#" class="btn btn-default" id="reset">Reset</a>
                         <button class="btn btn-primary"> Save </button>
                     </div>
@@ -98,25 +102,25 @@
                         </tr>
                     </thead>
                     <tbody id="tbody">
-                        @{ 
+                        @{
                             var i = 1;
-                            foreach(var item in Masterdata)
-            {
-                <tr>
-                        <td>@i</td>
-                        <td>@item.FeatureName</td>
-                        <td>@item.UOMeName</td>
-                        <td>@item.StartDate</td>
-                        <td>@item.EndDate</td>
-                        <td>@item.dRate</td>
-                        <td>
-                            <label class="toggle">
-                                <input class="toggle-checkbox" type="checkbox" id="Status" name="Status" value="@item.iStts" @(item.iStts == 1 ? "checked" : "")>
-                                <div class="toggle-switch"></div>
-                                @*<span class="toggle-label">Bluetooth</span>*@
-                            </label>
-                        </td>
-                        </tr>
+                            foreach (var item in Masterdata)
+                            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@item.FeatureName</td>
+                                    <td>@item.UOMeName</td>
+                                    <td>@item.StartDate</td>
+                                    <td>@item.EndDate</td>
+                                    <td>@item.dRate</td>
+                                    <td>
+                                        <label class="toggle">
+                                            <input class="toggle-checkbox" type="checkbox" id="Status" name="Status" value="@item.iStts" @(item.iStts == 1 ? "checked" : "")>
+                                            <div class="toggle-switch"></div>
+                                            @*<span class="toggle-label">Bluetooth</span>*@
+                                        </label>
+                                    </td>
+                                </tr>
                                 i++;
                             }
                         }
@@ -149,5 +153,5 @@
             document.getElementById("dRate").value = '';
         });
     });
-  
+
 </script>
