@@ -92,20 +92,6 @@
                         </div>*@
                 </div>
                 <div class="form-group is-empty row Paddingtop1">
-                    <label for="nameInput" class="col-sm-3 control-label">Licence Name</label>
-                    <div class="col-sm-5">
-                        <select class="singleselect" data-tags="true" name="iLicNameId" id="iLicNameId" @(Model != null && Model.iLicNameId != null ? "readonly" : "")>
-                            <option value="">Enter License Name</option>
-                            @{
-                                foreach (var item in LicenseName)
-                                {
-                                    <option @(Model != null && Convert.ToInt32(Model.iLicNameId) == item.DDLValue ? "selected" : "") value="@item.DDLValue">@item.DDLText</option>
-                                }
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group is-empty row Paddingtop1">
                     <label for="nameInput" class="col-sm-3 control-label">User Type</label>
                     <div class="col-sm-5">
                         <select class="singleselect " name="iUsrTypId" id="iUsrTypId">
@@ -114,6 +100,20 @@
                                 foreach (var item in UserType)
                                 {
                                     <option @(Model != null && Model.iUsrTypId == item.Id ? "selected" : "") value="@item.Id">@item.Text</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group is-empty row Paddingtop1">
+                    <label for="nameInput" class="col-sm-3 control-label">Licence Name</label>
+                    <div class="col-sm-5">
+                        <select class="singleselect" data-tags="true" name="iLicNameId" id="iLicNameId" @(Model != null && Model.iLicNameId != null ? "readonly" : "")>
+                            <option value="">Enter License Name</option>
+                            @{
+                                foreach (var item in LicenseName)
+                                {
+                                    <option @(Model != null && Convert.ToInt32(Model.iLicNameId) == item.DDLValue ? "selected" : "") value="@item.DDLValue">@item.DDLText</option>
                                 }
                             }
                         </select>
