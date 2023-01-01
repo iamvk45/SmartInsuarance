@@ -108,4 +108,82 @@ namespace SmartInsuarance.Models
             }
         }
     }
+    public class AddDepartment
+    {
+        public int DepartmentID { get; set; }
+        public string DepartmentName { get; set; }
+        public string PartyId { get; set; }
+        public string Status { get; set; }
+        public string CreatedDate { get; set; }
+        public string CreatedBy { get; set; }
+        public string Type { get; set; }
+    }
+    public class Activeclass
+    {
+        public string Tablename { get; set; }
+        public int Id { get; set; }
+        public int status { get; set; }
+    }
+    public class RoleMastertable
+    {
+        public int iPk_RolId { get; set; }
+        public string sRolName { get; set; }
+        public int iStatus { get; set; }
+        public string sCrtdByPrtyCode { get; set; }
+
+    }
+    public class AddGroup
+    {
+        public int ID { get; set; }
+        public int GroupID { get; set; }
+        public string GroupName { get; set; }
+        public int MenuID { get; set; }
+        public string Menu { get; set; }
+        public int SubmenuId { get; set; }
+        public string Submenu { get; set; }
+        public string Status { get; set; }
+        public string PartyId { get; set; }
+        public string CreatedDate { get; set; }
+        public string CreatedBy { get; set; }
+        public string Type { get; set; }
+    }
+    public class MappingRoleWithDepartmentandGroup
+    {
+        public int iPK_RoleDeptId { get; set; }
+        public int iDeptId { get; set; }
+        public int iGrpId { get; set; }
+        public int iRoleId { get; set; }
+        public int iStatus { get; set; }
+        public string PartyId { get; set; }
+        public string DepartmentName { get; set; }
+        public string GroupName { get; set; }
+        public string RoleName { get; set; }
+    }
+    public class UserPagingPermission
+    {
+        public int ID { get; set; }
+        public string MenuName { get; set; }
+        public string SubMenuName { get; set; }
+        public int perInsert { get; set; }
+        public int perDelete { get; set; }
+        public int perEdit { get; set; }
+        public int perView { get; set; }
+        public int perStatus { get; set; }
+        public int UserID { get; set; }
+        public int GroupID { get; set; }
+        public int? Inserting { get; set; }
+        public int? Editing { get; set; }
+        public int? Deleting { get; set; }
+        public int? Viewing { get; set; }
+        public int? Status { get; set; }
+    }
+    public class Permissionclass
+    {
+        public string Type { get; set; }
+        public int MappingId { get; set; }
+        public int MstGroupId { get; set; }
+        public int PermissionId { get; set; }
+        public int status { get; set; }
+        public string PartyId { get; set; }
+    }
 }

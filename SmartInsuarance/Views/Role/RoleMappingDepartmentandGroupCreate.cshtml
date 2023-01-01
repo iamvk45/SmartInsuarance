@@ -1,0 +1,124 @@
+﻿@using SmartInsuarance.Models
+@model MappingRoleWithDepartmentandGroup
+@{
+    ViewBag.Title = "RoleMappingDepartmentandGroupCreate";
+    Layout = "~/Views/Shared/_Layout_new.cshtml";
+    List<Dropdown> dept = new List<Dropdown>();
+    if (ViewBag.dept != null)
+    {
+        dept = (List<Dropdown>)ViewBag.dept;
+    }
+    List<Dropdown> Group = new List<Dropdown>();
+    if (ViewBag.Group != null)
+    {
+        Group = (List<Dropdown>)ViewBag.Group;
+    }
+    List<Dropdown> Role = new List<Dropdown>();
+    if (ViewBag.Role != null)
+    {
+        Role = (List<Dropdown>)ViewBag.Role;
+    }
+
+
+
+}
+
+<link href="~/Content/Custom.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-lg-12">
+        @using (Html.BeginForm("RoleMappingDepartmentandGroupCreate", "Role", FormMethod.Post, new { @class = "formcreateupdate", @id = "frmAddUpdate", enctype = "multipart/form-data" }))
+        {
+            <input name="iPK_RoleDeptId" id="RoleinformationId" type="hidden" value="@(Model != null ? Model.iPK_RoleDeptId.ToString() : "0")">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">Smart Insurance</li>
+                        <li class="breadcrumb-item">Create Mapping Department/Role/Group</li>
+
+                    </ol>
+                    <a class="btn btn-success float-right" href="@Url.Action("RoleMappingDepartmentandGroupIndex", "Role")"><i class="fas fa-list"></i>Back to Listr</a>
+
+                </div>
+                <div class="card-body">
+                    <div class="form-group is-empty row Paddingtop" id="Department">
+                        <label for="nameInput" class="col-sm-3 control-label">Department</label>
+                        <div class="col-sm-6">
+                            <select class="singleselect" name="iDeptId" id="DepartmentId">
+                                
+                                    @{
+                                        foreach (var item in dept)
+                                        {
+                                            <option @(Model != null && Model.iDeptId == Convert.ToInt32(item.Id) ? "selected" : "") value="@item.Id">@item.Text</option>
+                                        }
+                                    }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group is-empty row Paddingtop" id="Group">
+                        <label for="nameInput" class="col-sm-3 control-label">Group</label>
+                        <div class="col-sm-6">
+                            <select class="singleselect" name="iGrpId" id="GroupId">
+                                @{
+                                    foreach (var item in Group)
+                                    {
+                                        <option @(Model != null && Model.iGrpId == Convert.ToInt32(item.Id) ? "selected" : "") value="@item.Id">@item.Text</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group is-empty row Paddingtop" id="Group">
+                        <label for="nameInput" class="col-sm-3 control-label">Role</label>
+                        <div class="col-sm-6">
+                            <select class="singleselect" name="iRoleId" id="RoleId">
+                                @{
+                                    foreach (var item in Role)
+                                    {
+                                        <option @(Model != null && Model.iRoleId == Convert.ToInt32(item.Id) ? "selected" : "") value="@item.Id">@item.Text</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group is-empty row Paddingtop">
+                        <label for="nameInput" class="col-sm-3 control-label">Active</label>
+                        <label class="col-sm-6 toggle pull-left">
+                            <input class="toggle-checkbox" type="checkbox" id="Status" name="iStatus" value="@(Model != null? Model.iStatus.ToString() : "0")" @(Model != null && Model.iStatus == 1 ? "checked" : "")>
+                            <div class="toggle-switch"></div>
+                            @*<span class="toggle-label">Bluetooth</span>*@
+                        </label>
+
+                    </div>
+                </div>
+            </div>
+            <footer class="form-footer">
+                <div class="pull-right" style="text-align: end;">
+                    <a href="@Url.Action("RoleMasterIndex", "Role")" class="btn btn-default">DISCARD</a>
+                    <button class="btn btn-primary"> Save </button>
+                </div>
+            </footer>
+        }
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="~/Content/globalDomain.js"></script>
+<script src="~/Content/Template/js/jScript.js"></script>
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        $(".singleselect").select2();
+        //BindDepartment();
+        //BindGroup();
+        //BindRole();
+        $('input[type="checkbox"]').change(function () {
+            var id = $(this).val() == 0 ? 1 : 0;
+            $(this).val(id)
+
+        });
+    });
+     
+
+</script>

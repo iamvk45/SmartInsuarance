@@ -6945,6 +6945,13 @@
     <Content Include="Views\Admin\LicenseConfiguration.cshtml" />
     <Content Include="Views\Admin\UserLicenseConfiguration.cshtml" />
     <Content Include="Views\Master\AdminFlowDiagram.cshtml" />
+    <Content Include="Views\Role\AddDepartment.cshtml" />
+    <Content Include="Views\Role\RoleMasterIndex.cshtml" />
+    <Content Include="Views\Role\RoleMasterCreate.cshtml" />
+    <Content Include="Views\Role\AddGroup.cshtml" />
+    <Content Include="Views\Role\RoleMappingDepartmentandGroupIndex.cshtml" />
+    <Content Include="Views\Role\RoleMappingDepartmentandGroupCreate.cshtml" />
+    <Content Include="Views\Role\Userpermission.cshtml" />
     <Content Include="Views\Master\EnumMaster.cshtml" />
     <Content Include="Views\Admin\RegisteredUser.cshtml" />
     <Content Include="Views\Auth\LoginAlt.cshtml" />
@@ -6953,6 +6960,7 @@
     <Content Include="Views\Admin\RegistrationReport.cshtml" />
     <Content Include="Views\Admin\EarningReport.cshtml" />
     <Content Include="Views\Auth\Verification.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -135,5 +135,43 @@ namespace SmartInsuarance.Helper
 
 
         }
+
+        public static List<AddDepartment> GetDepartments(string Type = "DepartmentList")
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "RoleMaster/GetData?Type=" + Type + "&MenuId=0");
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            List<AddDepartment> departments = new List<AddDepartment>();
+            if (response.StatusCode.ToString() == "OK")
+            {
+                Api_CommonResponse objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                departments = JsonConvert.DeserializeObject<List<AddDepartment>>(objResponse.data.ToString());
+            }
+            return departments;
+        }
+
+        public static List<Dropdown> GetMenusList(string Type = "MenuList", int MenuId = 0)
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "RoleMaster/GetData?Type=" + Type + "&MenuId=" + MenuId);
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            List<Dropdown> MenusList = new List<Dropdown>();
+            if (response.StatusCode.ToString() == "OK")
+            {
+                Api_CommonResponse objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                MenusList = JsonConvert.DeserializeObject<List<Dropdown>>(objResponse.data.ToString());
+            }
+            return MenusList;
+        }
     }
 }
