@@ -181,6 +181,7 @@
 ***********************************-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="~/Content/globalDomain.js"></script>
 @*
     <script src="~/Content/CountrySelect/build/js/countrySelect.js"></script>
     <script>
@@ -229,7 +230,7 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            url: "/Common/GetCountryStateCity",
+            url: GetglobalDomain()+"/Common/GetCountryStateCity",
             dataType: 'json',
             type: 'Post',
             cache: false,

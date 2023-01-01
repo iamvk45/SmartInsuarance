@@ -29,7 +29,9 @@
     <div class="card">
         <div class="card-header">
             <h4 class="card-title" style="color: blanchedalmond;font-weight: bold;">ADD SPECIAL FEATURE</h4>
-            <a href="@Url.Action("PackageList", "Master")" class="btn btn-default pull-right" style="color: white;">Back</a>
+            @*<a href="@Url.Action("PackageList", "Master")" class="btn btn-default pull-right" style="color: white;">Back</a>*@
+
+            <a href="@Url.Action("PackageList", "Master")" style="color: blanchedalmond;font-weight: bold;"><i class="fas fa-arrow-left"></i> Back</a>
         </div>
         @*@using (Html.BeginForm("CreatePackageFunctionality", "Master", FormMethod.Post, new { @class = "formcreateupdate", @id = "frmAddUpdate", enctype = "multipart/form-data" }))
 
@@ -119,12 +121,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script src="~/Content/Template/js/jScript.js"></script>
+<script src="~/Content/globalDomain.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $(".singleselect").select2();
         var Id = $("#iPk_packid").val();
-    
+
         BindPackageFeature(Id);
         $("#iFetId").change(function () {
             var Id = $(this).val();
@@ -204,13 +207,13 @@
         $("#save").click(function () {
             debugger;
             var iFetId = $("#iFetId").val();
-         
+
             var ivalidityvalue = $("#ivalidityvalue").val();
             var ivalidityid = $("#ivalidityid").val();
             var drate = $("#drate").val();
             var iisdiscount = $("#iisdiscount").val() == '0' ? false : true;
             var idistyp = $("#idistyp").val();
-            
+
             var iPk_packid = $("#iPk_packid").val();
             var ddisvalue = $("#ddisvalue").val();
             var ddisplayvalue = $("#ddisplayvalue").val();
@@ -234,7 +237,7 @@
 
             });
             $.ajax({
-                url: "/AjaxRequest/InsertPackageFeature",
+                url: GetglobalDomain()+"/AjaxRequest/InsertPackageFeature",
                 type: 'POST',
                 dataType: "json",
                 data: Params,
@@ -251,7 +254,7 @@
                         })
                         var Id = $("#iPk_packid").val();
                         BindPackageFeature(Id);
-                       /* var Id = $("#iPk_packid").val();*/
+                        /* var Id = $("#iPk_packid").val();*/
                         //var iLicenseid = $("#iLicenseid").val();
                         //BindPackageFunction(Id, iLicenseid)
                         ResetField();

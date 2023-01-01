@@ -71,6 +71,32 @@ namespace SmartInsuarance.Controllers
           
             return dropDowns;
         }
+        public List<EnumMaster> GetDataCustomEnum(string selectionType)
+        {
+            //var json = JsonConvert.SerializeObject(geographical);
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Common/GetFillDropDowns?selectionType=" + selectionType);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            Api_CommonResponse _CommonResponse = new Api_CommonResponse();
+            List<EnumMaster> dropDowns = new List<EnumMaster>();
+
+            if (response.StatusCode.ToString() == "OK")
+            {
+                _CommonResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if(_CommonResponse.data != null)
+                {
+                    dropDowns = JsonConvert.DeserializeObject<List<EnumMaster>>(_CommonResponse.data.ToString());
+
+                }
+            }
+          
+            return dropDowns;
+        }
         public List<ChildUsers> GetChildID(string parentID)
         {
             //var json = JsonConvert.SerializeObject(geographical);
@@ -164,10 +190,10 @@ namespace SmartInsuarance.Controllers
             }
             return insurance;
         }
-        public List<LicenseConfigDetails> GetLicenseConfigData()
+        public List<LicenseConfigDetails> GetLicenseConfigData(string userID)
         {
             List<LicenseConfigDetails> licenseConfigList = new List<LicenseConfigDetails>();
-            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/GetLicenseConfigList");
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/GetLicenseConfigList?userID="+ userID);
             var request = new RestRequest(Method.GET);
             request.AddHeader("cache-control", "no-cache");
             //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");

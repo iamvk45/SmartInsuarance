@@ -12,8 +12,9 @@
         padding-top: 10px !important;
         padding-bottom: 10px !important
     }
-    .hidden{
-        display:none;
+
+    .hidden {
+        display: none;
     }
 </style>
 
@@ -23,23 +24,21 @@
         <div class="card-header">
             <h4 class="card-title" style="color: blanchedalmond;font-weight: bold;">Package Master</h4>
         </div>
-       
-          
+
+
         <div class="card-body row">
             @using (Html.BeginForm("SavePackage", "Master", FormMethod.Post, new { @class = "formcreateupdate", @id = "frmAddUpdate", enctype = "multipart/form-data" }))
             {
                 <input type="hidden" name="iPk_PackId" id="iPk_PackId" value="@ViewBag.id" />
 
-                <div class="form-group is-empty row Paddingtop1">
+                <div class="form-group is-empty row">
                     <div class="col-sm-4">
-
+                        <label class="form-label">Start Date</label>
                         <input type="date" class="form-control" name="dtInsertStrDt" value="" id="dtInsertStrDt" required />
-                        <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Start Date</small>
                     </div>
                     <div class="col-sm-4">
-
+                        <label class="form-label">End Date</label>
                         <input type="date" class="form-control" name="dtInsertEndDt" value="" id="dtInsertEndDt" required />
-                        <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">End Date</small>
                     </div>
                 </div>
                 <div class="form-group is-empty row Paddingtop1">
@@ -73,260 +72,261 @@
                     <label for="nameInput" class="col-sm-3 control-label">Is GstApplicable</label>
                     <div class="col-sm-5">
                         <input type="checkbox" id="iisgstapplicable" name="iisgstapplicable" class="col-sm-2" value="0">
-                        
+
                     </div>
                     <div class="col-sm-2">
                         <input type="text" id="gst" name="gst" value="18" class="form-control col-sm-2 hidden" style="
     margin-left: -457px;
 " readonly />
                     </div>
+                </div>
+
+
+                <footer class="form-footer" @*style="text-align:end;background: black;"*@>
+                    <div class="pull-right" style="text-align:end;">
+                        <a href="@Url.Action("PackageList", "Master")" class="btn btn-default" style="color: black;">DISCARD</a>
+                        <button class="btn btn-primary" id="save">SAVE</button>
                     </div>
-
-
-                    <footer class="form-footer" @*style="text-align:end;background: black;"*@>
-                        <div class="pull-right" style="text-align:end;">
-                            <a href="@Url.Action("PackageList", "Master")" class="btn btn-default" style="color: black;">DISCARD</a>
-                            <button class="btn btn-primary" id="save">SAVE</button>
-                        </div>
-                    </footer>
-                }
+                </footer>
+            }
 
             <div class="col-sm-12 row" id="licedetail">
 
                 <!--<div class="card Card--shadow--medium radiuscard reversecard" style="box-shadow: 0 8px 6px -6px black;">
-        <header class="card-heading card-default" style="padding: 5px;background: darkgray;">
-            <h2 class="card-title">
-                ADD FUNCTIONALITY TO PACKAGE
-            </h2>
+                <header class="card-heading card-default" style="padding: 5px;background: darkgray;">
+                    <h2 class="card-title">
+                        ADD FUNCTIONALITY TO PACKAGE
+                    </h2>
 
-        </header>
-        <div>
-            <div class="form-group is-empty row Paddingtop1">-->
+                </header>
+                <div>
+                    <div class="form-group is-empty row Paddingtop1">-->
                 @*<label for="nameInput" class="col-sm-2 control-label">Covered License</label>*@
 
                 <!--<div class="col-sm-3">
-                        <select class="singleselect " name="iMnuId" id="iMnuId">
-                            <option value="">Select Menu </option>
+                                <select class="singleselect " name="iMnuId" id="iMnuId">
+                                    <option value="">Select Menu </option>
 
-                        </select>
+                                </select>
 
+                            </div>
+                            <div class="col-sm-3">
+                                <select class="singleselect hidden" name="iSubMnuId" id="iSubMnuId">
+                                    <option value="">Select Submenus </option>
+
+                                </select>
+                            </div>
+
+                            <a href="javascript:;" class="btn btn-primary col-sm-2" id="Add">Add</a>
+                        </div>
+                        <div class="table-responsive  col-sm-12">
+                            <table class="table table-responsive-md" id="FuncPackage">
+                                <thead>
+                                    <tr>
+                                        <th>Menu</th>
+                                        <th>Submenu</th>
+                                        <th>UOM</th>
+                                        <th>Period</th>
+                                        <th>Rate</th>
+                                        <th>IsDiscount</th>
+                                        <th>Discount Type</th>
+                                        <th>value</th>
+                                        <th>Display Value</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="col-sm-3">
-                        <select class="singleselect hidden" name="iSubMnuId" id="iSubMnuId">
-                            <option value="">Select Submenus </option>
-
-                        </select>
-                    </div>
-
-                    <a href="javascript:;" class="btn btn-primary col-sm-2" id="Add">Add</a>
-                </div>
-                <div class="table-responsive  col-sm-12">
-                    <table class="table table-responsive-md" id="FuncPackage">
-                        <thead>
-                            <tr>
-                                <th>Menu</th>
-                                <th>Submenu</th>
-                                <th>UOM</th>
-                                <th>Period</th>
-                                <th>Rate</th>
-                                <th>IsDiscount</th>
-                                <th>Discount Type</th>
-                                <th>value</th>
-                                <th>Display Value</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbody">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>-->
+                </div>-->
 
             </div>
 
 
         </div>
-        </div>
+    </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script src="~/Content/Template/js/jScript.js"></script>
-<script type="text/javascript">
-  
-    $(document).ready(function () {
-        debugger;
-        $(".singleselect").select2();
-        $("#iisgstapplicable").change(function () {
-            if ($(this).is(':checked')) {
-                $("#gst").removeClass('hidden');
-            }
-            else {
-                $("#gst").addClass('hidden');
-            }
+    <script src="~/Content/Template/js/jScript.js"></script>
+    <script src="~/Content/globalDomain.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            debugger;
+            $(".singleselect").select2();
+            $("#iisgstapplicable").change(function () {
+                if ($(this).is(':checked')) {
+                    $("#gst").removeClass('hidden');
+                }
+                else {
+                    $("#gst").addClass('hidden');
+                }
 
 
+            });
+            /*    BindFuncPackage();*/
+            $("#iUsrTyp").change(function () {
+                BindLicName($(this).val());
+            });
+            $("#iFk_LiceId").change(function () {
+                let Id = $(this).val();
+
+                $.ajax({
+                    url: GetglobalDomain()+'/AdminAjaxRequest/DetailsOfLicense?Id=' + Id,
+                    type: 'POST',
+                    dataType: "text",
+                    success: function (response) {
+                        $("#licedetail").html(response);
+                        /*BindSubmenus(Id, 0);*/
+                    }
+                });
+
+
+            });
+            //$("#iMnuId").change(function () {
+            //    let Id = $(this).val();
+            //    BindSubmenus(Id, 1)
+            //});
+            //$("#Add").click(function () {
+            //    debugger;
+            //    var iMnuId = $("#iMnuId").val();
+            //    var iFk_PackMstId=$("#iPK_PackageMstId").val();
+            //    if (iMnuId == '') {
+            //        alert('Please select Menu');
+            //        return false;
+            //    }
+            //    var iSubMnuId = $("#iSubMnuId").val();
+            //    if (iSubMnuId == '') {
+            //        alert('Please select SubMenu');
+            //        return false;
+            //    }
+            //    var iLicMstId = $("#iLicNameId").val();
+            //        var Params = JSON.stringify(
+            //        {
+            //                MnuId: iMnuId,
+            //                LicMstId: iLicMstId,
+            //                SubMenuId: iSubMnuId,
+            //                iFk_PackMstId: iFk_PackMstId
+
+            //        });
+
+            //    $.ajax({
+            //        url: "/AjaxRequest/InsertPackageFunctionalityTemp",//GetglobalDomain() +
+            //        type: 'POST',
+            //        dataType: "json",
+            //        contentType: "application/json",
+            //        data: Params,
+            //        success: function (response) {
+            //            debugger;
+            //            if (response.isvalid == 1) {
+
+            //                Swal.fire({
+            //                    position: 'center',
+            //                    icon: 'success',
+            //                    title: response.msg,
+            //                    showConfirmButton: false,
+            //                    timer: 3000
+            //                })
+
+
+
+            //            }
+            //        }
+            //    });
+            //});
         });
-    /*    BindFuncPackage();*/
-        $("#iUsrTyp").change(function () {
-            BindLicName($(this).val());
-        });
-        $("#iFk_LiceId").change(function () {
-            let Id = $(this).val();
-         
+
+
+
+        function BindLicName(Id) {
+
+            var Model = {
+                Id: Id
+
+            }
             $.ajax({
-                url: '/AdminAjaxRequest/DetailsOfLicense?Id='+Id,
-                type: 'POST',
-                dataType: "text",
-                success: function (response) {
-                    $("#licedetail").html(response);
-                    /*BindSubmenus(Id, 0);*/
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: GetglobalDomain()+"/AjaxRequest/GetBindLicense",
+                dataType: 'json',
+                type: 'Post',
+                cache: false,
+                data: JSON.stringify(Model),
+                success: function (data) {
+
+                    var submenuList = data.Data;
+                    //console.table(submenuList)
+
+                    var selectBody = "<option value=0>Select License Name</option> ";
+
+                    submenuList.forEach(item => {
+
+                        selectBody += `<option value=${item.Id}>${item.Text}</option>`
+
+                    });
+
+                    $('#iFk_LiceId').html('')
+                    $('#iFk_LiceId').append(selectBody);
+
+
+                },
+                error: function (d) {
+                    console.log(d);
                 }
             });
 
-
-        });
-        //$("#iMnuId").change(function () {
-        //    let Id = $(this).val();
-        //    BindSubmenus(Id, 1)
-        //});
-        //$("#Add").click(function () {
-        //    debugger;
-        //    var iMnuId = $("#iMnuId").val();
-        //    var iFk_PackMstId=$("#iPK_PackageMstId").val();
-        //    if (iMnuId == '') {
-        //        alert('Please select Menu');
-        //        return false;
-        //    }
-        //    var iSubMnuId = $("#iSubMnuId").val();
-        //    if (iSubMnuId == '') {
-        //        alert('Please select SubMenu');
-        //        return false;
-        //    }
-        //    var iLicMstId = $("#iLicNameId").val();
-        //        var Params = JSON.stringify(
-        //        {
-        //                MnuId: iMnuId,
-        //                LicMstId: iLicMstId,
-        //                SubMenuId: iSubMnuId,
-        //                iFk_PackMstId: iFk_PackMstId
-
-        //        });
-
-        //    $.ajax({
-        //        url: "/AjaxRequest/InsertPackageFunctionalityTemp",//GetglobalDomain() +
-        //        type: 'POST',
-        //        dataType: "json",
-        //        contentType: "application/json",
-        //        data: Params,
-        //        success: function (response) {
-        //            debugger;
-        //            if (response.isvalid == 1) {
-
-        //                Swal.fire({
-        //                    position: 'center',
-        //                    icon: 'success',
-        //                    title: response.msg,
-        //                    showConfirmButton: false,
-        //                    timer: 3000
-        //                })
-                      
-
-
-        //            }
-        //        }
-        //    });
-        //});
-    });
-
-  
-
-    function BindLicName(Id) {
-
-        var Model = {
-            Id: Id
-
         }
-        $.ajax({
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            url: "/AjaxRequest/GetBindLicense",
-            dataType: 'json',
-            type: 'Post',
-            cache: false,
-            data: JSON.stringify(Model),
-            success: function (data) {
+            //function BindSubmenus(Id,Type) {
 
-                var submenuList = data.Data;
-                //console.table(submenuList)
+            //    var Model = {
+            //        Id: Id
 
-                var selectBody = "<option value=0>Select License Name</option> ";
+            //    }
+            //    $.ajax({
+            //        headers: {
+            //            'Accept': 'application/json',
+            //            'Content-Type': 'application/json'
+            //        },
+            //        url: "/AjaxRequest/GetPackageSelectMenuSubmenulist",
+            //        dataType: 'json',
+            //        type: 'Post',
+            //        cache: false,
+            //        data: JSON.stringify(Model),
+            //        success: function (data) {
+            //            debugger;
+            //            var submenuList = data.Data;
+            //            //console.table(submenuList)
+            //            if (Type != 0) {
+            //                var selectBody = "<option value=0>Select Submenus</option> ";
+            //            }
+            //            else {
+            //                var selectBody = "<option value=0>Select Menus</option> ";
+            //            }
+            //            submenuList.forEach(item => {
 
-                submenuList.forEach(item => {
+            //                selectBody += `<option value=${item.Id}>${item.Text}</option>`
 
-                    selectBody += `<option value=${item.Id}>${item.Text}</option>`
+            //            });
+            //            if (Type != 0) {
+            //                $('#iSubMnuId').html('')
+            //                $('#iSubMnuId').append(selectBody);
 
-                });
+            //            }
+            //            else {
+            //                $('#iMnuId').html('')
+            //                $('#iMnuId').append(selectBody);
+            //                $('#iSubMnuId').html('<option value=0>Select Submenus</option>');
+            //            }
+            //        },
+            //        error: function (d) {
+            //            console.log(d);
+            //        }
+            //    });
 
-                $('#iFk_LiceId').html('')
-                $('#iFk_LiceId').append(selectBody);
-
-
-            },
-            error: function (d) {
-                console.log(d);
-            }
-        });
-
-    }
-    //function BindSubmenus(Id,Type) {
-
-    //    var Model = {
-    //        Id: Id
-
-    //    }
-    //    $.ajax({
-    //        headers: {
-    //            'Accept': 'application/json',
-    //            'Content-Type': 'application/json'
-    //        },
-    //        url: "/AjaxRequest/GetPackageSelectMenuSubmenulist",
-    //        dataType: 'json',
-    //        type: 'Post',
-    //        cache: false,
-    //        data: JSON.stringify(Model),
-    //        success: function (data) {
-    //            debugger;
-    //            var submenuList = data.Data;
-    //            //console.table(submenuList)
-    //            if (Type != 0) {
-    //                var selectBody = "<option value=0>Select Submenus</option> ";
-    //            }
-    //            else {
-    //                var selectBody = "<option value=0>Select Menus</option> ";
-    //            }
-    //            submenuList.forEach(item => {
-
-    //                selectBody += `<option value=${item.Id}>${item.Text}</option>`
-
-    //            });
-    //            if (Type != 0) {
-    //                $('#iSubMnuId').html('')
-    //                $('#iSubMnuId').append(selectBody);
-
-    //            }
-    //            else {
-    //                $('#iMnuId').html('')
-    //                $('#iMnuId').append(selectBody);
-    //                $('#iSubMnuId').html('<option value=0>Select Submenus</option>');
-    //            }
-    //        },
-    //        error: function (d) {
-    //            console.log(d);
-    //        }
-    //    });
-
-    //}
-</script>
+            //}
+    </script>

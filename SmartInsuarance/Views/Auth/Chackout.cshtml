@@ -1,7 +1,14 @@
 ﻿
 @{
     Layout = null;
+    var pack = (List<SmartInsuarance.Models.PackDetails>)ViewBag.packs;
+
+    var GST = (pack[0].Total_displayvalue * 18) / 100;
+    var totalSum = ((pack[0].Total_displayvalue) + GST);
+
 }
+
+
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 
@@ -10,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
 
     <!-- PAGE TITLE HERE -->
-    <title>Smart ensure-Login</title>
+    <title>Smart ensure-Checkout</title>
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="~/Content/Template/images/favicon.png" />
     <link href="~/Content/Template/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
@@ -27,45 +34,45 @@
                     <div class="card-body p-0">
                         <div class="row m-0">
                             <div class="col-xl-6 col-md-6 sign text-center">
-                                <div>
+                                <div style="margin-top: -30px;">
                                     <div class="text-center my-5" style="display: flex; place-content: center; align-items: baseline">
                                         @* <a href="javascript:void(0);"><img src="~/Content/Template/images/logo-full.png" alt=""></a>*@
                                         <i class="fa fa-2xl fa-dollar-sign" style="color: #2681b5"></i><h2 style="color: #2681b5">mart ensure</h2>
                                     </div>
-                                    <img src="~/Content/Template/images/log.png" class="img-fix bitcoin-img sd-shape7" style="width:75%;height:75%" />
+                                    <img src="~/Content/Template/images/Checkout.png" class="img-fix bitcoin-img sd-shape7" style="width:75%;height:75%;margin-top: -65px;" />
                                 </div>
                             </div>
                             <div class="col-xl-6 col-md-6">
                                 <div class="sign-in-your py-4 px-2">
-                                    <h4 class="fs-20" style="margin-bottom: 20px;">Sign in your account</h4>
-                                    <span>Welcome back! Login with your data that you entered<br> during registration</span> <br />
+                                    <h4 class="fs-20" style="margin-bottom: 20px;">Checkout</h4>
+                                    @*<span>Welcome back! Login with your data that you entered<br> during registration</span>*@
                                     @*<div class="login-social">
                                             <a href="javascript:void(0);" class="btn d-block btn-primary my-3"><i class="fab fa-google me-2"></i>Login with Google</a>
                                             <a href="javascript:void(0);" class="btn d-block btn-secondary my-3"><i class="fab fa-facebook-f me-2"></i>Login with Facebook</a>
                                         </div>*@
                                     <form action="@Url.Action("Login","Auth")" method="post" class="mt-5">
-                                        <div class="mb-3">
-                                            <label class="mb-1"><strong>Email</strong></label>
-                                            <input type="email" name="Email" class="form-control" id="username" value="hello@example.com">
+                                        <div class="col-xl-12 col-md-12">
+                                            <table class="table primary-table-bordered table-striped">
+                                                <thead style="background: #ffb16e;">
+                                                    <tr><th style="color:black;">Item</th><th style="color: black;">Rate</th></tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{
+                                                        if (pack != null)
+                                                        {
+                                                            <tr><td>@pack[0].sPackName</td><td>&#x20B9; @pack[0].Total_displayvalue</td></tr>
+                                                            <tr><td>GST (18%)</td><td>&#x20B9; @GST</td></tr>
+                                                            <tr><td>Total Package Cost</td><td>&#x20B9; @totalSum</td></tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                            <input type="checkbox" class="form-check-input" id="chkTnc">
+                                            <label for="chkTnc" />I Agree terms and condition
                                         </div>
-                                        <div class="mb-3">
-                                            <label class="mb-1"><strong>Password</strong></label>
-                                            <input type="password" name="Password" class="form-control" id="userpassword">
-                                        </div>
-                                        <div class="row d-flex justify-content-between mt-4 mb-2">
-                                            @*<div class="mb-3">
-                                                    <div class="form-check custom-checkbox ms-1">
-                                                        <input type="checkbox" class="form-check-input" id="basic_checkbox_1">
-                                                        <label class="form-check-label" for="basic_checkbox_1">Remember my preference</label>
-                                                    </div>
-                                                </div>*@
-                                            <div class="mb-3">
-                                                <a href="javascript:void(0);">Forgot Password?</a>
-                                            </div>
-                                        </div>
-                                        <div class="text-center">
-                                            <button type="button" id="btnlogin" class="btn btn-primary btn-block">Login <i class="fa fa-sign-in-alt"></i></button>
-                                            <button type="submit" id="btnsubmit" class="btn btn-primary btn-block" style="display:none">Sign Me In <i class="fa fa-sign-in-alt"></i></button>
+                                        <div class="text-center" style="margin-top: 12px;">
+                                            <button type="button" id="btnlogin" class="btn btn-primary btn-block" style="background: #64d3ff; color: black"><i class="fa fa-coins"></i> Proceed For Online Payment</button>
+                                           @* <button type="submit" id="btnsubmit" class="btn btn-primary btn-block" style="display:none">Sign Me In <i class="fa fa-sign-in-alt"></i></button>*@
                                         </div>
                                     </form>
                                 </div>

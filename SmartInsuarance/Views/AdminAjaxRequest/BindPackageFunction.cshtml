@@ -8,13 +8,13 @@
     }
 }
 @*<style>
-    .trresult {
-        border: solid;
-        background: black;
-        color: azure;
-        font-weight: bold;
-    }
-</style>*@
+        .trresult {
+            border: solid;
+            background: black;
+            color: azure;
+            font-weight: bold;
+        }
+    </style>*@
 @{
 
     foreach (var firstitem in lstmenu)
@@ -25,44 +25,44 @@
         {
             j = 1;
             i = i + item.ddisplayvalue;
-<tr id="tr_@item.iPk_PackFunctId">
+            <tr id="tr_@item.iPk_PackFunctId">
 
-    <td>
+                <td>
 
-        <div class="d-flex">
+                    <div class="d-flex">
 
-            <a href="javascript:;" class="btn btn-danger shadow btn-xs sharp Delete" data-id="@item.iPk_PackFunctId" id="delete_@item.iPk_PackFunctId" onclick="Delete(@item.iPk_PackFunctId)"><i class="fa fa-trash"></i></a>
-        </div>
+                        <a href="javascript:;" class="btn btn-danger shadow btn-xs sharp Delete" data-id="@item.iPk_PackFunctId" id="delete_@item.iPk_PackFunctId" onclick="Delete(@item.iPk_PackFunctId)"><i class="fa fa-trash"></i></a>
+                    </div>
 
-    </td>
-    <td>@item.MenuName</td>
-    <td>@item.SubName</td>
-    <td>@item.ValidityName</td>
-    <td>@item.ivalidityvalue</td>
-    <td>@item.drate</td>
-    <td>@item.iisdiscount</td>
-    <td>@item.DisType</td>
-    <td>@item.ddisvalue</td>
-    <td style="font-weight:bold;color:black;">@item.ddisplayvalue</td>
-</tr>
+                </td>
+                <td>@item.MenuName</td>
+                <td>@item.SubName</td>
+                <td>@item.ValidityName</td>
+                <td>@item.ivalidityvalue</td>
+                <td>@item.drate</td>
+                <td>@item.iisdiscount</td>
+                <td>@item.DisType</td>
+                <td>@item.ddisvalue</td>
+                <td style="font-weight:bold;color:black;">@item.ddisplayvalue</td>
+            </tr>
         }
 
-        if(j==1)
-                {
-<tr class="trresult" style="border: solid; background: black; color: azure; font-weight: bold;">
-    <td colspan="9" style="text-align:end;">Total(Single Unit)</td>
-    <td>@i</td>
-</tr>
-<tr class="trresult" style="border: solid; background: black; color: azure; font-weight: bold;">
-    <td colspan="9" style="text-align:end;">Total(as per Qty)</td>
-    @{ 
-        decimal finalamount = 0;
-        finalamount = i * Convert.ToDecimal(firstitem.Qty);
-            }
- 
-    <td>@finalamount</td>
-</tr>
-
+        if (j == 1)
+        {
+            <tr class="trresult" style="border: solid; background: black; color: azure; font-weight: bold;">
+                <td colspan="9" style="text-align:end;">Total(Single Unit)</td>
+                <td>@i</td>
+            </tr>
+            <tr class="trresult" style="border: solid; background: black; color: azure; font-weight: bold;">
+                <td colspan="9" style="text-align:end;">Total(as per Qty)</td>
+                @{
+                    decimal finalamount = 0;
+                    finalamount = i * Convert.ToDecimal(firstitem.Qty);
                 }
+
+                <td>@finalamount</td>
+            </tr>
+
+        }
     }
 }

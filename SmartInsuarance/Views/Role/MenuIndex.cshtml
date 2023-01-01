@@ -18,11 +18,11 @@
                     <thead>
                         <tr>
                             @*<th style="width:50px;">
-            <div class="form-check custom-checkbox checkbox-success check-lg me-3">
-                <input type="checkbox" class="form-check-input" id="checkAll" required="">
-                <label class="form-check-label" for="checkAll"></label>
-            </div>
-        </th>*@
+                                    <div class="form-check custom-checkbox checkbox-success check-lg me-3">
+                                        <input type="checkbox" class="form-check-input" id="checkAll" required="">
+                                        <label class="form-check-label" for="checkAll"></label>
+                                    </div>
+                                </th>*@
                             <th>#No</th>
                             <th>Menu Name</th>
                             <th>Controller Name</th>
@@ -44,7 +44,7 @@
                                     <td> @item.ActionMethod</td>
                                     <td>
                                         <label class="toggle">
-                                            <input class="toggle-checkbox" type="checkbox" id="Status" name="Status" value="@item.Status" @(item.Status==1?"checked":"")>
+                                            <input class="toggle-checkbox" type="checkbox" id="Status" name="Status" value="@item.Status" @(item.Status == 1 ? "checked" : "")>
                                             <div class="toggle-switch"></div>
                                             @*<span class="toggle-label">Bluetooth</span>*@
                                         </label>
@@ -59,7 +59,7 @@
                                 i++;
                             }
                         }
-                     
+
                     </tbody>
                 </table>
             </div>
