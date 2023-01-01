@@ -50,7 +50,7 @@
                                 <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Feature Amount</small>
                             </div>
                             <div class="col-sm-4 Discountdetail" id="Discountdetail" >
-                                <select class="singleselect col-sm-8" id="iPackFunt_DisTyp" name="iPackFunt_DisTyp" readonly>
+                                <select class="singleselect col-sm-8" id="iPackFunt_DisTyp" name="iPackFunt_DisTyp" @(Model.iPackFunt_iStts != null && Model.iPackFunt_iStts != 1 ? "readonly" : "")>
                                     <option value="">Select </option>
                                     <option @(Model.iPackFunt_DisTyp != null && Model.iPackFunt_DisTyp == 1 ? "selected" : "") value="1">In Persentage</option>
                                     <option @(Model.iPackFunt_DisTyp != null && Model.iPackFunt_DisTyp == 2  ? "selected" : "") value="2">In Amount</option>
@@ -58,7 +58,7 @@
 
                             </div>
                             <div class="col-sm-2 Discountdetail">
-                                <input type="text" id="dPackFunt_Val" value="@(Model.dPackFunt_Val != null ? Model.dPackFunt_Val : 0)" class="form-control col-sm-4" placeholder="Enter Value" name="dPackFunt_Val" readonly>
+                                <input type="text" id="dPackFunt_Val" value="@(Model.dPackFunt_Val != null ? Model.dPackFunt_Val : 0)" class="form-control col-sm-4" placeholder="Enter Value" name="dPackFunt_Val" @(Model.iPackFunt_iStts != null && Model.iPackFunt_iStts != 1 ? "readonly" : "")>
                             </div>
                             <div class="col-sm-2">
 

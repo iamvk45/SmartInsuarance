@@ -122,4 +122,5 @@ namespace SmartInsuarance.Models
         public string Color { get; set; }
         public string UserRelation { get; set; }
     }
+  
 }

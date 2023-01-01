@@ -166,6 +166,7 @@
     <Content Include="Content\CountrySelect\build\js\countrySelect.min.js" />
     <Content Include="Content\CountrySelect\src\js\countrySelect.js" />
     <Content Include="Content\Custom.css" />
+    <Content Include="Content\globalDomain.js" />
     <Content Include="Content\select2\css\select2.css" />
     <Content Include="Content\select2\js\select2.js" />
     <Content Include="Content\Template\css\perfect-scrollbar.css" />
@@ -6940,6 +6941,13 @@
     <Content Include="Views\Admin\LicenseConfiguration.cshtml" />
     <Content Include="Views\Admin\UserLicenseConfiguration.cshtml" />
     <Content Include="Views\Master\AdminFlowDiagram.cshtml" />
+    <Content Include="Views\Role\AddDepartment.cshtml" />
+    <Content Include="Views\Role\RoleMasterIndex.cshtml" />
+    <Content Include="Views\Role\RoleMasterCreate.cshtml" />
+    <Content Include="Views\Role\AddGroup.cshtml" />
+    <Content Include="Views\Role\RoleMappingDepartmentandGroupIndex.cshtml" />
+    <Content Include="Views\Role\RoleMappingDepartmentandGroupCreate.cshtml" />
+    <Content Include="Views\Role\Userpermission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
