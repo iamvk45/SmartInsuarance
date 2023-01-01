@@ -1,0 +1,166 @@
+﻿@{
+    ViewBag.Title = "Registration Report";
+    Layout = "~/Views/Shared/_Layout_new.cshtml";
+
+}
+
+
+<link href="~/Content/Template/select2/css/select2.css" rel="stylesheet" />
+@*<link href="~/Content/CountrySelect/build/css/countrySelect.css" rel="stylesheet" />
+    <link href="~/Content/CountrySelect/build/css/demo.css" rel="stylesheet" />*@
+<link href="~/Content/Custom.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title" style="color: blanchedalmond;font-weight: bold;">Registration Report</h4>
+                <div class="btnContainer">
+                    <button class="btn btn-success" style="background: #26b326;border: green;"><i class="fa fa-file-excel" style="font-size: 20px;"></i> Excel</button>
+                    <button class="btn btn-secondary" style="background: #e91e1e;border: black;"><i class="fa fa-file-pdf" style="font-size: 20px;"></i> PDF</button>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <div class="row col-lg-12 col-md-6">
+                    <div class="col-sm-3">
+                        <label class="form-label"><strong>UserType</strong></label><br />
+                        <select class="singleselect" id="ddlUserType">
+                            <option value="0" role=separator>Select All</option>
+                            <option value="1" role=separator>Agent</option>
+                            <option value="2" role=separator>Broker</option>
+                            <option value="3" role=separator>Co-oprate Agent</option>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <label class="form-label"><strong>Registration Type</strong></label><br />
+                        <div class="form-group" style="display: flex; align-items: center;">
+                            <div class="col-xl-4 col-xxl-6 col-6">
+                                <div class="form-check custom-checkbox mb-3 checkbox-primary">
+                                    <input type="radio" class="form-check-input" id="rbtn_RType_paid" value="paid" name="rbtng_RType">
+                                    <label class="form-check-label" for="rbtn_RType_paid">Paid</label>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-xxl-6 col-6">
+                                <div class="form-check custom-checkbox mb-3 checkbox-primary">
+                                    <input type="radio" class="form-check-input" id="rbtn_RType_free" value="free" name="rbtng_RType">
+                                    <label class="form-check-label" for="rbtn_RType_free">Free</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <label class="form-label"><strong>Package</strong></label><br />
+                        <select class="singleselect" id="ddlPackage">
+                            <option value="0" role=separator>Select All</option>
+                            
+                        </select>
+                    </div>
+                </div>
+                <hr/>
+                <div class="col-lg-12 col-md-6 mt-3">
+                    <div class="table-responsive">
+                        <table class="table table-responsive-md table-striped">
+                            <thead class="thead-success">
+                                <tr>
+                                    <th style="width:80px;"><strong>#</strong></th>
+                                    <th hidden><strong>USERCODE</strong></th>
+                                    <th><strong>NAME</strong></th>
+                                    <th><strong>EMAIL</strong></th>
+                                    <th><strong>PHONE NO</strong></th>
+                                    <th><strong>USER TYPE</strong></th>
+                                    <th><strong>PACKAGE</strong></th>
+                                    <th><strong>EXPIRE ON</strong></th>
+                                    <th><strong>PRICE</strong></th>
+                                    <th><strong>STATUS</strong></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td colspan="10" style="text-align:center">No Data Available</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="~/Content/globalDomain.js"></script>
+@*
+    <script src="~/Content/CountrySelect/build/js/countrySelect.js"></script>
+    <script>
+        $("#countrySelect").countrySelect({
+            defaultStyling: "inside"
+
+        });
+    </script>*@
+<script>
+    $(document).ready(function () {
+        $(".singleselect").select2();
+        //$('.form-check-input').click(function () {
+        //    var status = 0;
+        //    var d = $(this).val();
+
+        //    if (d) {
+        //        status = 1;
+        //    }
+
+        //    var userCode = $(this).data("id");
+
+        //    console.log(status);
+        //    console.log(userCode);
+        //    //ActiveInActiveUser(userCode, status);
+
+        //    //setTimeout(function () {
+        //    //    location.reload();
+        //    //}, 3000);
+
+
+        //});
+    });
+    function ActiveInActiveUser(userID, status) {
+        var Content = {
+            userCode: userID,
+            isActive: parseInt(status),
+        }
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            url: GetglobalDomain() + "/Admin/ActiveInActiveUser",
+            dataType: 'json',
+            type: 'Post',
+            cache: false,
+            data: JSON.stringify(Content),
+            success: function (data) {
+                //console.log('ajax');
+                //console.log(data.Message);
+                //console.log(data);
+
+                if (data.StatusCode == 1) {
+                    Swal.fire({
+                        title: "Success",
+                        text: "Details Updated Successfully..!",
+                        icon: "success",
+                        showCancelButton: false,
+                    });
+                }
+                setTimeout(function () {
+                    location.reload();
+                }, 3000);
+
+            },
+            error: function (d) {
+                console.log(d);
+                //alert("404. Please wait until the File is Loaded.");
+            }
+        });
+    }
+
+</script>

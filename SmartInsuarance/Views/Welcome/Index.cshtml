@@ -46,6 +46,7 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Welcome,<span id="spnusername" style="color: #0a7bbc;">@username </span><span id="spnusertype" style="font-size: 16px;color: seagreen;display:none">@usertype</span></h4>
+                <a href="@Url.Action("Profilestatus","User")" class="btn btn-success">Continue to configuration <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="card-body">
                 <h6>Welcome to smart ensure,enjoy your trial period</h6>
@@ -89,7 +90,7 @@
                     <div class="col-6">
                         <div class="card" style="margin-top: -60px;">
                             <div class="card-body">
-                                <img src="~/Content/Template/images/InsuranceWelcome.jpeg"style="width:59rem" />
+                                <img src="~/Content/Template/images/InsuranceWelcome.jpeg" style="width:59rem" />
                             </div>
                         </div>
                     </div>
@@ -99,7 +100,7 @@
                 <p id="pdisclaimer">Disclaimer: If verification is not completed you can't get access to the system</p>
             </div>
             <div class="card-footer" style="text-align: end;">
-                <a href="@Url.Action("Profilestatus","User")" class="btn btn-success">Continue to configuration <i class="fas fa-arrow-right"></i></a>
+                @*<a href="@Url.Action("Profilestatus","User")" class="btn btn-success">Continue to configuration <i class="fas fa-arrow-right"></i></a>*@
             </div>
         </div>
     </div>

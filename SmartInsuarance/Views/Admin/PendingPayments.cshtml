@@ -231,6 +231,7 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="~/Content/globalDomain.js"></script>
 @*
     <script src="~/Content/CountrySelect/build/js/countrySelect.js"></script>
     <script>
@@ -266,7 +267,7 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            url: "/Admin/ActiveTrialUser",
+            url: GetglobalDomain()+"/Admin/ActiveTrialUser",
             dataType: 'json',
             type: 'Post',
             cache: false,
@@ -299,7 +300,7 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            url: "/Admin/GetuserDetails?userID=" + userID,
+            url: GetglobalDomain()+"/Admin/GetuserDetails?userID=" + userID,
             dataType: 'json',
             type: 'Post',
             cache: false,

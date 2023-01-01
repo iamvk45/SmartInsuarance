@@ -1,6 +1,6 @@
 ﻿function BindTableRate() {
     $.ajax({
-        url: '/AdminAjaxRequest/BindSubmenu',
+        url: GetglobalDomain() + '/AdminAjaxRequest/BindSubmenu',
         type: 'POST',
         dataType: "text",
         success: function (response) {
@@ -12,7 +12,7 @@
 
 function BindPackageFunction(Id, Licenseid) {
     $.ajax({
-        url: '/AdminAjaxRequest/BindPackageFunction?Id=' + Id + '&Licenseid=' + Licenseid,
+        url: GetglobalDomain() + '/AdminAjaxRequest/BindPackageFunction?Id=' + Id + '&Licenseid=' + Licenseid,
         type: 'POST',
         dataType: "text",
         success: function (response) {
@@ -23,7 +23,7 @@ function BindPackageFunction(Id, Licenseid) {
 }
 function BindPackageFeature(Id) {
     $.ajax({
-        url: '/AdminAjaxRequest/BindPackageFeature?Id=' + Id,
+        url: GetglobalDomain() + '/AdminAjaxRequest/BindPackageFeature?Id=' + Id,
         type: 'POST',
         dataType: "text",
         success: function (response) {
@@ -36,7 +36,7 @@ function BindFuncPackage() {
     debugger;
     var iFk_PackMstId = $("#iPK_PackageMstId").val();
     $.ajax({
-        url: '/AdminAjaxRequest/BindFuncPackage?iFk_PackMstId=' + iFk_PackMstId,
+        url: GetglobalDomain() + '/AdminAjaxRequest/BindFuncPackage?iFk_PackMstId=' + iFk_PackMstId,
         type: 'POST',
         dataType: "text",
         success: function (response) {

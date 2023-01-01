@@ -143,9 +143,11 @@
     </Compile>
     <Compile Include="Helper\Api_CommonResponse.cs" />
     <Compile Include="Helper\CommonFunction.cs" />
+    <Compile Include="Models\EnumMaster.cs" />
     <Compile Include="Models\FillDropDown.cs" />
     <Compile Include="Models\MasterModel.cs" />
     <Compile Include="Models\License.cs" />
+    <Compile Include="Models\PackDetails.cs" />
     <Compile Include="Models\Roll.cs" />
     <Compile Include="Models\PaymentTracking.cs" />
     <Compile Include="Models\PendingPayments.cs" />
@@ -5168,6 +5170,7 @@
     <Content Include="Content\Template\images\card\card33.jpg" />
     <Content Include="Content\Template\images\card\card4.png" />
     <Content Include="Content\Template\images\card\card44.jpg" />
+    <Content Include="Content\Template\images\Checkout.png" />
     <Content Include="Content\Template\images\contacts\1.jpg" />
     <Content Include="Content\Template\images\contacts\10.jpg" />
     <Content Include="Content\Template\images\contacts\11.jpg" />
@@ -5307,6 +5310,7 @@
     <Content Include="Content\Template\images\profile\small\pic8.jpg" />
     <Content Include="Content\Template\images\profile\small\pic9.jpg" />
     <Content Include="Content\Template\images\qr.png" />
+    <Content Include="Content\Template\images\Registration.png" />
     <Content Include="Content\Template\images\roll\img1.png" />
     <Content Include="Content\Template\images\roll\img2.png" />
     <Content Include="Content\Template\images\roll\img3.png" />
@@ -6948,6 +6952,15 @@
     <Content Include="Views\Role\RoleMappingDepartmentandGroupIndex.cshtml" />
     <Content Include="Views\Role\RoleMappingDepartmentandGroupCreate.cshtml" />
     <Content Include="Views\Role\Userpermission.cshtml" />
+    <Content Include="Views\Master\EnumMaster.cshtml" />
+    <Content Include="Views\Admin\RegisteredUser.cshtml" />
+    <Content Include="Views\Auth\LoginAlt.cshtml" />
+    <Content Include="Views\Auth\Chackout.cshtml" />
+    <Content Include="Views\Auth\Register.cshtml" />
+    <Content Include="Views\Admin\RegistrationReport.cshtml" />
+    <Content Include="Views\Admin\EarningReport.cshtml" />
+    <Content Include="Views\Auth\Verification.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using RestSharp;
 using SmartInsuarance.Helper;
+using SmartInsuarance.Model;
 using SmartInsuarance.Models;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,53 @@ namespace SmartInsuarance.Controllers
         {
             return View();
         }
+        public ActionResult EnumMaster()
+        {
+            var EnumList = _common.GetDataForDropdown("Enums");
+            var CustomEnumList = _common.GetDataCustomEnum("EnumsList");
+
+            ViewBag.enums = EnumList;
+            ViewBag.cstomeEnums = CustomEnumList;
+
+            return View();
+        }
+
+        public ActionResult CreateEnumMaster(EnumMaster Master)
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Master/SaveEnum");
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("cache-control", "no-cache");
+
+            request.AddParameter("application/json", _JsonSerializer.Serialize(Master), ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            if (response.StatusCode.ToString() == "OK")
+            {
+                Api_CommonResponse CommonResponse = new Api_CommonResponse();
+                CommonResponse = _JsonSerializer.Deserialize<Api_CommonResponse>(response.Content);
+                if (CommonResponse.statusCode == 1)
+                {
+                    TempData["SwalStatusMsg"] = "success";
+                    TempData["SwalTitleMsg"] = "Success!";
+                    if (CommonResponse.message == "Allready Exists In table")
+                    {
+                        TempData["SwalStatusMsg"] = "warning";
+                        TempData["SwalTitleMsg"] = "warning!";
+                    }
+                    TempData["SwalMessage"] = CommonResponse.message;
+                }
+                else
+                {
+                    TempData["SwalStatusMsg"] = "error";
+                    TempData["SwalMessage"] = "Something wrong";
+                    TempData["SwalTitleMsg"] = "error!";
+
+                }
+            }
+            return RedirectToAction("EnumMaster", "Master");
+        }
+
+
+
         public ActionResult CreateFinacialyear(FinYear Master)
         {
             var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Master/InsertFinYear");
