@@ -1,6 +1,11 @@
 ﻿
 @{
     Layout = null;
+    var pack = (List<SmartInsuarance.Models.PackDetails>)ViewBag.packs;
+
+    var GST = (pack[0].Total_displayvalue * 18) / 100;
+    var totalSum = ((pack[0].Total_displayvalue) + GST);
+
 }
 
 
@@ -52,9 +57,14 @@
                                                     <tr><th style="color:black;">Item</th><th style="color: black;">Rate</th></tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr><td>Agent- Silver pacakge</td><td>&#x20B9; 6000</td></tr>
-                                                    <tr><td>GST (18%)</td><td>&#x20B9; 1080</td></tr>
-                                                    <tr><td>Total Package Cost</td><td>&#x20B9; 7080</td></tr>
+                                                    @{
+                                                        if (pack != null)
+                                                        {
+                                                            <tr><td>@pack[0].sPackName</td><td>&#x20B9; @pack[0].Total_displayvalue</td></tr>
+                                                            <tr><td>GST (18%)</td><td>&#x20B9; @GST</td></tr>
+                                                            <tr><td>Total Package Cost</td><td>&#x20B9; @totalSum</td></tr>
+                                                        }
+                                                    }
                                                 </tbody>
                                             </table>
                                             <input type="checkbox" class="form-check-input" id="chkTnc">

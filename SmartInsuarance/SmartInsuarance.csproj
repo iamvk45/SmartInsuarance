@@ -147,6 +147,7 @@
     <Compile Include="Models\FillDropDown.cs" />
     <Compile Include="Models\MasterModel.cs" />
     <Compile Include="Models\License.cs" />
+    <Compile Include="Models\PackDetails.cs" />
     <Compile Include="Models\Roll.cs" />
     <Compile Include="Models\PaymentTracking.cs" />
     <Compile Include="Models\PendingPayments.cs" />
@@ -6951,6 +6952,7 @@
     <Content Include="Views\Auth\Register.cshtml" />
     <Content Include="Views\Admin\RegistrationReport.cshtml" />
     <Content Include="Views\Admin\EarningReport.cshtml" />
+    <Content Include="Views\Auth\Verification.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

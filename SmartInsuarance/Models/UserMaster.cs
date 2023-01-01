@@ -79,6 +79,7 @@ namespace SmartInsuarance.Models
         public string sUSRCode { get; set; }
         public string Name { get; set; }
         public string Usertype { get; set; }
+        public int UsertypeID { get; set; }
         public string Username { get; set; }
         public string sEmail { get; set; }
         public string sPhone { get; set; }
@@ -106,7 +107,9 @@ namespace SmartInsuarance.Models
         public string sMobileNo { get; set; }
         public string sEmailId { get; set; }
         public int iUsrTyp { get; set; }
+        public int iPackID { get; set; }
         public string userTypeName { get; set; }
+        public string sPassword { get; set; }
         public DateTime? dtDateOfReg { get; set; }
         public int iIsactive { get; set; }
     }
@@ -136,6 +139,13 @@ namespace SmartInsuarance.Models
         public string PurchasedPackage { get; set; }
         public string PurchasedLicense { get; set; }
         public bool iIsactive { get; set; }
+
+    }
+
+    public class VerificationRequest
+    {
+        public string userID { get; set; }
+        public string verificationType { get; set; }
 
     }
 }

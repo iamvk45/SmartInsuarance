@@ -1,6 +1,7 @@
 ﻿
 @{
     Layout = null;
+    var pckID = (int)ViewBag.packID;
 }
 
 
@@ -75,7 +76,7 @@
                                             </div>
                                             <div class="col-lg-6">
 
-                                                <a href="@Url.Action("Register","Auth")" id="btnRegister" class="btn btn-secondary btn-block" style="background-color: #2fc5c5 !important; border-color: #2fc5c5 !important; color: black !important;"><i class="fa fa-pen"></i> Register Me</a>
+                                                <a href="@Url.Action("Register", "Auth", new {packID=pckID})" id="btnRegister" class="btn btn-secondary btn-block" style="background-color: #2fc5c5 !important; border-color: #2fc5c5 !important; color: black !important;"><i class="fa fa-pen"></i> Register Me</a>
                                             </div>
 
                                         </div>
