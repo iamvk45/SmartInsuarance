@@ -30,6 +30,18 @@ namespace SmartInsuarance.Controllers
         }
         public ActionResult AddUserMember(string type, string parentID = "")
         {
+            //if(type!= "User")
+            //{
+            //var data = GetuserDetails(parentID);
+            //ViewBag.type = type;
+            //    return View(data);
+            //}
+            //else
+            //{
+            //    ViewBag.type = type;
+            //    return View();
+            //}
+
             var data = GetuserDetails(parentID);
             ViewBag.type = type;
             return View(data);

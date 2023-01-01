@@ -1,22 +1,21 @@
-﻿
-@{
-    ViewBag.Title = "ApproveTrailuser";
+﻿@{
+    ViewBag.Title = "Registered Users";
     Layout = "~/Views/Shared/_Layout_new.cshtml";
 
-    var trailUser = ViewBag.TrailUsers as List<SmartInsuarance.Models.TrailuserModal>;
+    var userList = ViewBag.registeredUsers as List<SmartInsuarance.Models.UsersList>;
 }
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.15/sweetalert2.css" />
-<link href="~/Content/Custom.css" rel="stylesheet" />
+
+<link href="~/Content/Template/select2/css/select2.css" rel="stylesheet" />
 @*<link href="~/Content/CountrySelect/build/css/countrySelect.css" rel="stylesheet" />
     <link href="~/Content/CountrySelect/build/css/demo.css" rel="stylesheet" />*@
-
+<link href="~/Content/Custom.css" rel="stylesheet" />
 
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title"  style="color: blanchedalmond;font-weight: bold;">Trial Users Queue</h4>
+                <h4 class="card-title" style="color: blanchedalmond;font-weight: bold;">Registered Users Queue</h4>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -24,55 +23,58 @@
                         <thead>
                             <tr>
                                 <th style="width:80px;"><strong>#</strong></th>
-                                <th hidden><strong>ID</strong></th>
+                                <th hidden><strong>USERCODE</strong></th>
                                 <th><strong>NAME</strong></th>
-                                <th><strong>PINCODE</strong></th>
-                                <th><strong>MOBILE</strong></th>
+                                <th><strong>USERNAME</strong></th>
+                                <th><strong>USER TYPE</strong></th>
                                 <th><strong>EMAIL</strong></th>
-                                <th><strong>USERTYPE</strong></th>
-                                <th><strong>DATE OF REGISTRATION</strong></th>
-                                <th><strong>Status</strong></th>
+                                <th><strong>MOBILE</strong></th>
+                                <th><strong>IS MOBILE VERIFIED</strong></th>
+                                <th><strong>IS EMAIL VERIFIED</strong></th>
+                                <th><strong>PACKAGE PURCHASED</strong></th>
+                                <th><strong>LICENSE PURCHASED</strong></th>
+                                <th><strong>STATUS</strong></th>
                             </tr>
                         </thead>
                         <tbody>
                             @{
-                                if (trailUser != null && trailUser.Count > 0)
+                                if (userList != null && userList.Count > 0)
                                 {
-                                    foreach (var item in trailUser)
+                                    var i = 1;
+                                    foreach (var item in userList)
                                     {
+                                        var status = item.iIsactive == true ? 0 : 1;
                                         <tr>
-                                            <td><strong>@item.RowNo</strong></td>
-                                            <td hidden>@item.iPk_USRFRTRLID</td>
-                                            <td>@item.sName</td>
-                                            <td>@item.sPincode</td>
-                                            <td>@item.sMobileNo</td>
-                                            <td>@item.sEmailId</td>
-                                            <td>@item.userTypeName</td>
-                                            <td>@item.dtDateOfReg</td>
+                                            <td><strong>@i</strong></td>
+                                            <td hidden>@item.UserCode</td>
+                                            <td>@item.Name</td>
+                                            <td>@item.Username</td>
+                                            <td>@item.UserType</td>
+                                            <td>@item.EmailAddress</td>
+                                            <td>@item.PhoneNumber</td>
+                                            <td>@item.IsMobileVarified</td>
+                                            <td>@item.IsEmailVarified</td>
+                                            <td>@item.PurchasedPackage</td>
+                                            <td>@item.PurchasedLicense</td>
                                             <td>
-                                                <div class="form-check form-check-inline" id="div_@item.iPk_USRFRTRLID">
+                                                <div class="form-check form-check-inline" id="div_@item.UserCode">
                                                     <label class="form-check-label">
                                                         <label class="col-sm-6 toggle">
-
-                                                            <input type="checkbox" id="che_@item.iPk_USRFRTRLID" data-id="@item.sName" data-html="@item.sEmailId" data-content="@item.iPk_USRFRTRLID" class="form-check-input toggle-checkbox" @(item.iIsactive == 1 ? "checked" : "") />
+                                                            <input type="checkbox" id="che_@item.UserCode" data-id="@item.UserCode" class="form-check-input toggle-checkbox" onchange="ActiveInActiveUser('@item.UserCode',@status)"  @(item.iIsactive == true ? "checked" : "") />
                                                             @*<input class="toggle-checkbox" type="checkbox" id="chkIsGST" name="Status" value="@Model.isGSTApplicable" @(Model.isGSTApplicable == 1 ? "checked" : "")>*@
                                                             <div class="toggle-switch"></div>
                                                         </label>
-
-
-
                                                         @*<input type="checkbox" id="che_@item.iPk_USRFRTRLID" data-id="@item.sName" data-html="@item.sEmailId" class="form-check-input" @(item.iIsactive == 1 ? "checked" : "")>*@
                                                     </label>
                                                 </div>
-                                                <span id="spn_@item.iPk_USRFRTRLID" style="display:none"><i class="fa-2x fa fa-circle-pause fa-beat-fade"></i></span>
                                             </td>
-
                                         </tr>
+                                        i++;
                                     }
                                 }
                                 else
                                 {
-                                    <tr><td colspan="8" style="text-align:center">No Data Available</td></tr>
+                                    <tr><td colspan="12" style="text-align:center">No Data Available</td></tr>
                                 }
                             }
 
@@ -85,7 +87,6 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.15/sweetalert2.min.js"></script>
 <script src="~/Content/globalDomain.js"></script>
 @*
     <script src="~/Content/CountrySelect/build/js/countrySelect.js"></script>
@@ -97,37 +98,38 @@
     </script>*@
 <script>
     $(document).ready(function () {
-        $('.form-check-input').click(function () {
+        //$('.form-check-input').click(function () {
+        //    var status = 0;
+        //    var d = $(this).val();
 
-            var d = $(".form-check-input").is(':checked')
-            if (d) {
-                var Name = $(this).data("id");
-                var EnailAddress = $(this).data("html");
-                var content = $(this).data("content");
-              
-                $('#div_' + content).css('display', 'none');
-                $('#spn_' + content).css('display', 'block');
+        //    if (d) {
+        //        status = 1;
+        //    }
+           
+        //    var userCode = $(this).data("id");
 
-                ActiveTrialUser(EnailAddress, Name, content);
+        //    console.log(status);
+        //    console.log(userCode);
+        //    //ActiveInActiveUser(userCode, status);
 
-                setTimeout(function () {
-                    location.reload();
-                }, 3000);
-            }
+        //    //setTimeout(function () {
+        //    //    location.reload();
+        //    //}, 3000);
 
-        });
+
+        //});
     });
-    function ActiveTrialUser(email, name,itemData) {
+    function ActiveInActiveUser(userID, status) {
         var Content = {
-            sEmailId: email,
-            sName: name,
+            userCode: userID,
+            isActive: parseInt(status),
         }
         $.ajax({
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            url: GetglobalDomain()+"/Admin/ActiveTrialUser",
+            url: GetglobalDomain() + "/Admin/ActiveInActiveUser",
             dataType: 'json',
             type: 'Post',
             cache: false,
@@ -145,8 +147,9 @@
                         showCancelButton: false,
                     });
                 }
-                $('#div_' + content).css('display', 'block');
-                $('#spn_' + content).css('display', 'none');
+                setTimeout(function () {
+                location.reload();
+            }, 3000);
 
             },
             error: function (d) {
@@ -155,6 +158,5 @@
             }
         });
     }
-
 
 </script>

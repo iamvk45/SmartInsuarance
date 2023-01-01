@@ -33,32 +33,32 @@
         </div>
 
 
-            <div class="table-responsive  col-sm-6">
-                <table class="table table-responsive-md">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Model</th>
-                            <th>Qty</th>
+        <div class="table-responsive  col-sm-6">
+            <table class="table table-responsive-md">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Insurance Covered</th>
+                        <th>Qty</th>
 
-                        </tr>
-                    </thead>
-                    <tbody id="tbody1">
-                        @{
-                            var i = 1;
-                            foreach (var item in groups)
-                            {
-                                <tr>
-                                    <td>@i</td>
-                                    <td>@item.Text</td>
-                                    <td>@item.Qty</td>
-                                </tr>
-                                i++;
-                            }
+                    </tr>
+                </thead>
+                <tbody id="tbody1">
+                    @{
+                        var i = 1;
+                        foreach (var item in groups)
+                        {
+                            <tr>
+                                <td>@i</td>
+                                <td>@item.Text</td>
+                                <td>@item.Qty</td>
+                            </tr>
+                            i++;
                         }
-                    </tbody>
-                </table>
-            </div>
+                    }
+                </tbody>
+            </table>
+        </div>
 
         @*</div>*@
 

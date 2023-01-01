@@ -1,7 +1,10 @@
 ﻿
 @{
     Layout = null;
+    var pckID = (int)ViewBag.packID;
 }
+
+
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 
@@ -28,11 +31,11 @@
                         <div class="row m-0">
                             <div class="col-xl-6 col-md-6 sign text-center">
                                 <div>
-                                    <div class="text-center my-5" style="display: flex; place-content: center; align-items: baseline">
+                                    <div class="text-center my-5" style="display: flex;place-content: center;align-items: baseline;margin-top: 25px !important;">
                                         @* <a href="javascript:void(0);"><img src="~/Content/Template/images/logo-full.png" alt=""></a>*@
                                         <i class="fa fa-2xl fa-dollar-sign" style="color: #2681b5"></i><h2 style="color: #2681b5">mart ensure</h2>
                                     </div>
-                                    <img src="~/Content/Template/images/log.png" class="img-fix bitcoin-img sd-shape7" style="width:75%;height:75%" />
+                                    <img src="~/Content/Template/images/log.png" class="img-fix bitcoin-img sd-shape7" style="width: 75%; height: 75%;margin-top: -30px;" />
                                 </div>
                             </div>
                             <div class="col-xl-6 col-md-6">
@@ -43,7 +46,7 @@
                                             <a href="javascript:void(0);" class="btn d-block btn-primary my-3"><i class="fab fa-google me-2"></i>Login with Google</a>
                                             <a href="javascript:void(0);" class="btn d-block btn-secondary my-3"><i class="fab fa-facebook-f me-2"></i>Login with Facebook</a>
                                         </div>*@
-                                    <form action="@Url.Action("Login","Auth")" method="post" class="mt-5">
+                                    <form action="@Url.Action("LoginAlt","Auth")" method="post" class="mt-5">
                                         <div class="mb-3">
                                             <label class="mb-1"><strong>Email</strong></label>
                                             <input type="email" name="Email" class="form-control" id="username" value="hello@example.com">
@@ -53,19 +56,29 @@
                                             <input type="password" name="Password" class="form-control" id="userpassword">
                                         </div>
                                         <div class="row d-flex justify-content-between mt-4 mb-2">
+
+                                            <div class="col-lg-6">
+                                                <a href="javascript:void(0);">Forgot Password?</a>
+                                            </div>
+
                                             @*<div class="mb-3">
                                                     <div class="form-check custom-checkbox ms-1">
                                                         <input type="checkbox" class="form-check-input" id="basic_checkbox_1">
                                                         <label class="form-check-label" for="basic_checkbox_1">Remember my preference</label>
                                                     </div>
                                                 </div>*@
-                                            <div class="mb-3">
-                                                <a href="javascript:void(0);">Forgot Password?</a>
-                                            </div>
+
                                         </div>
-                                        <div class="text-center">
-                                            <button type="button" id="btnlogin" class="btn btn-primary btn-block">Login <i class="fa fa-sign-in-alt"></i></button>
-                                            <button type="submit" id="btnsubmit" class="btn btn-primary btn-block" style="display:none">Sign Me In <i class="fa fa-sign-in-alt"></i></button>
+                                        <div class="text-center row">
+                                            <div class="col-lg-6">
+                                                <button type="button" id="btnlogin" class="btn btn-primary btn-block">Login <i class="fa fa-sign-in-alt"></i></button>
+                                                <button type="submit" id="btnsubmit" class="btn btn-primary btn-block" style="display:none">Sign Me In <i class="fa fa-sign-in-alt"></i></button>
+                                            </div>
+                                            <div class="col-lg-6">
+
+                                                <a href="@Url.Action("Register", "Auth", new {packID=pckID})" id="btnRegister" class="btn btn-secondary btn-block" style="background-color: #2fc5c5 !important; border-color: #2fc5c5 !important; color: black !important;"><i class="fa fa-pen"></i> Register Me</a>
+                                            </div>
+
                                         </div>
                                     </form>
                                 </div>

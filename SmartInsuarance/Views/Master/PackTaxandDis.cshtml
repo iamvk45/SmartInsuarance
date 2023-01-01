@@ -18,8 +18,8 @@
     .hidden {
         display: none;
     }
-    .customcheckbox 
-    {
+
+    .customcheckbox {
         width: 32px;
         margin-left: 95px;
         margin-top: -20px;
@@ -30,7 +30,8 @@
     <div class="card">
         <div class="card-header">
             <h4 class="card-title" style="color: blanchedalmond;font-weight: bold;">Discount </h4>
-            <a href="@Url.Action("PackageList", "Master")" class="btn btn-default pull-right" style="color: white;">Back</a>
+            @*<a href="@Url.Action("PackageList", "Master")" class="btn btn-default pull-right" style="color: white;">Back</a>*@
+            <a href="@Url.Action("PackageList", "Master")" style="color: blanchedalmond;font-weight: bold;"><i class="fas fa-arrow-left"></i> Back</a>
         </div>
         <div class="card-body">
             @using (Html.BeginForm("SaveTaxandDist", "Master", FormMethod.Post, new { @class = "formcreateupdate", @id = "frmAddUpdate", enctype = "multipart/form-data" }))
@@ -49,11 +50,11 @@
                                 <input type="text" id="dPackFunAmt" name="dPackFunAmt" class="form-control" value="@Model.dPackFunAmt" readonly>
                                 <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Feature Amount</small>
                             </div>
-                            <div class="col-sm-4 Discountdetail" id="Discountdetail" >
+                            <div class="col-sm-4 Discountdetail" id="Discountdetail">
                                 <select class="singleselect col-sm-8" id="iPackFunt_DisTyp" name="iPackFunt_DisTyp" @(Model.iPackFunt_iStts != null && Model.iPackFunt_iStts != 1 ? "readonly" : "")>
                                     <option value="">Select </option>
                                     <option @(Model.iPackFunt_DisTyp != null && Model.iPackFunt_DisTyp == 1 ? "selected" : "") value="1">In Persentage</option>
-                                    <option @(Model.iPackFunt_DisTyp != null && Model.iPackFunt_DisTyp == 2  ? "selected" : "") value="2">In Amount</option>
+                                    <option @(Model.iPackFunt_DisTyp != null && Model.iPackFunt_DisTyp == 2 ? "selected" : "") value="2">In Amount</option>
                                 </select>
 
                             </div>
@@ -108,36 +109,36 @@
                 @*<div class="card" style="color: black; border: solid;">
 
 
-                    <div class="card-body">
-                        <h4 class="card-title" style="font-weight: bold;">System Tax and Discount Amount:</h4>
+                        <div class="card-body">
+                            <h4 class="card-title" style="font-weight: bold;">System Tax and Discount Amount:</h4>
 
-                        <div class="form-group is-empty row Paddingtop1 row">
+                            <div class="form-group is-empty row Paddingtop1 row">
 
-                            <input type="checkbox" class="col-sm-1 customcheckbox" id="iPackFeat_iStts" name="iPackFeat_iStts" value="@Model.iPackSysUsr_iStts" @(Model.iPackSysUsr_iStts != null && Model.iPackSysUsr_iStts == 1 ? "checked" : "")>
-                            <div class="col-sm-2">
-                                <input type="text" id="dPackFunAmt" name="dPackFunAmt" class="form-control" value="@Model.dPackSysAmt" readonly>
-                                <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">System Amount</small>
-                            </div>
-                            <div class="col-sm-4 Discountdetail" id="Discountdetail">
-                                <select class="singleselect col-sm-8" id="iPackFeat_DisTyp" name="iPackFeat_DisTyp">
-                                    <option value="">Select </option>
-                                    <option @(Model.iPackSysUsr_DisTyp != null && Model.iPackSysUsr_DisTyp == 1 ? "selected" : "") value="1">In Persentage</option>
-                                    <option @(Model.iPackSysUsr_DisTyp != null && Model.iPackSysUsr_DisTyp == 2) value="2">In Amount</option>
-                                </select>
+                                <input type="checkbox" class="col-sm-1 customcheckbox" id="iPackFeat_iStts" name="iPackFeat_iStts" value="@Model.iPackSysUsr_iStts" @(Model.iPackSysUsr_iStts != null && Model.iPackSysUsr_iStts == 1 ? "checked" : "")>
+                                <div class="col-sm-2">
+                                    <input type="text" id="dPackFunAmt" name="dPackFunAmt" class="form-control" value="@Model.dPackSysAmt" readonly>
+                                    <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">System Amount</small>
+                                </div>
+                                <div class="col-sm-4 Discountdetail" id="Discountdetail">
+                                    <select class="singleselect col-sm-8" id="iPackFeat_DisTyp" name="iPackFeat_DisTyp">
+                                        <option value="">Select </option>
+                                        <option @(Model.iPackSysUsr_DisTyp != null && Model.iPackSysUsr_DisTyp == 1 ? "selected" : "") value="1">In Persentage</option>
+                                        <option @(Model.iPackSysUsr_DisTyp != null && Model.iPackSysUsr_DisTyp == 2) value="2">In Amount</option>
+                                    </select>
 
-                            </div>
-                            <div class="col-sm-2 Discountdetail">
-                                <input type="text" id="dPackFeat_Val" value="@(Model.dPackSysUsr_Val != null ? Model.dPackSysUsr_Val : 0)" class="form-control col-sm-4" placeholder="Enter Value" name="dPackFeat_Val">
-                            </div>
-                            <div class="col-sm-2">
+                                </div>
+                                <div class="col-sm-2 Discountdetail">
+                                    <input type="text" id="dPackFeat_Val" value="@(Model.dPackSysUsr_Val != null ? Model.dPackSysUsr_Val : 0)" class="form-control col-sm-4" placeholder="Enter Value" name="dPackFeat_Val">
+                                </div>
+                                <div class="col-sm-2">
 
-                                <input type="text" id="PackSysUsr_displayvalue" name="PackSysUsr_isplayvalue" class="form-control" value="0" readonly>
-                                <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Display value</small>
+                                    <input type="text" id="PackSysUsr_displayvalue" name="PackSysUsr_isplayvalue" class="form-control" value="0" readonly>
+                                    <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Display value</small>
+                                </div>
                             </div>
+
                         </div>
-
-                    </div>
-                </div>*@
+                    </div>*@
 
 
                 <div class="card" style="color: black; border: solid;">
@@ -147,9 +148,9 @@
                         <h4 class="card-title" style="font-weight: bold;">Total  Discount Amount:</h4>
 
                         <div class="form-group is-empty row Paddingtop1 row">
-                             
+
                             <input type="checkbox" class="col-sm-1 customcheckbox" data-id="Total" id="iTotalDis_iStts" name="iTotalDis_iStts" value="@Model.iTotalDis_iStts" @(Model.iTotalDis_iStts != null && Model.iTotalDis_iStts == 1 ? "checked" : "")>
-                            <div class="col-sm-2"> 
+                            <div class="col-sm-2">
                                 <input type="text" id="dTotalFunAmt" name="dTotalFunAmt" class="form-control" value="@Model.Total" readonly>
                                 <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">System Amount</small>
                             </div>
@@ -176,11 +177,11 @@
                 <footer class="form-footer" @*style="text-align:end;background: black;"*@>
                     <div class="pull-right" style="text-align:end;">
                         <a href="@Url.Action("PackageList", "Master")" class="btn btn-default" style="color: black;">DISCARD</a>
-                        <button class="btn btn-primary" id="save">SAVE</button>
+                        <button class="btn btn-primary" type="submit" id="save">SAVE</button>
                     </div>
                 </footer>
             }
-            </div>
+        </div>
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -207,7 +208,7 @@
             }
             else {
                 $('.customcheckbox').removeAttr("disabled");
-             
+
                 debugger;
                 settingfun('Total');
                 var amt = $("#dTotalFunAmt").val();
@@ -216,7 +217,7 @@
             }
 
         });
-      /*  updatetimecheck();*/
+        /*  updatetimecheck();*/
 
         $('#iPackFunt_iStts').change(function () {
             debugger;
@@ -312,17 +313,17 @@
                 $(this).val('1');
             }
             else {
-            
+
                 settingfun('PackFun');
                 var amt = $("#dPackFeatAmt").val();
                 $("#PackFeat_displayvalue").val(amt);
-          /*      $(this).val('0');*/
+                /*      $(this).val('0');*/
             }
 
-          
+
 
         });
-        function displayvalue(amt, type,typevalue) {
+        function displayvalue(amt, type, typevalue) {
             var ret = 0;
             if (type == 1) {
                 ret = (amt - (amt * typevalue) / 100).toFixed(2);
@@ -335,41 +336,41 @@
         function settingfun(Type) {
             debugger;
             if (Type == 'PackFun') {
-             
+
                 $("#iPackFunt_DisTyp").val('');
                 $("#iPackFunt_DisTyp").trigger('change');
                 $("#dPackFunt_Val").val('0');
-            /*    $("#PackFunt_displayvalue").val('0');*/
+                /*    $("#PackFunt_displayvalue").val('0');*/
                 $("#dPackFunAmt").attr('readonly', 'readonly');
                 $("#iPackFunt_DisTyp").attr('readonly', 'readonly');
-               
-                $("#dPackFunt_Val").attr('readonly','readonly');
+
+                $("#dPackFunt_Val").attr('readonly', 'readonly');
             }
-          
+
 
             if (Type == 'PackFeat') {
-               
+
                 $("#iPackFeat_DisTyp").val('');
                 $("#iPackFeat_DisTyp").trigger('change');
                 $("#dPackFeat_Val").val('0');
-              /*  $("#PackFeat_displayvalue").val('0');*/
+                /*  $("#PackFeat_displayvalue").val('0');*/
                 $("#dPackFeatAmt").attr('readonly', 'readonly');
                 $("#iPackFeat_DisTyp").attr('readonly', 'readonly');
                 $("#dPackFeat_Val").attr('readonly', 'readonly');
 
             }
             if (Type == 'Total') {
-               
+
                 $("#iTotalDis_Typ").val('');
                 $("#iTotalDis_Typ").trigger('change');
                 $("#dTotalDis_Val").val('0');
-               /* $("#Total_displayvalue").val('0');*/
+                /* $("#Total_displayvalue").val('0');*/
                 $("#dTotalAmt").attr('readonly', 'readonly');
                 $("#iTotalDis_Typ").attr('readonly', 'readonly');
                 $("#dTotalDis_Val").attr('readonly', 'readonly');
 
             }
-            
+
         }
         //function updatetimecheck()
         //{

@@ -33,9 +33,10 @@
             {
                 <input name="sMnuNme" id="sMnuNme" type="hidden" value="" class="form-control">
                 <input name="sSbMnuNme" id="sSbMnuNme" type="hidden" value="" class="form-control">
-                <div class="form-group  is-empty row Paddingtop">
+                <div class="form-group  is-empty row">
                     @*<label for="nameInput" class="col-sm-2 control-label customlabel">Menu Name</label>*@
                     <div class="col-sm-4">
+                        <label class="form-label">Select Menu</label>
                         <select class="singleselect" id="MenuName" name="iMnuid" required>
                             <option value="">Select Menu Name</option>
                             @{
@@ -49,6 +50,7 @@
                     </div>
                     @*<label for="nameInput" class="col-sm-2 control-label customlabel">SubMenu Name</label>*@
                     <div class="col-sm-4">
+                        <label class="form-label">Select Submenu</label>
                         <select class="singleselect" id="SubMenuName" name="iSbMnu" required>
                             <option value="">Select SubMenu Name</option>
 
@@ -56,6 +58,7 @@
                         </select>
                     </div>
                     <div class="col-sm-4">
+                        <label class="form-label">Select Type</label>
                         <select class="singleselect" id="Type" name="iTyp" required>
                             <option value="">Select Type </option>
                             @{
@@ -68,28 +71,30 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group is-empty row Paddingtop1">
+                <div class="form-group is-empty row mt-3">
 
                     <div class="col-sm-2">
+                        <label class="form-label">Enter Rate</label>
                         <input name="dRate" id="Rate" type="text" value="" class="form-control" placeholder="Enter Rate" required>
                     </div>
                     <div class="col-sm-3">
-
+                        <label class="form-label">Start Date</label>
                         <input type="date" class="form-control" name="dtInsertStrDt" value="" id="dtInsertStrDt" min="2022-01-01" required />
-                        <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Start Date</small>
+                        @*<small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">Start Date</small>*@
                     </div>
                     <div class="col-sm-3">
-
+                        <label class="form-label">End Date</label>
                         <input type="date" class="form-control" name="dtInsertEndDt" value="" id="dtInsertEndDt" max="2022-12-31" required />
-                        <small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">End Date</small>
+                        @*<small id="msgshow" class="col-sm-12 control-label" style="color:red;text-align: unset;">End Date</small>*@
                     </div>
-                    <div class="pull-right col-sm-4" style="text-align: end;">
+                    <div class="pull-right col-sm-4">
+                        <br />
                         <a href="#" class="btn btn-default">Reset</a>
                         <button class="btn btn-primary"> Save </button>
                     </div>
                 </div>
             }
-            <div class="table-responsive">
+            <div class="table-responsive mt-4">
                 <table class="table table-responsive-md" id="tblCustomers">
                     <thead>
                         <tr>
@@ -114,7 +119,7 @@
 
 @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>*@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<script src="~/Content/globalDomain.js"></script>
 <script src="~/Content/Template/js/jScript.js"></script>
 
 <script type="text/javascript">
@@ -146,7 +151,7 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            url: "/Role/GetSelectSubmenulist",
+            url: GetglobalDomain()+"/Role/GetSelectSubmenulist",
             dataType: 'json',
             type: 'Post',
             cache: false,
