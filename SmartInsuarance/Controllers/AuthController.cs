@@ -30,7 +30,7 @@ namespace SmartInsuarance.Controllers
 
         public ActionResult LoginAlt(int packID = 0)
         {
-            ViewBag.packID = packID;    
+            ViewBag.packID = packID;
             return View();
         }
 
@@ -73,10 +73,24 @@ namespace SmartInsuarance.Controllers
                     if (_CommonResponse.data != null)
                     {
                         userModel = JsonConvert.DeserializeObject<List<UserModelSession>>(_CommonResponse.data.ToString());
+                        List<UserPermissions> permissions = CommonController.GetPermissionDetails(userModel[0].iRoleID, userModel[0].iDeptID);
+
+
                         if (userModel[0].sUSRCode == "A000001")
                         {
                             //if (permissions != null)
                             //{
+                            Session["UserPermissions"] = permissions;
+                            Session["UserDetails"] = userModel[0];
+
+                            //}
+                            return RedirectToAction("Index", "Dashboard");
+                        }
+                        else if (userModel[0].UsertypeID == 3026 || userModel[0].Usertype == "Company User")
+                        {
+                            //if (permissions != null)
+                            //{
+                            Session["UserPermissions"] = permissions;
                             Session["UserDetails"] = userModel[0];
 
                             //}
@@ -95,6 +109,7 @@ namespace SmartInsuarance.Controllers
                             Session["UserDetails"] = userModel[0];
                             Session["LicenseDetails"] = LicencseDetails;
                             Session["InsuaranceDetails"] = insuaranceDetails;
+                            Session["UserPermissions"] = permissions;
                             return RedirectToAction("Index", "Welcome");
                             //return RedirectToAction("EditProfile", "User");
                         }
@@ -299,7 +314,7 @@ namespace SmartInsuarance.Controllers
 
         }
 
-        public ActionResult saveDetails(TrailuserModal trailuser,int pkID)
+        public ActionResult saveDetails(TrailuserModal trailuser, int pkID)
         {
             try
             {

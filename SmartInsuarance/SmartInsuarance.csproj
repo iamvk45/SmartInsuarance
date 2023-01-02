@@ -5212,6 +5212,7 @@
     <Content Include="Content\Template\images\coures\8.jpg" />
     <Content Include="Content\Template\images\coures\9.jpg" />
     <Content Include="Content\Template\images\coures\9.png" />
+    <Content Include="Content\Template\images\CreateNewUser.jpeg" />
     <Content Include="Content\Template\images\customers\1.jpg" />
     <Content Include="Content\Template\images\customers\11.jpg" />
     <Content Include="Content\Template\images\customers\2.jpg" />
@@ -6960,7 +6961,10 @@
     <Content Include="Views\Admin\RegistrationReport.cshtml" />
     <Content Include="Views\Admin\EarningReport.cshtml" />
     <Content Include="Views\Auth\Verification.cshtml" />
-
+    <Content Include="Views\User\AddNewUser.cshtml" />
+    <Content Include="Views\Shared\_leftSidebar.cshtml" />
+    <Content Include="Views\Shared\_headerTopbar.cshtml" />
+    <Content Include="Views\Shared\_leftSidebarUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

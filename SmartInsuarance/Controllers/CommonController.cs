@@ -207,6 +207,49 @@ namespace SmartInsuarance.Controllers
             }
             return licenseConfigList;
         }
-       
+        public static List<UserPermissions> GetPermissionDetails(int? RoleId, int? DepartmentId)
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Common/GetPermissionDetails?RoleId=" + RoleId + "&DepartmentId=" + DepartmentId);
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            List<UserPermissions> permissions = new List<UserPermissions>();
+            if (response.StatusCode.ToString() == "OK")
+            {
+                var responseData = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                permissions = JsonConvert.DeserializeObject<List<UserPermissions>>(responseData.data.ToString());
+            }
+            return permissions;
+        }
+        public JsonResult ValidateUser(ResetPassword reset)
+        {
+            var json = JsonConvert.SerializeObject(reset);
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/Reset");
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", json, ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+
+            if (response.StatusCode.ToString() == "OK")
+            {
+                _CommonResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+            }
+
+            return new JsonResult
+            {
+                Data = new { StatusCode = _CommonResponse.statusCode, Data = "", Failure = false, Message = _CommonResponse.message },
+                ContentEncoding = System.Text.Encoding.UTF8,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+   
     }
 }

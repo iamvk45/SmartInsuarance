@@ -1,0 +1,531 @@
+﻿@using SmartInsuarance.Model
+@{
+    ViewBag.Title = "Add New User";
+    Layout = "~/Views/Shared/_Layout_new.cshtml";
+
+
+    var depts = (List<FillDropDown>)ViewBag.departments;
+    var roles = (List<FillDropDown>)ViewBag.roles;
+
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.15/sweetalert2.css" />
+@*<link href="~/Content/CountrySelect/build/css/countrySelect.css" rel="stylesheet" />
+    <link href="~/Content/CountrySelect/build/css/demo.css" rel="stylesheet" />*@
+<link href="~/Content/Custom.css" rel="stylesheet" />
+
+<style type="text/css">
+    th {
+        color: #0a7bbc;
+    }
+
+    /* .row label, span {
+        text-align: end
+    }
+
+    .form-group span {
+        text-align: end
+    }*/
+</style>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title" style="color: blanchedalmond;font-weight: bold;">Add New User</h4>
+                @*<a href="@Url.Action("Index", "Welcome")" style="color: blanchedalmond;font-weight: bold;"><i class="fas fa-arrow-left"></i> Back To Welcome</a>*@
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12 row" style="margin-left: -12px;">
+                        <div class="col-lg-6" style="display: flex;align-items: center;place-content: center;font-size: 15rem;">
+                            @*<i class="fa fa-user-plus" style="color: #586c8c;"></i>*@
+                            <img src="~/Content/Template/images/CreateNewUser.jpeg" style="width: 100%;" />
+                        </div>
+                        <div class="col-lg-6" style="padding: 30px;color: white;border-radius: 50px;background: linear-gradient(315deg, #cacaca, #586c8c);box-shadow: -20px -20px 60px #bebebe,20px 20px 60px #ffffff;">
+                            @using (Html.BeginForm("AddNewuser", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <div class="col-lg-12">
+                                    <div class="row" style="align-items: baseline;">
+
+                                        <div class="form-group col-lg-4">
+                                            <label for="example-text-input" class="col-sm-12"><strong>Full Name</strong></label>
+                                        </div>
+                                        <div class="form-group col-lg-8">
+                                            <input class="form-control col-sm-12" type="text" autocomplete="off" id="txtFullName" name="sNME">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-4" style="align-items: baseline;">
+
+                                        <div class="form-group col-lg-4">
+                                            <label for="example-text-input" class="col-sm-12"><strong>Mobile Number</strong></label>
+                                        </div>
+                                        <div class="form-group col-lg-8">
+                                            <input class="form-control col-sm-12" type="text" autocomplete="off" oninput="numberOnly(this.id);" maxlength="10" name="sPhone" id="txtMobileNumber">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row mt-4" style="align-items: baseline;">
+
+                                        <div class="form-group col-lg-4">
+                                            <label for="example-text-input" class="col-sm-12"><strong>Email Address</strong></label>
+                                            @*<span style="font-size:12px;color: red;font-weight: 700;border-radius: 50px;padding: 4px;background: linear-gradient(145deg, #cacaca, #f0f0f0);" class="col-sm-12">User will get a mail on this</span>*@
+
+                                        </div>
+                                        <div class="form-group col-lg-8">
+                                            <input class="form-control col-sm-12" type="text" autocomplete="off" id="txtEmail" name="sEmail" oninput="FillUserName(this.id)">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-4" style="align-items: baseline;">
+
+                                        <div class="form-group col-lg-4">
+                                            <label for="example-text-input" class="col-sm-12"><strong>Select Department</strong></label>
+                                        </div>
+                                        <div class="form-group col-lg-8">
+                                            <select id="ddlDept" class="form-control" name="iDeptID">
+                                                @{
+                                                    if (depts != null)
+                                                    {
+                                                        foreach (var item in depts)
+                                                        {
+                                                            <option value="@item.DDLValue">@item.DDLText</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-4" style="align-items: baseline;">
+
+                                        <div class="form-group col-lg-4">
+                                            <label for="example-text-input" class="col-sm-12"><strong>Select Role</strong></label>
+                                        </div>
+                                        <div class="form-group col-lg-8">
+                                            <select id="ddlRole" class="form-control" name="iRoleID">
+                                                @{
+                                                    if (roles != null)
+                                                    {
+                                                        foreach (var item in roles)
+                                                        {
+                                                            <option value="@item.DDLValue">@item.DDLText</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                            <input name="Rolename" id="hdnRoleName" type="hidden" />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row mt-4" style="align-items: baseline;">
+
+                                        <div class="form-group col-lg-4">
+                                            <label for="example-text-input" class="col-sm-12"><strong>Username</strong></label>
+                                        </div>
+                                        <div class="form-group col-lg-8">
+                                            <input class="form-control col-sm-12" type="text" autocomplete="off" id="txtUsername" name="sUSRNME">
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row mt-4" style="align-items: baseline;">
+
+                                        <div class="form-group col-lg-4">
+                                            <label for="example-text-input" class="col-sm-12"><strong>Password</strong></label>
+                                        </div>
+                                        <div class="form-group col-lg-8">
+                                            <input class="form-control col-sm-12" type="password" autocomplete="off" id="txtPassword" name="bPassword">
+                                            <span id="withoutslash-login" style="display: none; top: -30px; position: relative; place-content: end; margin-right: 10px; align-items: center; width: fit-content; left: 26rem; ">
+                                                <i class="fa fa-eye EyeIcon" id="logineye" style="color:black!important" onclick="revealPassword(this,'txtPassword')"></i>
+                                            </span>
+
+                                            <span id="withslash-login" style="top: -30px; position: relative; display: flex; place-content: end; margin-right: 10px; align-items: center; width: fit-content; left: 26rem; color: #6e6c6c">
+                                                <i class="fa fa-eye-slash EyeIcon" id="logineye" onclick="revealPassword(this,'txtPassword')"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row mt-4" style="align-items: baseline;">
+
+                                        <div class="form-group col-lg-12" style="text-align:end">
+                                            <button type="button" class="btn btn-dark" id="btnSave" onclick="CheckValidation()"><i class="fa fa-user-plus"></i> Activate & Notify User </button>
+                                            <button type="submit" id="btnsubmitDetails" style="display:none"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.15/sweetalert2.min.js"></script>
+<script src="~/Content/globalDomain.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ddlDept").select2();
+        $("#ddlRole").select2();
+              var isuserExists = '@TempData["IsUserDetailsExists"]'
+        var message = '@TempData["msg"]'
+        if (isuserExists == 1 && message.length> 0) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Error',
+                    html: `<div>${message}</div>`,
+                    allowOutsideClick: false,
+                    showCloseButton: true,
+                    showConfirmButton: false,
+
+                });
+        }
+        if (isuserExists == 0 && message.length> 0) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Success',
+                    html: `<div>${message}</div>`,
+                    allowOutsideClick: false,
+                    showCloseButton: true,
+                    showConfirmButton: false,
+
+                });
+            setTimeout(function () {
+                window.location.reload();
+            }, 1000)
+            }
+        $('#txtMobileNumber').blur(function () {
+            if ($("#txtMobileNumber").val().length > 0) {
+                if ($("#txtMobileNumber").val().substr(0, 1) <6 || $("#txtMobileNumber").val().length < 10) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Invalid Mobile Number',
+                        html: '<div><b>Mobile No</b> Length Must be <b>10 Digits</b> long and should start with 6 or greater</div>',
+                        allowOutsideClick: false,
+                        showCloseButton: true,
+                        showConfirmButton: false,
+
+                    });
+                    $("#txtMobileNumber").val('');
+                }
+                else {
+                    CheckUserMobile($("#txtMobileNumber").val())
+                }
+            }
+        })
+
+        $('#txtPassword').blur(function () {
+            if ($("#txtPassword").val().length > 0) {
+                if ($("#txtPassword").val().length < 6) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Error',
+                        html: '<div>Password Must be 6 charecter long</div>',
+                        allowOutsideClick: false,
+                        showCloseButton: true,
+                        showConfirmButton: false,
+
+                    });
+                    $("#txtPassword").val('');
+                }
+            }
+        })
+
+        $('#txtEmail').blur(function () {
+            if ($("#txtEmail").val().length > 0) {
+                if (!isValidEmailAddress($("#txtEmail").val())) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Invalid Email Address',
+                        html: `"${$("#txtEmail").val()}" Is not valid, Please Enter Valid Email Address`,
+                        allowOutsideClick: false,
+                        showCloseButton: true,
+                        showConfirmButton: false,
+                    });
+                    $("#txtEmail").val('');
+                    $('#txtUsername').val('');
+                }
+                else {
+
+                    CheckUserEmailAddress($('#txtEmail').val());
+                }
+            }
+        })
+
+
+
+
+    });
+    function isValidEmailAddress(email) {
+      var regex = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email);
+}
+
+    function numberOnly(id) {
+        // Get element by id which passed as parameter within HTML element event
+        var element = document.getElementById(id);
+        // This removes any other character but numbers as entered by user
+        element.value = element.value.replace(/[^0-9]/gi, "");
+    }
+
+    function FillUserName(item) {
+
+        var d = $('#' + item).val();
+        console.log(d);
+
+        $('#txtUsername').val(d);
+
+    }
+
+
+    function CheckValidation() {
+
+        var btnText = $('#btnSave').html();
+        $('#btnSave').html('');
+        $('#btnSave').html(' <i class="fas fa fa-spinner fa-pulse ml-1"></i> ' + btnText);
+        $('#btnSave').css('cursor', 'wait');
+
+        var status = true;
+
+        var FirstName = $('#txtFullName').val().trim();
+        var MobileNumber = $('#txtMobileNumber').val().trim();
+        var Password = $('#txtPassword').val();
+        var Email = $('#txtEmail').val().trim();
+        var Dept = $('#ddlDept option:selected').val();
+        var Role = $('#ddlRole option:selected').val();
+        var Rolename = $('#RoleId option:selected').text();
+
+        $('#hdnRoleName').val(Rolename)
+
+        if (FirstName.length <= 0) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Error',
+                html: `<div>Full Name Required...!</div>`,
+                allowOutsideClick: false,
+                showCloseButton: true,
+                showConfirmButton: false,
+            })
+            $('#txtFullName').focus();
+            $('#btnSave').html('<i class="fa fa-user-plus"></i> Activate User Button');
+            $('#btnSave').css('cursor', 'pointer');
+
+            status = false;
+        }
+        else if (MobileNumber.length <= 0) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Error',
+                html: `<div>Mobile Number Required...!</div>`,
+                allowOutsideClick: false,
+                showCloseButton: true,
+                showConfirmButton: false,
+            })
+            $('#txtMobileNumber').focus();
+            $('#btnSave').html('<i class="fa fa-user-plus"></i> Activate User Button');
+            $('#btnSave').css('cursor', 'pointer');
+            status = false;
+        }
+        else if (Email.length <= 0) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Error',
+                html: `<div>Email Address Required...!</div>`,
+                allowOutsideClick: false,
+                showCloseButton: true,
+                showConfirmButton: false,
+
+            })
+            $('#txtEmail').focus();
+            $('#btnSave').html('<i class="fa fa-user-plus"></i> Activate User Button');
+            $('#btnSave').css('cursor', 'pointer');
+            status = false;
+        }
+
+        else if (Dept== 0) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Error',
+                html: `<div>Please Select Department...!</div>`,
+                allowOutsideClick: false,
+                showCloseButton: true,
+                showConfirmButton: false,
+            })
+            $('#ddlDept').focus();
+            $('#btnSave').html('<i class="fa fa-user-plus"></i> Activate User Button');
+            $('#btnSave').css('cursor', 'pointer');
+            status = false;
+        }
+        else if (Role == 0) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Error',
+                html: `<div>Please Select Role...!</div>`,
+                allowOutsideClick: false,
+                showCloseButton: true,
+                showConfirmButton: false,
+            })
+            $('#ddlRole').focus();
+            $('#btnSave').html('<i class="fa fa-user-plus"></i> Activate User Button');
+            $('#btnSave').css('cursor', 'pointer');
+            status = false;
+        }
+        else if (Password.length <= 0) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Error',
+                html: `<div>Password Required...!</div>`,
+                allowOutsideClick: false,
+                showCloseButton: true,
+                showConfirmButton: false,
+            })
+            $('#txtPassword').focus();
+            $('#btnSave').html('<i class="fa fa-user-plus"></i> Activate User Button');
+            $('#btnSave').css('cursor', 'pointer');
+            status = false;
+        }
+
+        if (status) {
+            $('#btnsubmitDetails').click();
+        }
+    }
+
+
+    function CheckUserMobile(mobileNumber) {
+        var m = mobileNumber;
+
+        if (m.length > 0) {
+            var validationRequestModel = {
+                "Email": mobileNumber,
+                "Password": "",
+                "Type": 'UserCheck'
+            }
+
+            var d = JSON.stringify(validationRequestModel);
+            console.log(d);
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: GetglobalDomain()+ "/Common/ValidateUser",
+                dataType: 'json',
+                type: 'Post',
+                cache: false,
+                data: JSON.stringify(validationRequestModel),
+                success: function (data) {
+                    //console.log('ajax');
+                    //console.log(data);
+
+                    if (data.StatusCode == 1 && data.Message == "User Details Exists") {
+                        var d = `<p><b>"${mobileNumber}"</b> is Already Registered, Please Use Different Mobile Number</p>`;
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: "Duplicate Entry",
+                            html: d,
+                            allowOutsideClick: false,
+                            showCloseButton: true,
+                            showConfirmButton: false,
+
+                        });
+                        $("#txtMobileNumber").val('');
+                    }
+                },
+                error: function (d) {
+                    console.log(d);
+                }
+            });
+        }
+    }
+
+    function revealPassword(sender, itemId) {
+
+        var formId = sender.id.replace('eye', '');
+        var type = $('#' + itemId).attr('type');
+        if (type == 'password') {
+
+
+            console.log('inside password type')
+            $('#' + itemId).attr('type', 'text');
+
+            $('#withslash-' + formId).css('display', 'none');
+            $('#withoutslash-' + formId).css('display', 'flex');
+
+        }
+        if (type == 'text') {
+            console.log('inside text type')
+            $('#' + itemId).attr('type', 'password');
+            $('#withslash-' + formId).css('display', 'flex');
+            $('#withoutslash-' + formId).css('display', 'none');
+        }
+    }
+
+    function CheckUserEmailAddress(EmailAddress) {
+        var m = EmailAddress;
+
+        if (m.length > 0) {
+            var validationRequestModel = {
+                "Email": EmailAddress,
+                "Password": "",
+                "Type": 'UserCheck'
+            }
+
+            var d = JSON.stringify(validationRequestModel);
+            console.log(d);
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: GetglobalDomain() + "/Common/ValidateUser",
+                dataType: 'json',
+                type: 'Post',
+                cache: false,
+                data: JSON.stringify(validationRequestModel),
+                success: function (data) {
+                    //console.log('ajax');
+                    //console.log(data);
+
+                    if (data.StatusCode == 1 && data.Message == "User Details Exists") {
+                        var d = `<p><b>"${EmailAddress}"</b> Is Already Registered, Please Use Different Mobile Number<p>`;
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: "Duplicate Entry",
+                            html: d,
+                            allowOutsideClick: false,
+                            showCloseButton: true,
+                            showConfirmButton: false,
+                        });
+                        $("#txtEmail").val('');
+                        $('#txtUsername').val('');
+                    }
+                },
+                error: function (d) {
+                    console.log(d);
+                }
+            });
+        }
+    }
+
+
+</script>

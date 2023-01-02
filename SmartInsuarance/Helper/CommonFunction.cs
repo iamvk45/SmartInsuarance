@@ -150,7 +150,10 @@ namespace SmartInsuarance.Helper
             if (response.StatusCode.ToString() == "OK")
             {
                 Api_CommonResponse objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
-                departments = JsonConvert.DeserializeObject<List<AddDepartment>>(objResponse.data.ToString());
+                if (objResponse.data != null)
+                {
+                    departments = JsonConvert.DeserializeObject<List<AddDepartment>>(objResponse.data.ToString());
+                }
             }
             return departments;
         }

@@ -28,6 +28,18 @@ namespace SmartInsuarance.Controllers
 
             return View();
         }
+        
+        public ActionResult AddNewUser()
+        {
+            CommonController common = new CommonController();
+            
+            var departmentList = common.GetDataForDropdown("Department");
+            var roleList = common.GetDataForDropdown("Role");
+            ViewBag.departments = departmentList;
+            ViewBag.roles = roleList;
+
+            return View();
+        }
         public ActionResult AddUserMember(string type, string parentID = "")
         {
             //if(type!= "User")
@@ -68,7 +80,6 @@ namespace SmartInsuarance.Controllers
             return trailuserModals[0];
 
         }
-
         public JsonResult SaveUserDetails(UserMaster _userMaster)
         {
             var json = JsonConvert.SerializeObject(_userMaster);
@@ -116,6 +127,51 @@ namespace SmartInsuarance.Controllers
                 ContentEncoding = System.Text.Encoding.UTF8,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
+        }
+
+        [HttpPost]
+        public ActionResult AddNewuser(UserMaster userMst)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(userMst);
+                var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/AddNewUser");
+                var request = new RestRequest(Method.POST);
+                request.AddHeader("cache-control", "no-cache");
+                //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+                request.AddParameter("application/json", json, ParameterType.RequestBody);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddHeader("Accept", "application/json");
+                IRestResponse response = client.Execute(request);
+
+                if (response.StatusCode.ToString() == "OK")
+                {
+                    var objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+
+                    if (objResponse.message.Contains("Details Already Exists..!"))
+                    {
+                        TempData["IsUserDetailsExists"] = 1;
+                        TempData["msg"] = "User Details Already Exists, Details Not Saved...";
+                        return RedirectToAction("AddNewUser", "User");
+                    }
+                    else
+                    {
+                        TempData["IsUserDetailsExists"] = 0;
+                        TempData["msg"] = "User Details Saved Successfully!";
+                        return RedirectToAction("AddNewUser", "User");
+                    }
+                }
+                else
+                {
+                    TempData["IsUserDetailsExists"] = 1;
+                    TempData["msg"] = "Details Not Saved Due To Some Internal Issues...!";
+                    return RedirectToAction("AddNewUser", "User");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
     }
