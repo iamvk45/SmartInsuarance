@@ -6965,6 +6965,8 @@
     <Content Include="Views\Shared\_leftSidebar.cshtml" />
     <Content Include="Views\Shared\_headerTopbar.cshtml" />
     <Content Include="Views\Shared\_leftSidebarUser.cshtml" />
+    <Content Include="Views\Master\PreviewMst.cshtml" />
+    <Content Include="Views\Master\CardDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
