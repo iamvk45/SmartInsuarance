@@ -591,4 +591,70 @@ namespace SmartInsuarance.Models
 
     }
 
+    public class PackShowView: PackageManagement
+    {
+        public int iLiceTypeId{ get; set; }
+        public int iValidityId{ get; set; }
+        public int iNumReg{ get; set; }
+        public int iTypId { get; set; } 
+        public int iValidityvalue{ get; set; }
+        public string LiceName
+        {
+            get
+            {
+                switch (iLiceTypeId)
+                {
+                    case 1000:
+                        return "Paid";
+                    case 1001:
+                        return "Trial";
+                    default:
+                        return "";
+                }
+            }
+        }
+
+        public string ValidityName
+        {
+            get
+            {
+                switch (iValidityId)
+                {
+                    case 1:
+                        return "Day";
+                    case 2:
+                        return "Month";
+                    case 3:
+                        return "Year";
+
+                    default:
+                        return "";
+                }
+            }
+        }
+        public string RegistrationName
+        {
+            get
+            {
+                switch (iTypId)
+                {
+                    case 1:
+                        return "Single";
+                    case 2:
+                        return "Multiple";
+
+
+                    default:
+                        return "";
+                }
+            }
+        }
+    }
+
+    public class PackFunctionShow: PACKFUNCView
+    {
+        public string sMenuName { get; set; }
+        public string sSubMnuName { get; set; }
+    }
+
 }
