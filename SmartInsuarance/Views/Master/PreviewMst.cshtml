@@ -1,0 +1,220 @@
+﻿@using SmartInsuarance.Models
+
+@{
+    ViewBag.Title = "PreviewMst";
+    Layout = "~/Views/Shared/_Layout_new.cshtml";
+    List<PackShowView> Packagelst = new List<PackShowView>();
+    List<PACKFUNCView> PackageFunction = new List<PACKFUNCView>();
+    List<PACKFEATUESPEView> PackageFeature = new List<PACKFEATUESPEView>();
+    List<PACKTAXDIS> PackageDis = new List<PACKTAXDIS>();
+    if (ViewBag.PackageFunction != null)
+    {
+        PackageFunction = (List<PACKFUNCView>)ViewBag.PackageFunction;
+    }
+    if (ViewBag.Packagelst != null)
+    {
+        Packagelst = (List<PackShowView>)ViewBag.Packagelst;
+    }
+    if (ViewBag.PackageFeature != null)
+    {
+        PackageFeature = (List<PACKFEATUESPEView>)ViewBag.PackageFeature;
+    }
+    if (ViewBag.PackageDis != null)
+    {
+        PackageDis = (List<PACKTAXDIS>)ViewBag.PackageDis;
+    }
+    List<Dropdown> lstmenu = new List<Dropdown>();
+    if (ViewBag.groups != null)
+    {
+        lstmenu = (List<Dropdown>)ViewBag.groups;
+    }
+    decimal funtotal = 0;
+    decimal featotal = 0;
+    var Id = ViewBag.Id;
+}
+
+<div class="card">
+    @foreach (var Packagelsts in Packagelst)
+    {
+        <h5 class="card-header h5">Package Name:-@Packagelsts.sPackName</h5>
+
+    }
+
+    <div class="card-body">
+
+
+        @foreach (var Packagelsts in Packagelst)
+        {
+            <!--<h5 class="card-title">INFORMATION OF PACKAGE</h5>-->
+            @*@Validitytype= Packagelst.ValidityName;*@
+            <!--<p class="card-text">
+                Licence Type:@Packagelsts.LiceName <br />
+                Registration:@Packagelsts.RegistrationName
+
+            </p>-->
+            <div id="divpack"></div>
+            <h5 class="card-title">Information Of Function</h5>
+
+
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-responsive-md" id="tblCustomers">
+                        <thead>
+                            <tr>
+                                <th>#No</th>
+                                <th>Model</th>
+                                <th>Functionality</th>
+                                <th>Qty</th>
+                                <th>Rate(per Qty)</th>
+                                <th>Discount</th>
+                                <th>Display Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+
+                            @{
+                                foreach (var firstitem in lstmenu)
+                                {
+                                    decimal T = 0;
+                                    int k = 0;
+                                    var j = 1;
+                                    foreach (var Functionlst in PackageFunction.Where(p => p.iMnuId == Convert.ToInt32(firstitem.Id)).ToList())
+                                    {
+                                        k = 1;
+                                        T = T + Functionlst.ddisplayvalue;
+                                        <tr>
+                                            <td>@j</td>
+                                            <td>@Functionlst.MenuName</td>
+                                            <td>@Functionlst.SubName</td>
+                                            <td>@Functionlst.ivalidityvalue</td>
+                                            <td>@Functionlst.drate</td>
+                                            @{
+                                                if (!string.IsNullOrEmpty(Functionlst.DisType))
+                                                {
+
+                                                    <td>@Functionlst.ddisvalue (@Functionlst.DisType)</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                            }
+
+                                            <td>@Functionlst.ddisplayvalue</td>
+                                        </tr>
+                                        j = j + 1;
+                                    }
+                                    if (k == 1)
+                                    {
+                                        <tr class="trresult" style="border: solid; background: black; color: azure; font-weight: bold;">
+                                            <td colspan="6" style="text-align:end;">Total(Single Unit)</td>
+                                            <td>@T</td>
+                                        </tr>
+                                        <tr class="trresult" style="border: solid; background: black; color: azure; font-weight: bold;">
+                                            <td colspan="6" style="text-align:end;">Total(as per Qty)</td>
+                                            @{
+                                                decimal finalamount = 0;
+                                                finalamount = T * Convert.ToDecimal(firstitem.Qty);
+                                                funtotal = funtotal + finalamount;
+                                            }
+
+                                            <td>@finalamount</td>
+                                        </tr>
+
+                                    }
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+
+
+            <h5 class="card-title">Information OF Feature</h5>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-responsive-md" id="tblCustomers">
+                        <thead>
+                            <tr>
+                                <th>#No</th>
+                                <th>Feature Name</th>
+                                <th>Qty</th>
+                                <th>Rate(per Qty)</th>
+                                <th>Discount</th>
+                                <th>Display Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                            @{
+                                var i = 1;
+                                decimal TF = 0;
+                                foreach (var Functionlst in PackageFeature)
+                                {
+                                    TF = TF + Functionlst.ddisplayvalue;
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@Functionlst.FeatureName</td>
+
+
+                                        <td>@Functionlst.ivalidityvalue</td>
+                                        <td>@Functionlst.drate</td>
+                                        @{
+                                            if (!string.IsNullOrEmpty(Functionlst.DisType))
+                                            {
+
+                                                <td>@Functionlst.ddisvalue (@Functionlst.DisType)</td>
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
+                                        }
+
+                                        <td>@Functionlst.ddisplayvalue</td>
+                                    </tr>
+                                    i = i + 1;
+                                }
+                            }
+                            <tr class="trresult" style="border: solid; background: black; color: azure; font-weight: bold;">
+                                <td colspan="5" style="text-align:end;">Total(Single Unit)</td>
+                                <td>@TF</td>
+                                @{  featotal = featotal + TF;
+                                        }
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        }
+
+
+
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="~/Content/globalDomain.js"></script>
+<script src="~/Content/Template/js/jScript.js"></script>
+<script type="text/javascript">
+    BindPackageCard();
+function BindPackageCard() {
+    $.ajax({
+        url: GetglobalDomain() + '/Master/CardDetail?Id=' + '@Id' + '&funtotal=' + '@funtotal' +'&featotal='+'@featotal',
+        type: 'POST',
+        dataType: "text",
+        success: function (response) {
+            $("#divpack").html(response);
+        }
+    });
+
+    }
+    </script>
+
+
+

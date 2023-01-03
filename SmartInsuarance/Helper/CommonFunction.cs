@@ -176,5 +176,110 @@ namespace SmartInsuarance.Helper
             }
             return MenusList;
         }
+
+        public static List<PackShowView> PackShowView(int Id = 0,string Type="")
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Master/GetPackageViewShow?Id=" + Id +"&Type="+Type);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            List<PackShowView> groups = new List<PackShowView>();
+            if (response.StatusCode.ToString() == "OK")
+            {
+                Api_CommonResponse objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if (objResponse.data != null)
+                {
+
+                    groups = JsonConvert.DeserializeObject<List<PackShowView>>(objResponse.data.ToString());
+
+                }
+            }
+
+            return groups;
+
+        }
+
+
+        public static List<PACKFUNCView> PackFunctionView(int Id = 0, string Type = "")
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Master/GetPackageViewShow?Id=" + Id + "&Type=" + Type);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            List<PACKFUNCView> groups = new List<PACKFUNCView>();
+            if (response.StatusCode.ToString() == "OK")
+            {
+                Api_CommonResponse objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if (objResponse.data != null)
+                {
+
+                    groups = JsonConvert.DeserializeObject<List<PACKFUNCView>>(objResponse.data.ToString());
+
+                }
+            }
+
+            return groups;
+
+        }
+        public static List<PACKFEATUESPEView> PackFeatureView(int Id = 0, string Type = "")
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Master/GetPackageViewShow?Id=" + Id + "&Type=" + Type);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            List<PACKFEATUESPEView> groups = new List<PACKFEATUESPEView>();
+            if (response.StatusCode.ToString() == "OK")
+            {
+                Api_CommonResponse objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if (objResponse.data != null)
+                {
+
+                    groups = JsonConvert.DeserializeObject<List<PACKFEATUESPEView>>(objResponse.data.ToString());
+
+                }
+            }
+
+            return groups;
+
+        }
+
+        public static List<PACKTAXDIS> PackDisView(int Id = 0, string Type = "")
+        {
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Master/GetPackageViewShow?Id=" + Id + "&Type=" + Type);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            List<PACKTAXDIS> groups = new List<PACKTAXDIS>();
+            if (response.StatusCode.ToString() == "OK")
+            {
+                Api_CommonResponse objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if (objResponse.data != null)
+                {
+
+                    groups = JsonConvert.DeserializeObject<List<PACKTAXDIS>>(objResponse.data.ToString());
+
+                }
+            }
+
+            return groups;
+
+        }
+
     }
 }

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+using System.Dynamic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -314,6 +315,38 @@ namespace SmartInsuarance.Controllers
             List<PackageManagementView> groups = new List<PackageManagementView>();
             groups = CommonFunction.PackageManagementViewList(0);
             return View(groups);
+        }
+        public ActionResult PreviewMst(int Id,string Licenseid)
+        {
+            List<PackShowView> Packagelst = new List<PackShowView>();
+            Packagelst = CommonFunction.PackShowView(Id, "Select");
+            List<PACKFUNCView> PackageFunction= new List<PACKFUNCView>();
+            PackageFunction = CommonFunction.PackFunctionView(Id, "Function");
+            List<PACKFEATUESPEView> PackageFeature = new List<PACKFEATUESPEView>();
+            PackageFeature = CommonFunction.PackFeatureView(Id, "Feature");
+            List<PACKTAXDIS> PackageDis = new List<PACKTAXDIS>();
+            PackageDis = CommonFunction.PackDisView(Id, "Discount");
+            List<Dropdown> groups = new List<Dropdown>();
+            groups = CommonFunction.GetLicenceCoverList(Licenseid);
+            ViewBag.groups = groups;
+            ViewBag.PackageFunction = PackageFunction;
+            ViewBag.Packagelst = Packagelst;
+            ViewBag.PackageFeature = PackageFeature;
+            ViewBag.PackageDis = PackageDis;
+            ViewBag.Id = Id;
+            return View();
+        }
+        public ActionResult CardDetail(int Id,decimal funtotal, decimal featotal)
+        {
+            List<PackShowView> Packagelst = new List<PackShowView>();
+            Packagelst = CommonFunction.PackShowView(Id, "Select");
+            List<PACKTAXDIS> PackageDis = new List<PACKTAXDIS>();
+            PackageDis = CommonFunction.PackDisView(Id, "Discount");
+            ViewBag.PackageDis = PackageDis;
+            ViewBag.Packagelst = Packagelst;
+            ViewBag.funtotal = funtotal;
+            ViewBag.featotal = featotal;
+            return View();
         }
         public ActionResult PackageCreate(int Id)
         {

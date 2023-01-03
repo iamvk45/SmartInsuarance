@@ -1,0 +1,43 @@
+﻿@using SmartInsuarance.Models
+@{
+    Layout = null;
+    List<PackShowView> Packagelst = new List<PackShowView>();
+    if (ViewBag.Packagelst != null)
+    {
+        Packagelst = (List<PackShowView>)ViewBag.Packagelst;
+    }
+    List<PACKTAXDIS> PackageDis = new List<PACKTAXDIS>();
+    if (ViewBag.PackageDis != null)
+    {
+        PackageDis = (List<PACKTAXDIS>)ViewBag.PackageDis;
+    }
+    
+    decimal funtotal = ViewBag.funtotal;
+    decimal featotal = ViewBag.featotal;
+}
+<div class="card" style="width: 20rem;background-color:burlywood;">
+    <div class="card-body" style="width: 20rem; background-color: cornsilk;">
+        @{
+            foreach (var Packagelsts in Packagelst)
+            {
+                <h5>@Packagelsts.sPackName</h5>
+                <p class="mb-0">Registration:@Packagelsts.RegistrationName</p>
+                <p class="mb-0">Licence Type:@Packagelsts.LiceName</p>
+            }
+        }
+
+
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Function Amount:@funtotal</li>
+        <li class="list-group-item">Feature  Amount:@featotal </li>
+        @{ decimal discount = Convert.ToDecimal(PackageDis.FirstOrDefault().dPackFunt_Val) + Convert.ToDecimal(PackageDis.FirstOrDefault().dPackFeat_Val) + Convert.ToDecimal(PackageDis.FirstOrDefault().dTotalDis_Val);
+            decimal Finalamount = funtotal + featotal - discount;
+                }
+    <li class="list-group-item">Discount Amount:@discount</li>
+
+    </ul>
+    <div class="card-body">
+        <h5>Package Amount:@Finalamount</h5>
+    </div>
+</div>
