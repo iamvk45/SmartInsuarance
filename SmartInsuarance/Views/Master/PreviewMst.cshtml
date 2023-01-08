@@ -32,12 +32,15 @@
     decimal featotal = 0;
     var Id = ViewBag.Id;
 }
+<link href="~/Content/Custom.css" rel="stylesheet" />
 
 <div class="card">
     @foreach (var Packagelsts in Packagelst)
     {
-        <h5 class="card-header h5">Package Name:-@Packagelsts.sPackName</h5>
-
+        <div class="card-header">
+            <h4 class="card-title" style="color: blanchedalmond;font-weight: bold;">Package Name : @Packagelsts.sPackName</h4>
+            <a href="@Url.Action("PackageList", "Master")" style="color: blanchedalmond;font-weight: bold;"><i class="fas fa-arrow-left"></i> Back To Package List</a>
+        </div>
     }
 
     <div class="card-body">
@@ -183,8 +186,8 @@
                             <tr class="trresult" style="border: solid; background: black; color: azure; font-weight: bold;">
                                 <td colspan="5" style="text-align:end;">Total(Single Unit)</td>
                                 <td>@TF</td>
-                                @{  featotal = featotal + TF;
-                                        }
+                                @{ featotal = featotal + TF;
+                                }
                             </tr>
 
                         </tbody>
@@ -214,7 +217,7 @@ function BindPackageCard() {
     });
 
     }
-    </script>
+</script>
 
 
 

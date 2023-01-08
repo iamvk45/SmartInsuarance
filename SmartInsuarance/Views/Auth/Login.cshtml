@@ -60,7 +60,7 @@
                                                     </div>
                                                 </div>*@
                                             <div class="mb-3">
-                                                <a href="javascript:void(0);">Forgot Password?</a>
+                                                <a href="@Url.Action("Resetpassword","Auth")">Forgot Password?</a>
                                             </div>
                                         </div>
                                         <div class="text-center">
@@ -91,11 +91,12 @@
             $('#username').focus();
             var isuserExists = '@TempData["IsUserDetailsExists"]'
             var message = '@TempData["msg"]'
+            var icon = '@TempData["icon"]'
             if (isuserExists == 1) {
                 Swal.fire({
-                    title: "Error",
+                    title: icon,
                     text: message,
-                    icon: "warning",
+                    icon: icon,
                     showCloseButton: true,
                 });
             }

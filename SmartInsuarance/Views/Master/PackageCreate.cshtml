@@ -6,6 +6,7 @@
     LicenseName = SmartInsuarance.Helper.CommonFunction.GetDataForDropdown(4);
     List<SmartLB.GlobalClass> UserType = new List<SmartLB.GlobalClass>();
     UserType = SmartLB.CommonList.GetUserType();
+    var userTypeList = (List<SmartInsuarance.Model.FillDropDown>)ViewBag.userTypes;
 }
 <style>
     .Paddingtop1 {
@@ -53,9 +54,9 @@
                         <select class="singleselect " name="iUsrTyp" id="iUsrTyp">
                             <option value="">Select User Type </option>
                             @{
-                                foreach (var item in UserType)
+                                foreach (var item in userTypeList)
                                 {
-                                    <option value="@item.Id">@item.Text</option>
+                                    <option value="@item.DDLValue">@item.DDLText</option>
                                 }
                             }
                         </select>

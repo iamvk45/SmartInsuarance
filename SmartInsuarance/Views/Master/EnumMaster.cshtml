@@ -73,10 +73,10 @@
                                 foreach (var item in CustomEnumList)
                                 {
                                     <tr>
-                                        <th>@i</th>
-                                        <th hidden>@item.iPK_CustEnum</th>
-                                        <th>@item.EnumName</th>
-                                        <th>@item.SettigName</th>
+                                        <td>@i</td>
+                                        <td hidden>@item.iPK_CustEnum</td>
+                                        <td>@item.EnumName</td>
+                                        <td>@item.SettigName</td>
                                     </tr>
                                     i++;
                                 }
@@ -92,7 +92,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script src="~/Content/Template/js/jScript.js"></script>
-
+<script src="~/Content/globalDomain.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $(".singleselect").select2();
@@ -110,6 +110,48 @@
             document.getElementById("dtInsertStrDt").value = '';
             document.getElementById("dRate").value = '';
         });
+
+        $('#ddlEnum').change(function () {
+            var id = $(this).val();
+            getEnum(id);
+        });
     });
+
+
+
+
+    function getEnum(enumId) {
+        var htmlString = "";
+       var userMasterModal = {
+           enumID: parseInt(enumId)
+        }
+         $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+             url: GetglobalDomain() +"/Master/GetDataForEnum",
+                dataType: 'json',
+                type: 'Post',
+                cache: false,
+                data: JSON.stringify(userMasterModal),
+                success: function (data) {
+                    console.log('ajax');
+                    console.log(data);
+                    var mainData = data.Data;
+                    mainData.forEach(function (item, index) {
+
+                        htmlString += `<tr><td>${index + 1}</td><td hidden>${item.iPK_CustEnum}</td><td>${item.EnumName}</td><td>${item.SettigName}</td></tr>`
+                    })
+                    $('#tblEnums tbody').html('');
+                    $('#tblEnums tbody').html(htmlString);
+                },
+                error: function (d) {
+                    console.log(d);
+                    //alert("404. Please wait until the File is Loaded.");
+                }
+            });
+       
+    }
 
 </script>
