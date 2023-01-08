@@ -15,6 +15,7 @@
     Type = SmartLB.CommonList.GetRegistrationType();
 
     var LicMstId = (string)ViewBag.id;
+    var userTypeList = (List<SmartInsuarance.Model.FillDropDown>)ViewBag.userTypes;
 
 }
 <style>
@@ -55,6 +56,20 @@
                 </div>
 
                 <div class="form-group is-empty row Paddingtop1">
+                    <label for="nameInput" class="col-sm-3 control-label">User Type</label>
+                    <div class="col-sm-5">
+                        <select class="singleselect " name="iUsrTypId" id="iUsrTypId">
+                            <option value="">Select User Type </option>
+                            @{
+                                foreach (var item in userTypeList)
+                                {
+                                    <option @(Model != null && Model.iUsrTypId == Convert.ToInt32(item.DDLValue) ? "selected" : "") value="@item.DDLValue">@item.DDLText</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group is-empty row Paddingtop1">
 
                     <input type="hidden" name="iPK_LicMstId" value="@ViewBag.id" />
 
@@ -92,20 +107,6 @@
                         </div>*@
                 </div>
                 <div class="form-group is-empty row Paddingtop1">
-                    <label for="nameInput" class="col-sm-3 control-label">User Type</label>
-                    <div class="col-sm-5">
-                        <select class="singleselect " name="iUsrTypId" id="iUsrTypId">
-                            <option value="">Select User Type </option>
-                            @{
-                                foreach (var item in UserType)
-                                {
-                                    <option @(Model != null && Model.iUsrTypId == item.Id ? "selected" : "") value="@item.Id">@item.Text</option>
-                                }
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group is-empty row Paddingtop1">
                     <label for="nameInput" class="col-sm-3 control-label">Licence Name</label>
                     <div class="col-sm-5">
                         <select class="singleselect" data-tags="true" name="iLicNameId" id="iLicNameId" @(Model != null && Model.iLicNameId != null ? "readonly" : "")>
@@ -138,7 +139,7 @@
                 </div>
 
                 <div class="form-group is-empty row Paddingtop1">
-                    <label for="nameInput" class="col-sm-3 control-label">Number Of Registration</label>
+                    <label for="nameInput" class="col-sm-3 control-label">Number Of Licence Covered</label>
                     <div class="col-sm-2">
                         <input type="number" name="iNumReg" value="" id="iNumReg" placeholder="" class="form-control">
                     </div>

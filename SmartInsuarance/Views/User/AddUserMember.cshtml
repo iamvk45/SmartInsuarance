@@ -5,20 +5,19 @@
     Layout = "~/Views/Shared/_Layout_new.cshtml";
     //var BaseURL = System.Configuration.ConfigurationManager.AppSettings["BaseUrl"];
 
-    //var countryID = 0;
-    //var stateID = 0;
-    //var cityID = 0;
-    //var Name = "";
+    int? countryID = 0;
+    int? stateID = 0;
+    int? cityID = 0;
+    var Name = "";
 
-    //var type = (string)ViewBag.type;
-    //if(type!="User")
+    var type = (string)ViewBag.type;
+    //if (type != "User")
     //{
-    var countryID = Model.iCountryID;
-    var stateID = Model.iStateID;
-    var cityID = Model.iCityID;
-
-    var Name = Model.Name.Split(' ')[0];
-    //}
+    countryID = Model.iCountryID;
+    stateID = Model.iStateID;
+    cityID = Model.iCityID;
+    Name = Model.sNME.Split(' ')[0];
+//  }
 }
 
 @*<link href="~/Content/Template/select2/css/select2.css" rel="stylesheet" />*@
@@ -222,7 +221,7 @@
                                         </div>
                                     </div>
                                     <div class="author-info">
-                                        <h6 class="title" id="proIMGName">@(Model.Name==null?"": Model.Name)</h6>
+                                        <h6 class="title" id="proIMGName">@(Model.sNME==null?"": Model.sNME)</h6>
                                         @*<span>Admin</span>*@
                                     </div>
                                 </div>
