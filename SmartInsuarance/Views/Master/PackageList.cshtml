@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "PackageList";
     Layout = "~/Views/Shared/_Layout_new.cshtml";
-   
+
 }
 
 <style>
@@ -15,8 +15,15 @@
     .top:hover, .top:active {
         background-color: red;
     }
+
+
+    #sortable tr:hover {
+        background-color: green;
+        color: white;
+    }
 </style>
 <link href="~/Content/Custom.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css" />
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
@@ -35,24 +42,32 @@
                             <th>Name</th>
                             <th>User Type</th>
                             <th>LicenseName</th>
+                            <th>Is Display</th>
                             <th>Active</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody id="tbody">
+                    <tbody id="sortable" style="cursor:pointer">
                         @{
                             var i = 1;
 
                             foreach (var item in Model)
                             {
-                                <tr id="tr_@item.iPk_PackId">
+                                <tr class="taskSingleLine" id="tr_@item.iPk_PackId" data-taskid="@item.iPk_PackId">
                                     <td>@i</td>
                                     <td>@item.sPackName</td>
                                     <td>@item.UsereName</td>
                                     <td>@item.LicenseName</td>
                                     <td>
                                         <label class="toggle">
-                                            <input class="toggle-checkbox" type="checkbox" id="Status" name="Status" value="@item.iStts" @(item.iStts == 1 ? "checked" : "")>
+                                            <input class="toggle-checkbox ChangeStatus" type="checkbox" data-id="Packagelist-@item.iPk_PackId-displayactive" name="Status" value="@(item.IsDisplay==1?1:0)" @(item.IsDisplay == 1 ? "checked" : "")>
+                                            <div class="toggle-switch"></div>
+                                            @*<span class="toggle-label">Bluetooth</span>*@
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <label class="toggle">
+                                            <input class="toggle-checkbox ChangeStatus" type="checkbox" data-id="Packagelist-@item.iPk_PackId-status" name="Status" value="@(item.iStts==1?1:0)" @(item.iStts == 1 ? "checked" : "")>
                                             <div class="toggle-switch"></div>
                                             @*<span class="toggle-label">Bluetooth</span>*@
                                         </label>
@@ -81,3 +96,184 @@
     </div>
 </div>
 
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
+
+
+
+@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>*@
+<script src="~/Content/globalDomain.js"></script>
+@*<script src="~/Content/Template/js/jScript.js"></script>*@
+@*<script src="~/Content/Template/js/sortable.js"></script>*@
+<script type="text/javascript">
+    $(".ChangeStatus").change(function () {
+        debugger;
+        var id = $(this).data("id");
+        var item = id.split('-');
+        var type = parseInt($(this).val());
+        //if (type == 0) {
+        //    type = 1;
+        //}
+        //else {
+        //    type = 0;
+        //}
+        var Params = JSON.stringify(
+            {
+                TableId: item[0],
+                type: type,
+                Id: item[1],
+                Display: item[2],
+            });
+
+        $.ajax({
+            url: GetglobalDomain() + "/Role/ChangeStatus",
+            type: 'POST',
+            dataType: "json",
+            contentType: "application/json",
+            data: Params,
+            success: function (response) {
+                debugger;
+                if (response.isvalid == 1) {
+                    var msg = 'Status Changes Successfully';
+                    if (type == 1) {
+                        $("#" + id).val(0);
+                        /* $(this).val('0');*/
+                        msg = 'Status De-Active Successfully';
+                    }
+                    else {
+                        $("#" + id).val(1);
+                        /* $(this).val('1');*/
+                        msg = 'Status Active Successfully';
+                    }
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: msg,
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+
+
+                }
+
+
+
+
+
+
+            }
+        });
+
+    });
+    function DeleteData(Id) {
+        var Id = Id;
+
+        /*  var TypeId = $(this).attr("name");*/
+        $.confirm({
+
+            title: 'Remove Confirmation',
+            content: 'Are you sure to remove record',
+            type: 'red',
+            typeAnimated: true,
+            animation: 'rotate',
+            closeAnimation: 'scale',
+            buttons: {
+                Confirm: {
+                    text: 'YES',
+                    btnClass: 'btn-red',
+                    action: function () {
+
+
+
+                        var Params = JSON.stringify({
+                            TableId: 'PackageList',
+                            Id: Id,
+                            type: 2
+
+
+                        });
+                        /* ShowBALoader("LoaderBASinup1");*/
+                        $.ajax({
+                            url: GetglobalDomain() + "/Role/ChangeStatus",
+                            type: 'POST',
+                            dataType: "json",
+                            data: Params,
+                            contentType: "application/json",
+                            success: function (response) {
+
+
+                                debugger;
+                                if (response.IsValid = 1) {
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: 'Delete Successfully',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    })
+                                    $("#tr_" + Id).remove();
+                                }
+
+                            },
+
+                        });
+
+                    }
+                },
+                close: {
+                    text: 'NO',
+                    action: function () { }
+                }
+            }
+        });
+    }
+
+</script>
+<script>
+    $(document).ready(function () {
+        jQuery.browser = {};
+        (function () {
+            jQuery.browser.msie = false;
+            jQuery.browser.version = 0;
+            if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
+                jQuery.browser.msie = true;
+                jQuery.browser.version = RegExp.$1;
+            }
+        })();
+        //$("#Menutable tbody").sortable({
+        //});
+    });
+    $(function () {
+
+        $("#sortable").sortable({
+            items: 'tr',
+            cursor: 'pointer',
+            axis: 'y',
+            dropOnEmpty: false,
+            update: function (event, ui) {
+                var itemIds = "";
+                $("#sortable").find(".taskSingleLine").each(function () {
+                    var itemId = $(this).attr("data-taskid");
+                    itemIds = itemIds + itemId + ",";
+                });
+                $.ajax({
+                    url: '@Url.Action("UpdateItem", "Master")',
+                    data: { itemIds: itemIds },
+                    type: 'POST',
+                    success: function (data) {
+
+                    },
+                    error: function (xhr,status,error) {
+
+                    }
+                });
+
+            }
+        })
+
+    })
+</script>

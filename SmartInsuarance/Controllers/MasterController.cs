@@ -428,7 +428,7 @@ namespace SmartInsuarance.Controllers
             List<FEATRATMSTView> Fealst = new List<FEATRATMSTView>();
             Fealst = GetFeatureRatelist();
             List<FEATRATMSTDROP> Lst = new List<FEATRATMSTDROP>();
-            foreach (var item in Fealst)
+            foreach (var item in Fealst.Where(p=>p.iFK_UomId==ivalidityid).ToList())
             {
                 FEATRATMSTDROP obj = new FEATRATMSTDROP();
                 obj.iPk_FetRatMstId = item.iPk_FetRatMstId;
@@ -492,6 +492,9 @@ namespace SmartInsuarance.Controllers
             return RedirectToAction("PackageList");
         }
         #endregion
-
+        public ActionResult UpdateItem(string itemIds)
+        {
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
     }
 }

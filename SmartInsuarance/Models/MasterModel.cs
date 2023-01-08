@@ -322,6 +322,7 @@ namespace SmartInsuarance.Models
         public decimal? iGstval { get; set; }
         public Boolean? bCompSts { get; set; }
 
+        public int? IsDisplay { get; set; }
     }
     public class PackageManagementView: PackageManagement
     {
@@ -458,6 +459,7 @@ namespace SmartInsuarance.Models
     }
     public class PACKFEATUESPEView:PACKFEATURSPE
     {
+        public int iFK_FetId { get; set; }
         public string ValidityName
         {
             get
@@ -477,7 +479,7 @@ namespace SmartInsuarance.Models
             }
         }
         public string sFeatureName { get; set; }
-        public int iFK_FetId { get; set; }
+     
         public string FeatureName
         {
             get
