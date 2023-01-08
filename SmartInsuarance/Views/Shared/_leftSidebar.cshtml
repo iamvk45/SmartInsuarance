@@ -43,7 +43,7 @@
                 </a>
                 <ul aria-expanded="false">
                     @*<li><a href="#">Profile View</a></li>*@
-                    <li><a href="@Url.Action("EditProfile", "User")">Edit Profile</a></li>
+                    @*<li><a href="@Url.Action("EditProfile", "User")">Edit Profile</a></li>*@
                     <li><a href="@Url.Action("RegisteredUser", "Admin")">Active In-Active User</a></li>
                     @*<li><a href="./post-details.html">Post Details</a></li>
                         <li>
@@ -199,6 +199,16 @@
 
 
 
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="fa fa-file-zipper"></i>
+                    <span class="nav-text">Human Resource</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="@Url.Action("AddNewUserIndex", "User")">Add New User</a></li>
+                </ul>
+            </li>
+            
             <li>
                 <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                     <i class="fa fa-file-zipper"></i>

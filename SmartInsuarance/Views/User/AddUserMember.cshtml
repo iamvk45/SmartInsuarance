@@ -16,7 +16,7 @@
     countryID = Model.iCountryID;
     stateID = Model.iStateID;
     cityID = Model.iCityID;
-    Name = Model.Name.Split(' ')[0];
+    Name = Model.sNME.Split(' ')[0];
 //  }
 }
 
@@ -221,7 +221,7 @@
                                         </div>
                                     </div>
                                     <div class="author-info">
-                                        <h6 class="title" id="proIMGName">@(Model.Name==null?"": Model.Name)</h6>
+                                        <h6 class="title" id="proIMGName">@(Model.sNME==null?"": Model.sNME)</h6>
                                         @*<span>Admin</span>*@
                                     </div>
                                 </div>

@@ -1,14 +1,31 @@
-﻿@using SmartInsuarance.Model;
+﻿@using SmartInsuarance.Models;
 @{
     ViewBag.Title = "EditProfile";
     Layout = "~/Views/Shared/_Layout_new.cshtml";
-    //var BaseURL = System.Configuration.ConfigurationManager.AppSettings["BaseUrl"];
+    var BaseURL = System.Configuration.ConfigurationManager.AppSettings["BaseUrl"];
+    BaseURL = BaseURL.Replace("api/", "");
+
+    var profileImg = "";
+    var panImg = "";
+    var aadhaarImg = "";
+    var roles = (List<SmartInsuarance.Model.FillDropDown>)ViewBag.roles;
+    int? countryID = 0;
+    int? stateID = 0;
+    int? cityID = 0;
+
+    var currentuser = (UserMasterDetails)ViewBag.currentUser;
+
+    profileImg = BaseURL + currentuser.s_profileImg;
+    panImg = BaseURL + currentuser.s_panImg;
+    aadhaarImg = BaseURL + currentuser.s_aadhaarImg;
 
 
-
+    countryID = currentuser.iCountryID;
+    stateID = currentuser.iStateID;
+    cityID = currentuser.iCityID;
+    var name = currentuser.sNME.Split(' ')[0];
 }
-
-<link href="~/Content/Template/select2/css/select2.css" rel="stylesheet" />
+<link href="~/Content/Custom.css" rel="stylesheet" />
 @*<link href="~/Content/CountrySelect/build/css/countrySelect.css" rel="stylesheet" />
     <link href="~/Content/CountrySelect/build/css/demo.css" rel="stylesheet" />*@
 
@@ -21,15 +38,17 @@
                     <div class="p-5">
                         <div class="author-profile">
                             <div class="author-media">
-                                <img src="~/Content/Template/images/userlogo.png" alt="">
+                                @*<img src="@profileImg" alt="" id="imgProfile">*@
+                                <img src="@((currentuser.s_profileImg==""|| currentuser.s_profileImg==null)?"../Content/Template/images/userlogo.png":profileImg)" alt=""  id="imgProfile">
                                 <div class="upload-link" title="" data-toggle="tooltip" data-placement="right" data-original-title="update">
-                                    <input type="file" class="update-flie">
+                                    <input type="file" class="update-flie" id="fupProfileImage" onchange="return encodeImageFileAsURL(this,'Profile')">
+                                    <input type="hidden" id="hdnProfileImage">
                                     <i class="fa fa-camera"></i>
                                 </div>
                             </div>
                             <div class="author-info">
-                                <h6 class="title">Super User</h6>
-                                <span>Admin</span>
+                                <h6 class="title">@currentuser.sNME</h6>
+                                <span>@currentuser.Role</span>
                                 @*<div>
                                         @{
                                             if (data != null)
@@ -46,9 +65,9 @@
                     </div>
                     <div class="info-list">
                         <ul>
-                            <li><a href="javascript:void(0)">Username</a><span>SU</span></li>
-                            <li><a href="javascript:void(0)">Role</a><span>Admin</span></li>
-                            <li><a href="javascript:void(0)">My Members</a><span>0</span></li>
+                            <li><a href="javascript:void(0)">Username</a><span>@currentuser.sUSRNME</span></li>
+                            <li><a href="javascript:void(0)">Role</a><span>@currentuser.Role</span></li>
+                            <li><a href="javascript:void(0)">My Members</a><span class="badge badge-circle badge-secondary" style="color:white">@currentuser.Members</span></li>
                         </ul>
                     </div>
                 </div>
@@ -67,7 +86,8 @@
     <div class="col-xl-9 col-lg-8">
         <div class="card profile-card card-bx m-b30">
             <div class="card-header">
-                <h6 class="title">Account setup</h6>
+                <h6 class="title" style="color: blanchedalmond;font-weight: bold;">Account setup</h6>
+                @*<a href="@Url.Action("Profilestatus", "User")" style="color: blanchedalmond;font-weight: bold;"><i class="fas fa-arrow-left"></i> Back To List</a>*@
             </div>
             <form class="profile-form">
 
@@ -75,19 +95,19 @@
                     <div class="row">
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Name</label>
-                            <input type="text" class="form-control" value="Super">
+                            <input type="text" class="form-control" value="@name" id="txtName">
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Surname</label>
-                            <input type="text" class="form-control" value="User">
+                            <input type="text" class="form-control" value="@currentuser.sSurNME" id="txtSurname">
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Date Of Birth</label>
-                            <input type="text" class="form-control" placeholder="24.09.1995">
+                            <input type="text" placeholder="24.09.1995" value="@currentuser.dtDOB" class="form-control" id="mdate">
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Email address</label>
-                            <input type="text" class="form-control" value="su@gmail.com">
+                            <input type="text" class="form-control" value="@currentuser.sEmail" readonly disabled style="background: #e8f0fe;color: black;">
                         </div>
 
                         <div class="col-sm-6 m-b30">
@@ -119,7 +139,7 @@
                                     <input type="text" class="form-control" id="txtPhoneCodeID" value="NA" style="font-size:15px;width: 80px; background-color: #f1f1f1" disabled readonly />
                                 </div>
                                 <div class="col-10">
-                                    <input type="text" class="form-control" value="90XXXXXXX5">
+                                    <input type="text" class="form-control" value="@currentuser.sPhone" id="txtmobile">
                                 </div>
                             </div>
 
@@ -127,52 +147,209 @@
 
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Pincode</label>
-                            <input type="text" class="form-control" value="462042">
+                            <input type="text" class="form-control" value="@currentuser.sPincode" id="txtPincode">
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Role</label><br />
-                            <select class="selectpicker">
-                                <option>Admin</option>
-                                <option>Female</option>
-                                <option>Other</option>
+                            <select id="ddlRole" class="form-control" name="iRoleID" disabled>
+                                @{
+                                    if (roles != null)
+                                    {
+                                        foreach (var item in roles)
+                                        {
+                                            if (item.DDLValue == currentuser.iRoleID)
+                                            {
+
+                                                <option value="@item.DDLValue" selected>@item.DDLText</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.DDLValue">@item.DDLText</option>
+                                            }
+                                        }
+                                    }
+                                }
                             </select>
                         </div>
 
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Aadhar Number</label>
-                            <input type="text" class="form-control" value="XXXXXXXX1234">
+                            <input type="text" class="form-control" value="@currentuser.sAadhaar" id="txtAadharNo">
                         </div>
 
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">PAN Number</label>
-                            <input type="text" class="form-control" value="BXXXXXXXX8A">
+                            <input type="text" class="form-control" value="@currentuser.sPan" id="txtPan">
                         </div>
 
-                        <div class="col-sm-6 m-b30">
-                            <label class="form-label">Choose Image (Aadhaar)</label>
-                            <input type="file" class="form-control">
-                        </div>
+                        @{
+                            if (currentuser.s_aadhaarImg != "" && currentuser.s_aadhaarImg != null)
+                            {
 
-                        <div class="col-sm-6 m-b30">
-                            <label class="form-label">Choose Image (PAN)</label>
-                            <input type="file" class="form-control" >
-                        </div>
+                                <div class="col-sm-6 m-b30">
+                                    <label class="form-label">Aadhaar Image</label>
+                                    <div class="col-sm-6 m-b30" style="background:url('@aadhaarImg');background-size:cover;background-repeat:no-repeat;background-position:center;width:250px;height:100px">
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-sm-6 m-b30">
+                                    <label class="form-label">Choose Image (Aadhaar)</label>
+                                    <input type="file" class="form-control" id="fupAadhaarImage" onchange="return encodeImageFileAsURL(this,'Aadhaar')">
+                                    <input type="hidden" id="hdnAadhaarImage">
+                                </div>
+                            }
+                        }
+
+                        @{
+                            if (currentuser.s_panImg != "" && currentuser.s_panImg != null)
+                            {
+
+                                <div class="col-sm-6 m-b30">
+                                    <label class="form-label">PAN Image</label>
+                                    <div class="col-sm-6 m-b30" style="background:url('@panImg');background-size:cover;background-repeat:no-repeat;background-position:center;width:250px;height:100px">
+                                    </div>
+                                    </div>
+                                    }
+                                    else
+                                    {
+                                    <div class="col-sm-6 m-b30">
+                                        <label class="form-label">Choose Image (PAN)</label>
+                                        <input type="file" class="form-control" id="fupPanImage" onchange="return encodeImageFileAsURL(this,'Pan')">
+                                        <input type="hidden" id="hdnPanImage">
+                                    </div>
+                                    }
+                                    }
 
 
-                        <div class="col-sm-12 m-b30">
-                            <label class="form-label">Full Address</label>
-                            <textarea class="form-control" placeholder="Some where....." rows="3" style="resize:none"></textarea>
-                        </div>
-                    </div>
-                </div>
+
+                                    <div class="col-sm-12 m-b30">
+                                        <label class="form-label">Full Address</label>
+                                        <textarea class="form-control" placeholder="Some where....." rows="3" style="resize:none" id="txtAddress">@currentuser.sAddress</textarea>
+                                    </div>
+                                </div>
+                            </div>
                 <div class="card-footer">
-                    <button class="btn btn-primary">UPDATE</button>
-                    <a href="javascript:void(0);" class="btn-link">Forgot your password?</a>
+                    <button class="btn btn-secondary" type="button" onclick="SaveDetails()"><i class="fa fa-wrench"></i>&nbsp; UPDATE</button>
+                    <a href="javascript:void(0);" class="btn-link" data-bs-toggle="modal" data-bs-target="#ResetModel">Forgot your password?</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+
+@*<button type="button" class="btn btn-primary mb-2" id="btnStartTrail" style="display:none" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Modal centered</button>*@
+<!-- Modal -->
+<div class="modal fade" id="ResetModel">
+    <div class="modal-dialog modal-dialog-centered modal-m" role="document">
+        <div class="modal-content modal-m">
+            <div class="modal-header">
+                <h5 class="modal-title">Reset Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <i class='far fa-3x fa-smile' style="color: #87b2d6"></i><br />
+                    <div style="margin-top: 20px;font-size:15px">
+                        Thank you for using our service. <br />
+                        Please enter the otp you recieved on provided mobile number and email address
+                    </div>
+                </div>
+                <hr />
+                <div style="width: 90%;margin: auto;border: none;">
+                    <div class="row">
+                        <div class="col-sm-12 m-b30">
+                            <label class="form-label">Email address/Username</label>
+                            <input type="text" class="form-control" value="@currentuser.sEmail" readonly disabled style="background: #e8f0fe;color: black;">
+                        </div>
+                    </div>
+
+                    <div class="row  mt-3">
+                        <div class="col-sm-12">
+                            <label class="form-label">Enter Password</label>
+                            <input type="password" class="form-control" id="txtMpassword">
+                        </div>
+                    </div>
+                    <div class="row  mt-3">
+                        <div class="col-sm-12" style="text-align:right">
+                            <button class="btn btn-primary btn-sm" id="btnResetPass" type="button"><i class="fa fa-recycle"></i>&nbsp;Reset Password</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="modal-footer">
+                <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>*@
+    </div>
+</div>
+
+
+
+<button type="button" class="btn btn-primary mb-2" id="btnStartTrail" style="display:none" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Modal centered</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content modal-xl">
+            <div class="modal-header">
+                <h5 class="modal-title">Enter OTP</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <h2>Thank You</h2>
+                    <i class='far fa-3x fa-smile' style="color: #87b2d6"></i><br />
+                    <div style="margin-top: 20px;font-size:18px">
+                        Thank you for using our service. <br />
+                        Please enter the otp you recieved on provided mobile number and email address
+                    </div>
+                </div>
+                <hr />
+                <div style="width: 90%;margin: auto;border: none;">
+                    <div class="row">
+                        <div class="col-sm-6" style="border-right: 1px solid #cbcbcb;">
+                            <div class="row" style="display: flex; align-items: end;">
+                                <div class="col-sm-8">
+                                    <label class="form-label"><strong>Mobile OTP</strong></label>
+                                    <input type="text" class="form-control" oninput="numberOnly(this.id)" id="txtMobileOTP" placeholder="----" maxlength="4" style="width: 340px;">
+                                </div>
+                                <div class="col-sm-4">
+                                    <button type="button" class="btn btn-primary" id="btnMverify" style="width: 160px;margin-left: -39px;-webkit-box-shadow: inset -12px 4px 34px -4px rgba(0,0,0,0.75);-moz-box-shadow: inset -12px 4px 34px -4px rgba(0,0,0,0.75);box-shadow: inset -12px 4px 34px -4px rgba(0,0,0,0.75);"> <i class='fa fa-check'></i> Verify</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="row" style="display: flex; align-items: end;">
+                                <div class="col-sm-8">
+                                    <label class="form-label"><strong>Email OTP</strong></label>
+                                    <input type="text" class="form-control" oninput="numberOnly(this.id)" id="txtEmailOTP" placeholder="----" maxlength="4" style="width: 340px;">
+                                </div>
+                                <div class="col-sm-4">
+                                    <button type="button" class="btn btn-primary" id="btnEverify" style="width: 160px;margin-left: -39px;-webkit-box-shadow: inset -12px 4px 34px -4px rgba(0,0,0,0.75);-moz-box-shadow: inset -12px 4px 34px -4px rgba(0,0,0,0.75);box-shadow: inset -12px 4px 34px -4px rgba(0,0,0,0.75);"> <i class='fa fa-check'></i> Verify</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+
+
 <!--**********************************
     Footer start
 ***********************************-->
@@ -191,9 +368,10 @@
         });
     </script>*@
 <script type="text/javascript">
-
+    var imagebase64 = "";
     $(document).ready(function () {
-
+        $('#ddlRole').select2();
+        $('#ddlCountry').select2();
         bindCountryStateCity('Country', 0, 0);
         $('#ddlCountry').change(function () {
             $('#ddlCity').html('');
@@ -208,16 +386,47 @@
             $('#txtPhoneCodeID').val(ds1);
 
         });
-
         $('#ddlState').change(function () {
 
             $('#ddlCity').html('');
             var ds = $('#ddlState').val();
             bindCountryStateCity('City', 0, ds);
         });
+
+        $('#txtAadharNo').blur(function () {
+            if ($("#txtAadharNo").val().length > 0) {
+                if ($("#txtAadharNo").val().length<12) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Invalid Aadhaar Number',
+                        html: `"${$("#txtAadharNo").val()}" Is not valid, should be 12 digits long`,
+                        allowOutsideClick: false,
+                        showCloseButton: true,
+                        showConfirmButton: false,
+                    });
+                }
+            }
+        })
+
+        $('#btnResetPass').click(function () {
+            var pass = $('#txtMpassword').val()
+            if (pass.length > 0) {
+                resetpassword();
+                //setTimeout(function () {
+                //    $('#btnStartTrail').click();
+                //}, 1500)
+            }
+            else {
+                Swal.fire({
+                    title: "error",
+                    text: "Password Can`t be blank..!",
+                    icon: "error",
+                    showCancelButton: false,
+                });
+            }
+        });
     });
-
-
 
     function bindCountryStateCity(type, cID, sID) {
         var Content = {
@@ -244,33 +453,82 @@
                     var countryData = "<option value=0>Select Country</option>";
                     mainData.forEach(function (item) {
                         /* console.log(item.DDLText);*/
+                        if ('@ViewBag.type' != 'Member') {
+                            if (item.DDLValue == '@countryID') {
+                                countryData += `<option value=${item.DDLValue} selected>${item.DDLText}</option>`;
+                            }
+                            else {
+                            countryData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
+                            }
+                        }
+                        else {
                         countryData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
+                        }
 
                     });
+
                     //console.log(countryData);
                     $('#ddlCountry').html('');
                     $('#ddlCountry').html(countryData);
-                    $('#ddlCountry').select2();
+
+                    if ('@ViewBag.type' != 'Member') {
+                        var ds = $('#ddlCountry').val();
+                        var ds1 = $('#ddlCountry option:selected').text();
+
+                        ds1 = ds1.split('(')[1].replace(')', '').trim();
+                        $('#txtPhoneCodeID').val('');
+                        $('#txtPhoneCodeID').val(ds1);
+
+
+                        bindCountryStateCity('State', ds, 0);
+                    }
                 }
 
                 if (type == 'State') {
                     var stateData = "<option value=0>Select State</option>";
                     mainData.forEach(function (item) {
                         /* console.log(item.DDLText);*/
-                        stateData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
+                      if ('@ViewBag.type' != 'Member') {
+                            if (item.DDLValue == '@stateID') {
+                                stateData += `<option value=${item.DDLValue} selected>${item.DDLText}</option>`;
+                            }
+                            else {
+                                stateData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
+                            }
+                        }
+                        else {
+                          stateData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
+                        }
 
                     });
                     //console.log(countryData);
                     $('#ddlState').html('');
                     $('#ddlState').html(stateData);
                     $('#ddlState').select2();
+
+                    if ('@ViewBag.type' != 'Member') {
+                        var ds = $('#ddlState').val();
+                        bindCountryStateCity('City', 0, ds);
+                    }
+
+
+
                 }
                 if (type == 'City') {
                     var cityData = "<option value=0>Select City</option>";
                     mainData.forEach(function (item) {
                         /* console.log(item.DDLText);*/
-                        cityData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
-
+                          if ('@ViewBag.type' != 'Member') {
+                            if (item.DDLValue == '@cityID') {
+                                cityData += `<option value=${item.DDLValue} selected>${item.DDLText}</option>`;
+                            }
+                            else {
+                                cityData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
+                            }
+                        }
+                        else {
+                              cityData += `<option value=${item.DDLValue}>${item.DDLText}</option>`;
+                        }
                     });
                     //console.log(countryData);
                     $('#ddlCity').html('');
@@ -284,4 +542,292 @@
             }
         });
     }
+
+    function numberOnly(id) {
+        // Get element by id which passed as parameter within HTML element event
+        var element = document.getElementById(id);
+        // This removes any other character but numbers as entered by user
+        element.value = element.value.replace(/[^0-9]/gi, "");
+    }
+
+    function encodeImageFileAsURL(element, item) {
+        var elementID = element.id;
+        var file = element.files[0];
+        //console.log(file);
+        //console.log(elementID);
+
+        var reader = new FileReader();
+        reader.onloadend = function () {
+            imagebase64 = reader.result;
+            var binaryOnly = imagebase64.split(',')[1];
+            //console.log(binaryOnly);
+
+            if (item == "Aadhaar") {
+                $('#hdnAadhaarImage').val(binaryOnly);
+            }
+            if (item == "Pan") {
+                $('#hdnPanImage').val(binaryOnly);
+            }
+            if (item == "Profile") {
+                $('#hdnProfileImage').val(binaryOnly);
+                $('#imgProfile').attr("src", '');
+                $('#imgProfile').attr("src", imagebase64);
+            }
+            //var c = $('#UploadedImage').val();
+            // console.log("Converted "+ c)
+        }
+        reader.readAsDataURL(file);
+        return imagebase64;
+    }
+
+    function SaveDetails() {
+
+        var name = $('#txtName').val();
+        var surname = $('#txtSurname').val();
+        var dob = $('#mdate').val();
+        var country = $('#ddlCountry').val();
+        var state = $('#ddlState').val();
+        var city = $('#ddlCity').val();
+        var phonenumber = $('#txtmobile').val();
+        var pincode = $('#txtPincode').val();
+        var adhaarNumber = $('#txtAadharNo').val();
+        var panNumber = $('#txtPan').val();
+        var adhaarImg = $('#hdnAadhaarImage').val();
+        var panImg = $('#hdnPanImage').val();
+        var profileImg = $('#hdnProfileImage').val();
+        var address = $('#txtAddress').val();
+
+        var userMasterModal = {
+            sNME: name,
+            sSurNME: surname,
+            dtDOB: dob,
+            sPhone: phonenumber,
+            iCountryID: parseInt(country),
+            iStateID: parseInt(state),
+            iCityID: parseInt(city),
+            sPincode: pincode,
+            sAadhaar: adhaarNumber,
+            sPan: panNumber,
+            sAddress: address,
+            aadhaarImg: adhaarImg,
+            panImg: panImg,
+            profileImg: profileImg,
+            sUSRCode:'@currentuser.sUSRCode'
+        }
+
+        var d = checkValidate();
+        //console.log(d);
+        //var d = JSON.stringify(Content);
+        //console.log(d);
+
+        if (d) {
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: GetglobalDomain() +"/User/UpdateUserDetails",
+                dataType: 'json',
+                type: 'Post',
+                cache: false,
+                data: JSON.stringify(userMasterModal),
+                success: function (data) {
+                    //console.log('ajax');
+                    //console.log(data);
+                    if (data.StatusCode == 1) {
+                        Swal.fire({
+                            title: "Success",
+                            text: "Details Saved Successfully..!",
+                            icon: "success",
+                            showCancelButton: false,
+                        });
+                        setTimeout(function () {
+                            location.href = '@Url.Action("Index","Dashboard")';
+                        }, 2500)
+                    }
+                    else {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Facing some internal issues..!",
+                            icon: "error",
+                            showCancelButton: false,
+                        });
+                    }
+                },
+                error: function (d) {
+                    console.log(d);
+                    //alert("404. Please wait until the File is Loaded.");
+                }
+            });
+        }
+    }
+
+    function checkValidate() {
+        var status = true;
+
+        var name = $('#txtName').val();
+        var surname = $('#txtSurname').val();
+        var dob = $('#mdate').val();
+        var country = $('#ddlCountry').val();
+        var state = $('#ddlState').val();
+        var city = $('#ddlCity').val();
+        var phonenumber = $('#txtmobile').val();
+        var pincode = $('#txtPincode').val();
+        var adhaarNumber = $('#txtAadharNo').val();
+        var panNumber = $('#txtPan').val();
+        var adhaarImg = $('#hdnAadhaarImage').val();
+        var panImg = $('#hdnPanImage').val();
+        var profileImg = $('#hdnProfileImage').val();
+        var address = $('#txtAddress').val();
+
+        if (name.length <= 0) {
+            Swal.fire({
+                title: "Error",
+                text: "Please Enter Name..!",
+                icon: "warning",
+                showCancelButton: false,
+            });
+            status = false;
+        }
+        else if (surname.length <= 0) {
+            Swal.fire({
+                title: "Error",
+                text: "Please Enter Surname..!",
+                icon: "warning",
+                showCancelButton: false,
+            });
+            status = false;
+        }
+        else if (dob.length <= 0) {
+            Swal.fire({
+                title: "Error",
+                text: "Please Enter Date of Birth..!",
+                icon: "warning",
+                showCancelButton: false,
+            });
+            status = false;
+        }
+        else if (country == 0) {
+            Swal.fire({
+                title: "Error",
+                text: "Please Select Country..!",
+                icon: "warning",
+                showCancelButton: false,
+            });
+            status = false;
+        }
+        else if (state == 0) {
+            Swal.fire({
+                title: "Error",
+                text: "Please Select State..!",
+                icon: "warning",
+                showCancelButton: false,
+            });
+            status = false;
+        }
+        else if (city == 0) {
+            Swal.fire({
+                title: "Error",
+                text: "Please Select City..!",
+                icon: "warning",
+                showCancelButton: false,
+            });
+            status = false;
+        }
+        else if (phonenumber.length <= 0) {
+            Swal.fire({
+                title: "Error",
+                text: "Please Enter Phone Number..!",
+                icon: "warning",
+                showCancelButton: false,
+            });
+            status = false;
+        }
+        else if (pincode.length <= 0) {
+            Swal.fire({
+                title: "Error",
+                text: "Please Enter Pincode..!",
+                icon: "warning",
+                showCancelButton: false,
+            });
+            status = false;
+        }
+        else if (adhaarNumber.length <= 0) {
+            Swal.fire({
+                title: "Error",
+                text: "Please Enter Aadhaar Number..!",
+                icon: "warning",
+                showCancelButton: false,
+            });
+            status = false;
+        }
+        else if (panNumber.length <= 0) {
+            Swal.fire({
+                title: "Error",
+                text: "Please Enter Pan Number..!",
+                icon: "warning",
+                showCancelButton: false,
+            });
+            status = false;
+        }
+        else if (address.length <= 0) {
+            Swal.fire({
+                title: "Error",
+                text: "Please Enter Address..!",
+                icon: "warning",
+                showCancelButton: false,
+            });
+            status = false;
+        }
+
+        return status;
+    }
+    function resetpassword() {
+
+         var userMasterModal = {
+             Password: $('#txtMpassword').val(),
+             Email: '@currentuser.sEmail',
+             Type:'Reset'
+        }
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: GetglobalDomain() +"/User/Resetpassword",
+                dataType: 'json',
+                type: 'Post',
+                cache: false,
+                data: JSON.stringify(userMasterModal),
+                success: function (data) {
+                    //console.log('ajax');
+                    //console.log(data);
+                    if (data.StatusCode == 1) {
+                        Swal.fire({
+                            title: "Success",
+                            text: "Details Saved Successfully..!",
+                            icon: "success",
+                            showCancelButton: false,
+                        });
+                        @*setTimeout(function () {
+                            location.href = '@Url.Action("Index","Dashboard")';
+                        }, 2500)*@
+                    }
+                    else {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Facing some internal issues..!",
+                            icon: "error",
+                            showCancelButton: false,
+                        });
+                    }
+                },
+                error: function (d) {
+                    console.log(d);
+                    //alert("404. Please wait until the File is Loaded.");
+                }
+            });
+
+    }
+
 </script>

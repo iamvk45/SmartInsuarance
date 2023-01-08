@@ -175,6 +175,7 @@ namespace SmartInsuarance.Models
         public int iTypId { get; set; }
         public int iValidityvalue { get; set; }
         public string LicenseName { get; set; }
+        public string UsereName { get; set; }
         public int? iLiceTypeId { get; set; }
     }
     public class LICEMSTViEW: LICEMST
@@ -246,27 +247,6 @@ namespace SmartInsuarance.Models
                 }
             }
         }
-        public string UsereName
-        {
-            get
-            {
-                switch (iUsrTypId)
-                {
-                    case 1:
-                        return "Agent";
-                    case 2:
-                        return "Broker";
-
-                    case 3:
-                        return "User";
-                    case 4:
-                        return "Trial User";
-                    default:
-                        return "";
-                }
-            }
-        }
-
         public string LiceType
         {
             get
@@ -341,6 +321,7 @@ namespace SmartInsuarance.Models
         public Boolean? ipkgsts { get; set; }
         public decimal? iGstval { get; set; }
         public Boolean? bCompSts { get; set; }
+
     }
     public class PackageManagementView: PackageManagement
     {
@@ -395,26 +376,7 @@ namespace SmartInsuarance.Models
                 }
             }
         }
-        public string UsereName
-        {
-            get
-            {
-                switch (iUsrTyp)
-                {
-                    case 1:
-                        return "Agent";
-                    case 2:
-                        return "Broker";
-
-                    case 3:
-                        return "User";
-                    case 4:
-                        return "Trial User";
-                    default:
-                        return "";
-                }
-            }
-        }
+        public string UsereName {get;set;}
         public string LicenseName { get; set; }
         public decimal? dPackFunAmt { get; set; }
         public decimal? dPackFeaAmt { get; set; }

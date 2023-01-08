@@ -28,6 +28,7 @@ namespace SmartInsuarance.Controllers
             return View();
         }
 
+
         public ActionResult LoginAlt(int packID = 0)
         {
             ViewBag.packID = packID;
@@ -47,6 +48,50 @@ namespace SmartInsuarance.Controllers
 
             ViewBag.packID = packID;
             return View();
+        }
+        public ActionResult Resetpassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Resetpassword(ResetPassword reset)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(reset);
+                var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/Reset");
+                var request = new RestRequest(Method.POST);
+                request.AddHeader("cache-control", "no-cache");
+                //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+                request.AddParameter("application/json", json, ParameterType.RequestBody);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddHeader("Accept", "application/json");
+                IRestResponse response = client.Execute(request);
+
+                if (response.StatusCode.ToString() == "OK")
+                {
+                    _CommonResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+
+                    TempData["IsUserDetailsExists"] = 1;
+                    TempData["msg"] = "Password Updated Successfully...";
+                    TempData["icon"] = "success";
+                    return RedirectToAction("Login", "Auth");
+
+                }
+                else
+                {
+                    TempData["IsUserDetailsExists"] = 1;
+                    TempData["msg"] = "Facing some internal issue, password not updated, kindly try after sometime...";
+                    TempData["icon"] = "error";
+                    return RedirectToAction("Login", "Auth");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         [HttpPost]
@@ -100,6 +145,7 @@ namespace SmartInsuarance.Controllers
                         {
                             TempData["IsUserDetailsExists"] = 1;
                             TempData["msg"] = "Your Account is blocked Please Contact to admin...";
+                            TempData["icon"] = "error";
                             return RedirectToAction("Login", "Auth");
                         }
                         else
@@ -119,6 +165,7 @@ namespace SmartInsuarance.Controllers
                     {
                         TempData["IsUserDetailsExists"] = 1;
                         TempData["msg"] = "Invalid Credentials Please Try Again...";
+                        TempData["icon"] = "error";
                         return RedirectToAction("Login", "Auth");
                     }
                     else
@@ -129,6 +176,8 @@ namespace SmartInsuarance.Controllers
                 else
                 {
                     TempData["IsUserDetailsExists"] = 1;
+                    TempData["msg"] = "";
+                    TempData["icon"] = "error";
                     return RedirectToAction("Login", "Auth");
                 }
 
@@ -388,5 +437,8 @@ namespace SmartInsuarance.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
+      
+
     }
 }

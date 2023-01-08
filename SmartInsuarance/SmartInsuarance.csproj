@@ -6967,6 +6967,8 @@
     <Content Include="Views\Shared\_leftSidebarUser.cshtml" />
     <Content Include="Views\Master\PreviewMst.cshtml" />
     <Content Include="Views\Master\CardDetail.cshtml" />
+    <Content Include="Views\User\AddNewUserIndex.cshtml" />
+    <Content Include="Views\Auth\Resetpassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

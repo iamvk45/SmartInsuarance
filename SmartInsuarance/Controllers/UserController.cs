@@ -16,6 +16,15 @@ namespace SmartInsuarance.Controllers
     {
         public ActionResult EditProfile()
         {
+            CommonController common = new CommonController();
+            var userSession = (UserModelSession)Session["UserDetails"];
+
+            var currentUser = GetuserDetails(userSession.sUSRCode);
+            var roleList = common.GetDataForDropdown("Role", 0);
+
+            ViewBag.roles = roleList;
+            ViewBag.currentUser = currentUser;
+
             return View();
         }
         public ActionResult Profilestatus()
@@ -28,15 +37,39 @@ namespace SmartInsuarance.Controllers
 
             return View();
         }
-        
-        public ActionResult AddNewUser()
+
+        public ActionResult AddNewUser(string userCode = "")
         {
             CommonController common = new CommonController();
-            
-            var departmentList = common.GetDataForDropdown("Department");
-            var roleList = common.GetDataForDropdown("Role");
-            ViewBag.departments = departmentList;
-            ViewBag.roles = roleList;
+
+            var departmentList = common.GetDataForDropdown("Department", 0);
+            var roleList = common.GetDataForDropdown("Role", 0);
+
+            if (userCode == "")
+            {
+                ViewBag.departments = departmentList;
+                ViewBag.roles = roleList;
+                ViewBag.userCod = userCode;
+                return View();
+            }
+            else
+            {
+                var UserMasterDetails = GetuserDetails(userCode);
+                ViewBag.departments = departmentList;
+                ViewBag.roles = roleList;
+                ViewBag.userCod = userCode;
+                return View(UserMasterDetails);
+            }
+
+
+        }
+        public ActionResult AddNewUserIndex()
+        {
+            CommonController common = new CommonController();
+
+            var userList = common.GetUsersListToActiveInactive("CompanyUser", 0);
+
+            ViewBag.users = userList;
 
             return View();
         }
@@ -104,6 +137,30 @@ namespace SmartInsuarance.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+        public JsonResult UpdateUserDetails(UserMasterDetails _userMaster)
+        {
+            var json = JsonConvert.SerializeObject(_userMaster);
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/UpdateuserDetails");
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", json, ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            Api_CommonResponse objResponse = new Api_CommonResponse();
+            if (response.StatusCode.ToString() == "OK")
+            {
+                objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+            }
+
+            return new JsonResult
+            {
+                Data = new { StatusCode = objResponse.statusCode, Data = objResponse, Failure = false, Message = objResponse.message },
+                ContentEncoding = System.Text.Encoding.UTF8,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         public JsonResult CollectPayment(PaymentTracking payment)
         {
             var json = JsonConvert.SerializeObject(payment);
@@ -129,6 +186,37 @@ namespace SmartInsuarance.Controllers
             };
         }
 
+        public JsonResult Resetpassword(ResetPassword reset)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(reset);
+                var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/Reset");
+                var request = new RestRequest(Method.POST);
+                request.AddHeader("cache-control", "no-cache");
+                //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+                request.AddParameter("application/json", json, ParameterType.RequestBody);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddHeader("Accept", "application/json");
+                IRestResponse response = client.Execute(request);
+                Api_CommonResponse _CommonResponse = new Api_CommonResponse();
+                if (response.StatusCode.ToString() == "OK")
+                {
+                    _CommonResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+
+                }
+                return new JsonResult
+                {
+                    Data = new { StatusCode = _CommonResponse.statusCode, Data = _CommonResponse, Failure = false, Message = _CommonResponse.message },
+                    ContentEncoding = System.Text.Encoding.UTF8,
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         [HttpPost]
         public ActionResult AddNewuser(UserMaster userMst)
         {
@@ -152,20 +240,20 @@ namespace SmartInsuarance.Controllers
                     {
                         TempData["IsUserDetailsExists"] = 1;
                         TempData["msg"] = "User Details Already Exists, Details Not Saved...";
-                        return RedirectToAction("AddNewUser", "User");
+                        return RedirectToAction("AddNewUserIndex", "User");
                     }
                     else
                     {
                         TempData["IsUserDetailsExists"] = 0;
                         TempData["msg"] = "User Details Saved Successfully!";
-                        return RedirectToAction("AddNewUser", "User");
+                        return RedirectToAction("AddNewUserIndex", "User");
                     }
                 }
                 else
                 {
                     TempData["IsUserDetailsExists"] = 1;
                     TempData["msg"] = "Details Not Saved Due To Some Internal Issues...!";
-                    return RedirectToAction("AddNewUser", "User");
+                    return RedirectToAction("AddNewUserIndex", "User");
                 }
             }
             catch (Exception ex)

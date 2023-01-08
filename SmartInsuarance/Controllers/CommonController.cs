@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using System.ComponentModel.Design;
 
 namespace SmartInsuarance.Controllers
 {
@@ -45,10 +46,10 @@ namespace SmartInsuarance.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }        
-        public List<FillDropDown> GetDataForDropdown(string selectionType)
+        public List<FillDropDown> GetDataForDropdown(string selectionType,int enumID)
         {
             //var json = JsonConvert.SerializeObject(geographical);
-            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Common/GetFillDropDowns?selectionType=" + selectionType);
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Common/GetFillDropDowns?selectionType=" + selectionType+ "&enumID="+enumID);
             var request = new RestRequest(Method.GET);
             request.AddHeader("cache-control", "no-cache");
             //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
@@ -71,10 +72,10 @@ namespace SmartInsuarance.Controllers
           
             return dropDowns;
         }
-        public List<EnumMaster> GetDataCustomEnum(string selectionType)
+        public List<EnumMaster> GetDataCustomEnum(string selectionType, int enumID)
         {
             //var json = JsonConvert.SerializeObject(geographical);
-            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Common/GetFillDropDowns?selectionType=" + selectionType);
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Common/GetFillDropDowns?selectionType=" + selectionType + "&enumID=" + enumID);
             var request = new RestRequest(Method.GET);
             request.AddHeader("cache-control", "no-cache");
             //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
@@ -120,6 +121,29 @@ namespace SmartInsuarance.Controllers
                 }
             }
             return dropDowns;
+        }
+        public List<UsersList> GetUsersListToActiveInactive(string selectionType, int enumID)
+        {
+            //var json = JsonConvert.SerializeObject(new { type = selectiontype, userID = userCode });
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Common/GetFillDropDowns?selectionType=" + selectionType + "&enumID=" + enumID);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            Api_CommonResponse objResponse = new Api_CommonResponse();
+            List<UsersList> registeredUsers = new List<UsersList>();
+            if (response.StatusCode.ToString() == "OK")
+            {
+                objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if (objResponse.data != null)
+                    registeredUsers = JsonConvert.DeserializeObject<List<UsersList>>(objResponse.data.ToString());
+
+            }
+
+            return registeredUsers;
         }
         public List<LicenseConfigDetails> GetLicenseConfigData(string parentID, string licensID)
         {

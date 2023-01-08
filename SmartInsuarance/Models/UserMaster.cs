@@ -47,7 +47,7 @@ namespace SmartInsuarance.Models
     {
         public string sUSRCode { get; set; }
         public string sPrntID { get; set; }
-        public string Name { get; set; }
+        public string sNME { get; set; }
         public string sSurNME { get; set; }
         public string sUSRNME { get; set; }
         public int? iUsrTypeID { get; set; }
@@ -65,9 +65,18 @@ namespace SmartInsuarance.Models
         public string sAadhaar { get; set; }
         public string sPan { get; set; }
         public string sAddress { get; set; }
+        public string Members { get; set; }
+        public byte[] aadhaarImg { get; set; }
+        public byte[] panImg { get; set; }
+        public byte[] profileImg { get; set; }
+        
+        public string s_aadhaarImg { get; set; }
+        public string s_panImg { get; set; }
+        public string s_profileImg { get; set; }
         public int? isGSTApplicable { get; set; }
         public string GSTINNo { get; set; }
         public int? iRoleID { get; set; }
+        public int? iDept { get; set; }
         public string Role { get; set; }
         public string location { get; set; }
         public string sCrtedBy { get; set; }
