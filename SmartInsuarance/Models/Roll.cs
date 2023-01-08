@@ -123,6 +123,7 @@ namespace SmartInsuarance.Models
         public string Tablename { get; set; }
         public int Id { get; set; }
         public int status { get; set; }
+        public string Display { get; set; }
     }
     public class RoleMastertable
     {
