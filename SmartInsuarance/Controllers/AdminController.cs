@@ -84,7 +84,7 @@ namespace SmartInsuarance.Controllers
         public ActionResult UserLicenseConfiguration()
         {
             CommonController common = new CommonController();
-            var CompanyList = common.GetDataForDropdown("Companies");
+            var CompanyList = common.GetDataForDropdown("Companies", 0);
             var userSession = (UserModelSession)Session["UserDetails"];
             var InsuranceList = common.GetInsuranceForLicense(userSession.sUSRCode);
             var childData = common.GetChildID(userSession.sUSRCode);
@@ -100,7 +100,7 @@ namespace SmartInsuarance.Controllers
         {
             CommonController common = new CommonController();
 
-            ViewBag.paymentMethod = common.GetDataForDropdown("PaymentMethod");
+            ViewBag.paymentMethod = common.GetDataForDropdown("PaymentMethod",0);
             ViewBag.orderDetails = GetOrderDetailsForPayment(orderID);
             return View();
         }

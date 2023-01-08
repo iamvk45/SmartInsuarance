@@ -32,8 +32,8 @@ namespace SmartInsuarance.Controllers
         }
         public ActionResult EnumMaster()
         {
-            var EnumList = _common.GetDataForDropdown("Enums");
-            var CustomEnumList = _common.GetDataCustomEnum("EnumsList");
+            var EnumList = _common.GetDataForDropdown("Enums",0);
+            var CustomEnumList = _common.GetDataCustomEnum("EnumsList",0);
 
             ViewBag.enums = EnumList;
             ViewBag.cstomeEnums = CustomEnumList;
@@ -203,8 +203,11 @@ namespace SmartInsuarance.Controllers
         public ActionResult LicenceMaster(string Id)
         {
             LICEMSTViEW seldata = new LICEMSTViEW();
+            CommonController common = new CommonController();
             seldata = CommonFunction.GetSelectLicence(Id);
+            var UserTypeList = common.GetDataForDropdown("UserType",0);
             ViewBag.id = Id;
+            ViewBag.userTypes = UserTypeList;
 
 
             return View(seldata);
@@ -222,6 +225,17 @@ namespace SmartInsuarance.Controllers
             return new JsonResult
             {
                 Data = new { Data = lst, failure = false, msg = "Success", isvalid = 1 },
+                ContentEncoding = System.Text.Encoding.UTF8,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        public JsonResult GetDataForEnum(int enumID, string SelectionType= "EnumsList")
+        {
+            var CustomEnumList = _common.GetDataCustomEnum("EnumsList", enumID);
+
+            return new JsonResult
+            {
+                Data = new { Data = CustomEnumList, failure = false, msg = "Success", isvalid = 1 },
                 ContentEncoding = System.Text.Encoding.UTF8,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
@@ -350,7 +364,9 @@ namespace SmartInsuarance.Controllers
         }
         public ActionResult PackageCreate(int Id)
         {
-
+            CommonController common = new CommonController();
+            var UserTypeList = common.GetDataForDropdown("UserType", 0);
+            ViewBag.userTypes = UserTypeList;
             ViewBag.id = Id;
             PackageManagementView groups = new PackageManagementView();
             if (Id > 0)

@@ -24,6 +24,9 @@ namespace SmartInsuarance.Models
         public string sPan { get; set; }
         public string sAddress { get; set; }
         public int iRoleID { get; set; }
+        public string Rolename { get; set; }
+        public int iDeptID { get; set; }
+        public int iGrpD { get; set; }
         public int iFinYrID { get; set; }
         public int iFK_brnchID { get; set; }
         public string bPassword { get; set; }
@@ -44,7 +47,7 @@ namespace SmartInsuarance.Models
     {
         public string sUSRCode { get; set; }
         public string sPrntID { get; set; }
-        public string Name { get; set; }
+        public string sNME { get; set; }
         public string sSurNME { get; set; }
         public string sUSRNME { get; set; }
         public int? iUsrTypeID { get; set; }
@@ -62,9 +65,18 @@ namespace SmartInsuarance.Models
         public string sAadhaar { get; set; }
         public string sPan { get; set; }
         public string sAddress { get; set; }
+        public string Members { get; set; }
+        public byte[] aadhaarImg { get; set; }
+        public byte[] panImg { get; set; }
+        public byte[] profileImg { get; set; }
+        
+        public string s_aadhaarImg { get; set; }
+        public string s_panImg { get; set; }
+        public string s_profileImg { get; set; }
         public int? isGSTApplicable { get; set; }
         public string GSTINNo { get; set; }
         public int? iRoleID { get; set; }
+        public int? iDept { get; set; }
         public string Role { get; set; }
         public string location { get; set; }
         public string sCrtedBy { get; set; }
@@ -89,6 +101,9 @@ namespace SmartInsuarance.Models
         public int? iStateID { get; set; }
         public int? iCountryID { get; set; }
         public int? iCityID { get; set; }
+        public int? iRoleID { get; set; }
+        public int? iDeptID { get; set; }
+        public int? iGrpID { get; set; }
     }
     public class LoginModal
     {
@@ -96,6 +111,11 @@ namespace SmartInsuarance.Models
         public string Password { get; set; }
         public string Email { get; set; }
 
+    }
+
+    public class ResetPassword : LoginModal
+    {
+        public string Type { get; set; }
     }
 
     public class TrailuserModal
@@ -147,5 +167,20 @@ namespace SmartInsuarance.Models
         public string userID { get; set; }
         public string verificationType { get; set; }
 
+    }
+
+    public class UserPermissions
+    {
+        public int MappedSubmenuId { get; set; }
+        public int MenuId { get; set; }
+        public string Menu { get; set; }
+        public int SubMenuId { get; set; }
+        public string SubMenu { get; set; }
+        public string Controller { get; set; }
+        public string ActionMethod { get; set; }
+        public string Allow_Insert { get; set; }
+        public string Allow_Edit { get; set; }
+        public string Allow_Delete { get; set; }
+        public string Allow_View { get; set; }
     }
 }
