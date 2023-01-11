@@ -1,0 +1,289 @@
+﻿@using SmartInsuarance.Models
+@{
+    ViewBag.Title = "Support Ticket";
+    Layout = "~/Views/Shared/_Layout_new.cshtml";
+
+    var Module = ViewBag.Module as List<Dropdown>;
+    var Functionality = ViewBag.Functionality as List<Dropdown>;
+    var Ticket = ViewBag.Ticket as List<Dropdown>;
+
+}
+
+<link href="~/Content/Custom.css" rel="stylesheet" />
+
+
+
+<!DOCTYPE html>
+
+<style>
+    .sticky {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+</style>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title" style="color: blanchedalmond;font-weight: bold;">Support Ticket</h4>
+
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group col-lg-12">
+                                        <label for="example-text-input" class="col-sm-12" style="margin-left:-10px">Select Module</label>
+
+                                        <select id="ddlModule">
+                                            <option value="0" role=separator>Module</option>
+                                            @{
+                                                if (Module != null)
+                                                {
+                                                    foreach (var item in Module)
+                                                    {
+                                                        <option value=@item.Id data-image="~/images/404.png">@item.Text</option>
+
+
+
+                                                    }
+                                                }
+                                            }
+                                        </select>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group col-lg-12">
+                                        <label for="example-text-input" class="col-sm-12" style="margin-left:-10px">Select Functionality</label>
+
+                                        <select id="ddlFunctionality">
+                                            <option value="0" role=separator>Functionality</option>
+                                            @{
+                                                if (Functionality != null)
+                                                {
+                                                    foreach (var item in Functionality)
+                                                    {
+                                                        <option value=@item.Id data-image="~/images/404.png">@item.Text</option>
+
+
+
+                                                    }
+                                                }
+                                            }
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-4">
+                                    <div class="form-group col-lg-12">
+                                        <label for="example-text-input" class="col-sm-12" style="margin-left:-10px">Type Of Ticket</label>
+
+                                        <div>
+                                            <select class="form-control" id="ddlTicket" name="Division">
+                                                <option value="">--Select --</option>
+                                                <option value="1">Error</option>
+                                                <option value="2">Bug</option>
+                                                <option value="3">New</option>
+                                                <option value="4">Changes</option>
+
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-lg-8">
+                                    <div class="col-lg-12">
+                                        <div class="form-group col-lg-12">
+                                            <input class="form-control" id="txtDescription" placeholder="Enter error/issue description" name="Decribe" />
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-8">
+                                    <div class="col-lg-12">
+                                        <div class="form-group col-lg-12">
+                                            <label for="file1">Attach your issue screen shot</label>
+                                            <input type="file" id="fileaadhaar" style="border: 0px solid #e8ebf3" name="attachment" data-input="true" data-buttonname="btn btn-info" data-iconname="fa fa-upload mr" class="form-control filestyle" />
+                                            <span id="attachment"></span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-8">
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="pull-right" style="text-align: end;">
+                                        <a href="" class="btn btn-default">DISCARD</a>
+
+                                        <input type="button" class="btn btn-primary" id="btnSaveData" onclick="SaveData();" value="Add" title="Add" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="~/Content/globalDomain.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ddlModule").select2();
+        $("#ddlFunctionality").select2();
+        $("#ddlTicket").select2();
+    });
+
+    function SaveData() {
+        var Module = $('#ddlModule').val();
+        var Functionality = $('#ddlFunctionality').val();
+        var Ticket = $('#ddlTicket').val();
+        var Description = $('#txtDescription').val();
+        var Attachment = $('#txtAttachment').val();
+
+        var isSaved = true;
+        var Data = {
+            ModuleId: 0,
+            FunctionalityId: 0,
+            TicketId: 0,
+            Description: '',
+            Attachment: ''
+
+        }
+
+        if (Module == 0) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Please Select Module...!',
+                allowOutsideClick: false,
+                showCloseButton: true,
+            });
+            isSaved = false;
+        }
+        else if (Functionality == 0) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Please Select Functionality...!',
+                allowOutsideClick: false,
+                showCloseButton: true,
+            });
+            isSaved = false;
+        }
+        else if (Ticket == 0) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Please Select Ticket...!',
+                allowOutsideClick: false,
+                showCloseButton: true,
+            });
+            isSaved = false;
+        }
+        else if (Description == '') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Please Select Course...!',
+                allowOutsideClick: false,
+                showCloseButton: true,
+            });
+            isSaved = false;
+        }
+
+        else {
+            Data.ModuleId = parseInt(Module);
+            Data.FunctionalityId = parseInt(Functionality);
+            Data.TicketId = parseInt(Ticket);
+            Data.Description = Description;
+
+        }
+        var d = JSON.stringify(Data)
+        if (isSaved) {
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: GetglobalDomain() + "/SupportTicket/SaveData",
+                dataType: 'json',
+                type: 'Post',
+                cache: false,
+                data: JSON.stringify(Data),
+                success: function (data) {
+                    console.log(data.Type);
+                    console.log(data);
+                    var type = data.Type;
+                    if (data.StatusCode === 1 && data.Message == " Already Exists") {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: type + data.Message + '...!',
+                            allowOutsideClick: false,
+                            showCloseButton: true
+                        });
+                    }
+                    if (data.StatusCode === 1 && data.Message == " Inserted Successfully") {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: type + data.Message + '...!',
+                            allowOutsideClick: false,
+                            showCloseButton: true
+                        });
+                    }
+
+                    setTimeout(function () {
+                        var url = GetglobalDomain() + "/SupportTicket/Index";
+                        window.location.href = url;
+                    }, 700)
+
+
+                },
+                error: function (d) {
+                    //alert(d);
+                }
+            });
+        }
+    }
+</script>

@@ -10,4 +10,10 @@ namespace SmartInsuarance.Model
         public string SettigName { get; set; }
 
     }
+    public class InsuranceCheckout
+    {
+        public string PackageGst { get; set; }
+        public int GstVal { get; set; }
+        public string PackName { get; set; }
+    }
 }

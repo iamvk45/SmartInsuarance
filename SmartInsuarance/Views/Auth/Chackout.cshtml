@@ -1,11 +1,47 @@
 ﻿
 @{
     Layout = null;
-    var pack = (List<SmartInsuarance.Models.PackDetails>)ViewBag.packs;
+    var pack = (List<SmartInsuarance.Model.InsuranceCheckout>)ViewBag.InsuranceData;
+    var packInsurance = (List<SmartInsuarance.Models.PackInsuranceDetails>)ViewBag.packageDetails;
+    var CoverID = (int)ViewBag.CoverID;
 
-    var GST = (pack[0].Total_displayvalue * 18) / 100;
-    var totalSum = ((pack[0].Total_displayvalue) + GST);
+    var IsGSTApplicable = "0";
+    var GSTVal = 0;
+    var pakageName = "";
+    decimal totalSum = 0;
+    decimal GST = 0;
 
+    if (pack != null)
+    {
+        IsGSTApplicable = pack[0].PackageGst;
+
+    }
+    var packageData = new SmartInsuarance.Models.PackInsuranceDetails();
+    if (packInsurance != null)
+    {
+
+        if (CoverID == 0)
+        {
+
+            packageData = packInsurance.FirstOrDefault();
+        }
+        else
+        {
+            packageData = packInsurance.Where(wh => wh.IPk_CovLicId == CoverID).FirstOrDefault();
+        }
+    }
+    if (IsGSTApplicable == "0")
+    {
+        GSTVal = pack[0].GstVal;
+
+        GST = 0;
+    }
+    else
+    {
+        GST = (packageData.packageCost * 18) / 100;
+    }
+    pakageName = pack[0].PackName;
+    totalSum = ((packageData.packageCost) + Convert.ToDecimal(GST) + (packageData.featValue));
 }
 
 
@@ -58,10 +94,14 @@
                                                 </thead>
                                                 <tbody>
                                                     @{
-                                                        if (pack != null)
+                                                        if (packageData != null && pack != null)
                                                         {
-                                                            <tr><td>@pack[0].sPackName</td><td>&#x20B9; @pack[0].Total_displayvalue</td></tr>
-                                                            <tr><td>GST (18%)</td><td>&#x20B9; @GST</td></tr>
+                                                            <tr><td>@pakageName</td><td>&#x20B9; @packageData.packageCost</td></tr>
+                                                            <tr><td>Feature Rate</td><td>&#x20B9; @packageData.featValue</td></tr>
+                                                            if (IsGSTApplicable == "1")
+                                                            {
+                                                                <tr><td>GST (18%)</td><td>&#x20B9; @GST</td></tr>
+                                                            }
                                                             <tr><td>Total Package Cost</td><td>&#x20B9; @totalSum</td></tr>
                                                         }
                                                     }
@@ -72,7 +112,7 @@
                                         </div>
                                         <div class="text-center" style="margin-top: 12px;">
                                             <button type="button" id="btnlogin" class="btn btn-primary btn-block" style="background: #64d3ff; color: black"><i class="fa fa-coins"></i> Proceed For Online Payment</button>
-                                           @* <button type="submit" id="btnsubmit" class="btn btn-primary btn-block" style="display:none">Sign Me In <i class="fa fa-sign-in-alt"></i></button>*@
+                                            @* <button type="submit" id="btnsubmit" class="btn btn-primary btn-block" style="display:none">Sign Me In <i class="fa fa-sign-in-alt"></i></button>*@
                                         </div>
                                     </form>
                                 </div>
