@@ -93,4 +93,13 @@ namespace SmartInsuarance.Models
         }
     }
 
+    public class PackInsuranceDetails
+    {
+        public decimal packageCost { get; set; }
+        public decimal featValue { get; set; }
+        public int iMnuId { get; set; }
+        public string sMenuName { get; set; }
+        public int IPk_CovLicId { get; set; }
+        public int iqty { get; set; }
+    }
 }
