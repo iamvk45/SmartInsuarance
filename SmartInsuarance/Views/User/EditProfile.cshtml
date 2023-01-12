@@ -65,9 +65,9 @@
                     </div>
                     <div class="info-list">
                         <ul>
-                            <li><a href="javascript:void(0)">Username</a><span>@currentuser.sUSRNME</span></li>
+                            <li><a href="javascript:void(0)">Username</a><span>@currentuser.sEmail</span></li>
                             <li><a href="javascript:void(0)">Role</a><span>@currentuser.Role</span></li>
-                            <li><a href="javascript:void(0)">My Members</a><span class="badge badge-circle badge-secondary" style="color:white">@currentuser.Members</span></li>
+                            @*<li><a href="javascript:void(0)">My Members</a><span class="badge badge-circle badge-secondary" style="color:white">@currentuser.Members</span></li>*@
                         </ul>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-6 m-b30">
-                            <label class="form-label">Name</label>
+                            <label class="form-label">First Name</label>
                             <input type="text" class="form-control" value="@name" id="txtName">
                         </div>
                         <div class="col-sm-6 m-b30">
@@ -103,7 +103,8 @@
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Date Of Birth</label>
-                            <input type="text" placeholder="dd.MM.yyyy" value="@currentuser.dtDOB" class="form-control" id="mdate">
+                            <input type="date" placeholder="24.09.1995" value="@currentuser.dtDOB" class="form-control" id="mdate1">
+
                         </div>
                         <div class="col-sm-6 m-b30">
                             <label class="form-label">Email address</label>
@@ -584,7 +585,7 @@
 
         var name = $('#txtName').val();
         var surname = $('#txtSurname').val();
-        var dob = $('#mdate').val();
+        var dob = $('#mdate1').val();
         var country = $('#ddlCountry').val();
         var state = $('#ddlState').val();
         var city = $('#ddlCity').val();
@@ -667,7 +668,7 @@
 
         var name = $('#txtName').val();
         var surname = $('#txtSurname').val();
-        var dob = $('#mdate').val();
+        var dob = $('#mdate1').val();
         var country = $('#ddlCountry').val();
         var state = $('#ddlState').val();
         var city = $('#ddlCity').val();

@@ -124,6 +124,7 @@ namespace SmartInsuarance.Models
         public int Id { get; set; }
         public int status { get; set; }
         public string Display { get; set; }
+        public string  Guid { get; set; }
     }
     public class RoleMastertable
     {

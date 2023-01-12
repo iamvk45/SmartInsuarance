@@ -8,7 +8,7 @@ namespace SmartInsuarance.Model
         public int iFK_EnumNo { get; set; }
         public string EnumName { get; set; }
         public string SettigName { get; set; }
-
+        public int? iStts { get; set; }
     }
     public class InsuranceCheckout
     {
