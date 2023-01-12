@@ -317,7 +317,7 @@ namespace SmartInsuarance.Controllers
                 }
             }
             return groups;
-        }
+   }
 
 
 
@@ -411,7 +411,7 @@ namespace SmartInsuarance.Controllers
             return RedirectToAction("PackageList", "Master");
         }
 
-        public ActionResult PackageFunctionality(int Id, string Licenseid, int ivalidityvalue, string ivalidityname, int ivalidityid)
+        public ActionResult PackageFunctionality(int Id, string Licenseid, int ivalidityvalue, string ivalidityname, int ivalidityid,int iusertype)
         {
             List<Dropdown> groups = new List<Dropdown>();
             groups = CommonFunction.GetLicenceCoverList(Licenseid);
@@ -421,6 +421,7 @@ namespace SmartInsuarance.Controllers
             ViewBag.ivalidityvalue = ivalidityvalue;
             ViewBag.ivalidityname = ivalidityname;
             ViewBag.ivalidityid = ivalidityid;
+            ViewBag.iusertype = iusertype;
             return View();
         }
         public ActionResult SpecialFeatureackage(int Id, int ivalidityvalue, string ivalidityname, int ivalidityid)
