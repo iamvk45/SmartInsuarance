@@ -349,14 +349,14 @@ namespace SmartInsuarance.Controllers
         #endregion
 
         #region chnage status
-        public JsonResult ChangeStatus(string TableId, int type, int Id,string Display=null)
+        public JsonResult ChangeStatus(string TableId, int type, int Id,string Display=null, string Guid=null)
         {
             Activeclass objRatemaster = new Activeclass();
             objRatemaster.Id = Id;
             objRatemaster.Tablename = TableId;
             objRatemaster.status = type;
             objRatemaster.Display= Display;
-
+            objRatemaster.Guid = Guid;
             var client2 = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "RoleMaster/ChangeStatus");
             var request2 = new RestRequest(Method.POST);
             request2.AddHeader("cache-control", "no-cache");

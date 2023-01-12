@@ -7,6 +7,7 @@
     {
         Menulist = (List<Dropdown>)ViewBag.groups;
     }
+    var usertype = (int)ViewBag.iusertype;
 }
 
 <style>
@@ -247,6 +248,10 @@
                     if (response.IsValid = 1) {
                         var id = response.Data[0].Id;
                         $("#drate").val(id);
+                        if ('@usertype' == 4) {
+                            $("#drate").val(0);
+                        }
+                        
                     }
                     Display();
                 }

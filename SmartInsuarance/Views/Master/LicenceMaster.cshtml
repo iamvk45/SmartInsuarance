@@ -123,7 +123,7 @@
                 <div class="form-group is-empty row Paddingtop1">
                     <label for="nameInput" class="col-sm-3 control-label">Validity</label>
                     <div class="col-sm-2">
-                        <input type="number" name="iValidityvalue" value="@(Model!=null ?Model.iValidityvalue.ToString():"")" id="ivalidityvalue" placeholder="Enter Number" class="form-control">
+                        <input type="number" name="iValidityvalue" value="@(Model!=null ?Model.iValidityvalue.ToString():"")" id="ivalidityvalue" min="0" placeholder="Enter Number" class="form-control">
                     </div>
                     <div class="col-sm-3">
                         <select class="singleselect" name="iValidityId" id="iValidityId" @(Model != null && Model.iValidityId.ToString() != "0" ? "readonly" : "")>
@@ -141,7 +141,7 @@
                 <div class="form-group is-empty row Paddingtop1">
                     <label for="nameInput" class="col-sm-3 control-label">Number Of Licence Covered</label>
                     <div class="col-sm-2">
-                        <input type="number" name="iNumReg" value="" id="iNumReg" placeholder="" class="form-control">
+                        <input type="number" name="iNumReg" value="@Model.iNumReg" min="0" id="iNumReg" placeholder="" class="form-control">
                     </div>
                     <div class="col-sm-3">
                         <select class="singleselect " name="iTypId" id="iTypId">
@@ -186,7 +186,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <label class="form-label">Enter Qty</label>
-                                <input type="number" name="iQty" id="iQty" value="" placeholder="Enter Qty" class="form-control">
+                                <input type="number" name="iQty" id="iQty" value="" min="0" placeholder="Enter Qty" class="form-control">
                             </div>
                             <div class="col-sm-2">
                                 <br />

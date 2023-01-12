@@ -16,6 +16,11 @@
     }
 </style>
 <link href="~/Content/Custom.css" rel="stylesheet" />
+<style>
+    thead, tbody, tfoot, tr, td, th {
+        border-width: thin !important;
+    }
+</style>
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
@@ -29,7 +34,7 @@
                 <table class="table table-responsive-md" id="tblCustomers">
                     <thead>
                         <tr>
-                            <th>#No</th>
+                            @*<th>#No</th>*@
                             <th>Name</th>
                             <th>User Type</th>
                             <th>Validity</th>
@@ -46,7 +51,7 @@
                             foreach (var item in Model)
                             {
                                 <tr id="tr_@item.iPK_LicMstId" style="font-weight:bold;">
-                                    <td>@i</td>
+                                    @*<td>@i</td>*@
                                     <td>
                                         @item.LicenseName <br />
                                         <span style="color:red">Start Date:</span> @item.StartDate<br />
@@ -58,16 +63,22 @@
                                     <td>@item.RegistrationName</td>
                                     <td>@item.LiceType</td>
                                     <td>
-                                        <label class="toggle">
-                                            <input class="toggle-checkbox" type="checkbox" id="Status" name="Status" value="@item.iStts" @(item.iStts == 1 ? "checked" : "")>
-                                            <div class="toggle-switch"></div>
-                                            @*<span class="toggle-label">Bluetooth</span>*@
-                                        </label>
+                                        <div class="form-check form-switch">
+                                            @{if (item.iStts == 1)
+                                                { <input id="LICEMST_@item.iPK_LicMstId" class="form-check-input ChangeStatus1" type="checkbox" data-id="LICEMST_@item.iPK_LicMstId" name="@item.iPK_LicMstId" value="@item.iStts" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input id="LICEMST_@item.iPK_LicMstId" class="form-check-input ChangeStatus1" type="checkbox" data-id="LICEMST_@item.iPK_LicMstId" name="@item.iPK_LicMstId" value="@item.iStts">
+
+                                                }
+                                            }
+                                        </div>
                                     </td>
                                     <td>
                                         <div class="d-flex">
                                             <a href="@Url.Action("LicenceMaster", "Master", new {Id=item.iPK_LicMstId})" class="btn btn-primary shadow btn-xs sharp me-1 Edit"><i class="fa fa-edit"></i></a>
-                                            <button class="btn btn-danger shadow btn-xs sharp Delete" id="delete_@item.iPK_LicMstId" onclick="Delete(@item.iPK_LicMstId)"><i class="fa fa-trash"></i></button>
+                                            <button class="btn btn-danger shadow btn-xs sharp Delete" id="delete_@item.iPK_LicMstId" onclick="DeleteData1('@item.iPK_LicMstId','LICEMST')"><i class="fa fa-trash"></i></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -80,3 +91,88 @@
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="~/Content/globalDomain.js"></script>
+<script src="~/Content/Template/js/jScript.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<link href="~/Content/datatable/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script type="text/javascript" language="javascript" src="~/Content/datatable/js/jquery.dataTables.min.js"></script>
+@*<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">*@
+@*<script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>*@
+<script src="~/Content/Template/js/Commonjs.js"></script>
+<script type="text/javascript">
+    $('#tblCustomers').DataTable();
+    //$(document).ready(function () {
+    //    $('#example').DataTable({
+    //        "sPaginationType": "scrolling"
+
+    //    });
+    //});
+
+    function DeleteData1(Id, table) {
+        var Id = Id;
+
+        /*  var TypeId = $(this).attr("name");*/
+        $.confirm({
+
+            title: 'Remove Confirmation',
+            content: 'Are you sure to remove record',
+            type: 'red',
+            typeAnimated: true,
+            animation: 'rotate',
+            closeAnimation: 'scale',
+            buttons: {
+                Confirm: {
+                    text: 'YES',
+                    btnClass: 'btn-red',
+                    action: function () {
+
+
+
+                        var Params = JSON.stringify({
+                            TableId: table,
+                            Guid: Id,
+                            type: 2,
+                            Id:0
+
+                        });
+                        /* ShowBALoader("LoaderBASinup1");*/
+                        $.ajax({
+                            url: GetglobalDomain() + "/Role/ChangeStatus",
+                            type: 'POST',
+                            dataType: "json",
+                            data: Params,
+                            contentType: "application/json",
+                            success: function (response) {
+
+
+                                debugger;
+                                if (response.IsValid = 1) {
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: 'Delete Successfully',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    })
+                                    $("#tr_" + Id).remove();
+                                }
+
+                            },
+
+                        });
+
+                    }
+                },
+                close: {
+                    text: 'NO',
+                    action: function () { }
+                }
+            }
+        });
+    }
+
+</script>
+
+

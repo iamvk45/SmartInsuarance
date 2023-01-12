@@ -43,16 +43,27 @@
                                     <td> @item.ControllerName</td>
                                     <td> @item.ActionMethod</td>
                                     <td>
-                                        <label class="toggle">
-                                            <input class="toggle-checkbox" type="checkbox" id="Status" name="Status" value="@item.Status" @(item.Status == 1 ? "checked" : "")>
-                                            <div class="toggle-switch"></div>
-                                            @*<span class="toggle-label">Bluetooth</span>*@
-                                        </label>
+                                        <div class="form-check form-switch">
+                                            @{if (item.Status == 1)
+                                                {
+                                                    <input id="MENUMST-@item.MenuId" class="form-check-input ChangeStatus" type="checkbox" data-id="MENUMST-@item.MenuId" name="@item.MenuId" value="@item.Status" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input id="MENUMST-@item.MenuId" class="form-check-input ChangeStatus" type="checkbox" data-id="MENUMST-@item.MenuId" name="@item.MenuId" value="@item.Status">
+
+                                                }
+                                            }
+
+                                        </div>
+
+
+                                     
                                     </td>
                                     <td>
                                         <div class="d-flex">
                                             <a href="#" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
-                                            <a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                            <a href="#" class="btn btn-danger shadow btn-xs sharp"  onclick="DeleteData(@item.MenuId)"><i class="fa fa-trash"></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -66,5 +77,130 @@
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="~/Content/globalDomain.js"></script>
+<script src="~/Content/Template/js/jScript.js"></script>
+<script type="text/javascript">
+    $(".ChangeStatus").change(function () {
+        debugger;
+        var id = $(this).data("id");
+        var item = id.split('-');
+        var type = parseInt($(this).val());
+        //if (type == 0) {
+        //    type = 1;
+        //}
+        //else {
+        //    type = 0;
+        //}
+        var Params = JSON.stringify(
+            {
+                TableId: item[0],
+                type: type,
+                Id: item[1]
+            });
+
+        $.ajax({
+            url: GetglobalDomain() + "/Role/ChangeStatus",
+            type: 'POST',
+            dataType: "json",
+            contentType: "application/json",
+            data: Params,
+            success: function (response) {
+                debugger;
+                if (response.isvalid == 1) {
+                    var msg = 'Status Changes Successfully';
+                    if (type == 1) {
+                        $("#" + id).val(0);
+                        /* $(this).val('0');*/
+                        msg = 'Status De-Active Successfully';
+                    }
+                    else {
+                        $("#" + id).val(1);
+                        /* $(this).val('1');*/
+                        msg = 'Status Active Successfully';
+                    }
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: msg,
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+
+
+                }
+
+
+
+
+
+
+            }
+        });
+
+    });
+    function DeleteData(Id) {
+        var Id = Id;
+
+        /*  var TypeId = $(this).attr("name");*/
+        $.confirm({
+
+            title: 'Remove Confirmation',
+            content: 'Are you sure to remove record',
+            type: 'red',
+            typeAnimated: true,
+            animation: 'rotate',
+            closeAnimation: 'scale',
+            buttons: {
+                Confirm: {
+                    text: 'YES',
+                    btnClass: 'btn-red',
+                    action: function () {
+
+
+
+                        var Params = JSON.stringify({
+                            TableId: 'MENUMST',
+                            Id: Id,
+                            type: 2
+
+
+                        });
+                        /* ShowBALoader("LoaderBASinup1");*/
+                        $.ajax({
+                            url: GetglobalDomain() + "/Role/ChangeStatus",
+                            type: 'POST',
+                            dataType: "json",
+                            data: Params,
+                            contentType: "application/json",
+                            success: function (response) {
+
+
+                                debugger;
+                                if (response.IsValid = 1) {
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: 'Delete Successfully',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    })
+                                    $("#tr_" + Id).remove();
+                                }
+
+                            },
+
+                        });
+
+                    }
+                },
+                close: {
+                    text: 'NO',
+                    action: function () { }
+                }
+            }
+        });
+    }
+</script>
 
 
