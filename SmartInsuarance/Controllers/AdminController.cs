@@ -81,7 +81,7 @@ namespace SmartInsuarance.Controllers
 
             return View();
         }
-        public ActionResult UserLicenseConfiguration()
+        public ActionResult UserLicenseConfiguration(int configurationID)
         {
             CommonController common = new CommonController();
             var CompanyList = common.GetDataForDropdown("Companies", 0);
@@ -89,9 +89,13 @@ namespace SmartInsuarance.Controllers
             var InsuranceList = common.GetInsuranceForLicense(userSession.sUSRCode);
             var childData = common.GetChildID(userSession.sUSRCode);
 
+            var LicenceDetails = LicenseDetailsForEdit(configurationID);
+
             ViewBag.childData = childData;
             ViewBag.companyList = CompanyList;
             ViewBag.InsuranceList = InsuranceList;
+            ViewBag.LicenceDetailsForEdit = LicenceDetails;
+            ViewBag.licenceIPKID = configurationID;
 
             return View();
         }
@@ -320,6 +324,59 @@ namespace SmartInsuarance.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+        public JsonResult UpdateLicencseConfiguration(UserLicenseConfigRequest userLicense)
+        {
+            var json = JsonConvert.SerializeObject(userLicense);
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/UpdateLicencseConfiguration");
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", json, ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            Api_CommonResponse objResponse = new Api_CommonResponse();
 
+            if (response.StatusCode.ToString() == "OK")
+            {
+                objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+            }
+
+            return new JsonResult
+            {
+                Data = new { StatusCode = objResponse.statusCode, Data = objResponse, Failure = false, Message = objResponse.message },
+                ContentEncoding = System.Text.Encoding.UTF8,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        
+        public UserLicenseConfigRequest LicenseDetailsForEdit(int IpkID)
+        {
+            List<UserLicenseConfigRequest> userLicenseConfig = new List<UserLicenseConfigRequest>();
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "User/LicenceDetails?Ipk_Licence_ID="+ IpkID);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            Api_CommonResponse objResponse = new Api_CommonResponse();
+
+            if (response.StatusCode.ToString() == "OK")
+            {
+                objResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if (objResponse.data != null)
+                    userLicenseConfig = JsonConvert.DeserializeObject<List<UserLicenseConfigRequest>>(objResponse.data.ToString());
+                
+                if(objResponse.data1 != null)
+                    userLicenseConfig[0].relationshipManagers = JsonConvert.DeserializeObject<List<UserRelationshipManager>>(objResponse.data1.ToString());
+            }
+            if (userLicenseConfig != null && userLicenseConfig.Count>0)
+                return userLicenseConfig[0];
+            else
+                return new UserLicenseConfigRequest();
+            
+        }
     }
 }

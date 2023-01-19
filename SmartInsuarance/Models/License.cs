@@ -33,17 +33,22 @@ namespace SmartInsuarance.Models
     public class UserLicenseConfigRequest
     {
         public int? iPK_ID { get; set; }
+        public int? configID { get; set; }
         public string sCnfigredUSRID { get; set; }
         public string sFK_prntID { get; set; }
+        public string parentName { get; set; }
         public string sChildID { get; set; }
+        public string childName { get; set; }
         public int? iMenuID { get; set; }
+        public string sMenuName { get; set; }
         public int? iCmpnyID { get; set; }
+        public string CompanyName { get; set; }
         public string sRegstionNo { get; set; }
         public string dtExpry { get; set; }
         public string sCKYC_No { get; set; }
         public int? iBranchID { get; set; }
         public int? iFinyrID { get; set; }
-        public DateTime? dtCreatedOn { get; set; }
+        public string dtCreatedOn { get; set; }
         public List<UserRelationshipManager> relationshipManagers { get; set; }
     }
 
@@ -51,6 +56,7 @@ namespace SmartInsuarance.Models
     {
         public int? iPK_ID { get; set; }
         public int? iFK_insCmpCngID { get; set; }
+        public string UniqueGuid { get; set; }
         public string sName { get; set; }
         public string sMobileNo { get; set; }
         public string sEmail { get; set; }

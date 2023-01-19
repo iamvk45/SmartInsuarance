@@ -6,6 +6,7 @@
         public int responseCode { get; set; }
         public string message { get; set; }
         public object data { get; set; }
+        public object data1 { get; set; }
         public int status { get; set; }
         public int mobileOTP { get; set; }
         public int emailOTP { get; set; }
