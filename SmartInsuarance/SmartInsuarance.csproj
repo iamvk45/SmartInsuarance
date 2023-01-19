@@ -128,6 +128,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminAjaxRequestController.cs" />
+    <Compile Include="Controllers\SupportTicketController.cs" />
     <Compile Include="Controllers\WelcomeController.cs" />
     <Compile Include="Controllers\AjaxRequestController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Models\Roll.cs" />
     <Compile Include="Models\PaymentTracking.cs" />
     <Compile Include="Models\PendingPayments.cs" />
+    <Compile Include="Models\SupportTicket.cs" />
     <Compile Include="Models\UserMaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -5433,7 +5435,6 @@
     <Content Include="Content\Template\js\plugins-init\toastr-init.js" />
     <Content Include="Content\Template\js\plugins-init\widgets-script-init.js" />
     <Content Include="Content\Template\js\settings.js" />
-    <Content Include="Content\Template\js\sortable.js" />
     <Content Include="Content\Template\js\styleSwitcher.js" />
     <Content Include="Content\Template\js\user.js" />
     <Content Include="Content\Template\scss\main.css" />
@@ -6985,7 +6986,6 @@
     <Content Include="Views\Master\CardDetail.cshtml" />
     <Content Include="Views\User\AddNewUserIndex.cshtml" />
     <Content Include="Views\Auth\Resetpassword.cshtml" />
-    <Content Include="Views\Master\AddSupplierSection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

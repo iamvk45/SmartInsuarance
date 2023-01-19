@@ -22,12 +22,19 @@ namespace SmartInsuarance.Controllers
     public class AuthController : Controller
     {
         Api_CommonResponse _CommonResponse = new Api_CommonResponse();
+        
         public ActionResult Login()
         {
             Session["OTPVerification"] = null;
+            Session["packageID"] = null;
+            Session["InsCoverID"] = null;
+            Session["UserDetails"] = null;
+            Session["LicenseDetails"] = null;
+            Session["InsuaranceDetails"] = null;
+            Session["UserPermissions"] = null;
+
             return View();
         }
-
 
         public ActionResult LoginAlt(int packID = 0)
         {
@@ -37,18 +44,27 @@ namespace SmartInsuarance.Controllers
 
         public ActionResult Chackout()
         {
-            var packData = (List<PackDetails>)Session["PackageData"];
+            var pkgID  = (int)Session["packageID"];
+            var covID = (int)Session["InsCoverID"];
 
-            ViewBag.packs = packData;
+            CommonController common = new CommonController();
+          var InsuranceData =  common.GetInsuranceCheckout("InsuranceCheckout", pkgID);
+          var packageDetails =  common.GetPackageDetails(pkgID);
+
+            ViewBag.InsuranceData = InsuranceData;
+            ViewBag.packageDetails = packageDetails;
+            ViewBag.CoverID = covID;
             return View();
         }
 
-        public ActionResult Register(int packID = 0)
+        public ActionResult Register(int packID = 0, int coverID = 0)
         {
 
             ViewBag.packID = packID;
+            ViewBag.insCoverID = coverID;
             return View();
         }
+        
         public ActionResult Resetpassword()
         {
             return View();
@@ -139,7 +155,7 @@ namespace SmartInsuarance.Controllers
                             Session["UserDetails"] = userModel[0];
 
                             //}
-                            return RedirectToAction("Index", "Dashboard");
+                            return RedirectToAction("EditProfile", "User");
                         }
                         else if (userModel[0].IsActive == "0")
                         {
@@ -312,6 +328,7 @@ namespace SmartInsuarance.Controllers
             }
             return licenses;
         }
+       
         public List<Insuarance> GetInsuaranceData(string usrID, string licensID, string type = "Insuarance")
         {
             //var json = JsonConvert.SerializeObject(geographical);
@@ -363,7 +380,7 @@ namespace SmartInsuarance.Controllers
 
         }
 
-        public ActionResult saveDetails(TrailuserModal trailuser, int pkID)
+        public ActionResult saveDetails(TrailuserModal trailuser, int pkID,int? insCoverID)
         {
             try
             {
@@ -382,8 +399,12 @@ namespace SmartInsuarance.Controllers
                 {
                     _CommonResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
 
-                    var packDetails = getPackageData(Convert.ToInt32(_CommonResponse.userCode));
-                    Session["PackageData"] = packDetails;
+                    //var packDetails = getPackageData(Convert.ToInt32(_CommonResponse.userCode));
+                    //Session["PackageData"] = packDetails.Where(wh=>wh.iPk_PackId == pkID).ToList();
+
+                    Session["packageID"] = pkID;
+                    Session["InsCoverID"] = Convert.ToInt32(insCoverID);
+
 
                     if (string.IsNullOrEmpty(_CommonResponse.userID))
                     {
@@ -437,8 +458,5 @@ namespace SmartInsuarance.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
-      
-
     }
 }

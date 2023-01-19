@@ -98,6 +98,31 @@ namespace SmartInsuarance.Controllers
           
             return dropDowns;
         }
+        public List<InsuranceCheckout> GetInsuranceCheckout(string selectionType, int enumID)
+        {
+            //var json = JsonConvert.SerializeObject(geographical);
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Common/GetFillDropDowns?selectionType=" + selectionType + "&enumID=" + enumID);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
+            IRestResponse response = client.Execute(request);
+            Api_CommonResponse _CommonResponse = new Api_CommonResponse();
+            List<InsuranceCheckout> dropDowns = new List<InsuranceCheckout>();
+
+            if (response.StatusCode.ToString() == "OK")
+            {
+                _CommonResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if(_CommonResponse.data != null)
+                {
+                    dropDowns = JsonConvert.DeserializeObject<List<InsuranceCheckout>>(_CommonResponse.data.ToString());
+                }
+            }
+          
+            return dropDowns;
+        }
         public List<ChildUsers> GetChildID(string parentID)
         {
             //var json = JsonConvert.SerializeObject(geographical);
@@ -228,6 +253,24 @@ namespace SmartInsuarance.Controllers
                 _CommonResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
                 if (_CommonResponse.data != null)
                     licenseConfigList = JsonConvert.DeserializeObject<List<LicenseConfigDetails>>(_CommonResponse.data.ToString());
+            }
+            return licenseConfigList;
+        }
+        
+        public List<PackInsuranceDetails> GetPackageDetails(int packID)
+        {
+            List<PackInsuranceDetails> licenseConfigList = new List<PackInsuranceDetails>();
+            var client = new RestClient(ConfigurationManager.AppSettings["BaseUrl"] + "Common/GetPackageDetails?packID=" + packID);
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("cache-control", "no-cache");
+            //request.AddHeader("authorization", "bearer " + CurrentSessions.Token + "");
+            request.AddParameter("application/json", "", ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            if (response.StatusCode.ToString() == "OK")
+            {
+                _CommonResponse = JsonConvert.DeserializeObject<Api_CommonResponse>(response.Content);
+                if (_CommonResponse.data != null)
+                    licenseConfigList = JsonConvert.DeserializeObject<List<PackInsuranceDetails>>(_CommonResponse.data.ToString());
             }
             return licenseConfigList;
         }
