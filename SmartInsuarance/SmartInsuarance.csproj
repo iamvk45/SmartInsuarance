@@ -6986,6 +6986,7 @@
     <Content Include="Views\Master\CardDetail.cshtml" />
     <Content Include="Views\User\AddNewUserIndex.cshtml" />
     <Content Include="Views\Auth\Resetpassword.cshtml" />
+    <Content Include="Views\SupportTicket\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
