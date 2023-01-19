@@ -121,9 +121,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="~/Content/globalDomain.js"></script>
 <script src="~/Content/Template/js/jScript.js"></script>
-
+<link href="~/Content/datatable/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script type="text/javascript" language="javascript" src="~/Content/datatable/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-
+/*    $('#tbody').DataTable();*/
     $(document).ready(function () {
         BindTableRate();
         $("#fluid #tblCustomers #tbody .Update").click(function () {
@@ -138,7 +139,7 @@
             $("#sSbMnuNme").val($("#SubMenuName option:selected").text());
         })
         $(input['name=Status']).change(function () {
-            alert("hdvjf");
+           
         });
     });
     function BindSubmenus(MenuId) {
@@ -151,7 +152,7 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            url: GetglobalDomain()+"/Role/GetSelectSubmenulist",
+            url: GetglobalDomain() + "/Role/GetSelectSubmenulist",
             dataType: 'json',
             type: 'Post',
             cache: false,

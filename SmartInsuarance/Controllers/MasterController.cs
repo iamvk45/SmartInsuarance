@@ -497,5 +497,10 @@ namespace SmartInsuarance.Controllers
         {
             return Json(true, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult AddSupplierSection(string name)
+        {
+           ViewBag.Name = name;
+            return View();
+        }
     }
 }

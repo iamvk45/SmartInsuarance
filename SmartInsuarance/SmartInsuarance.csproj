@@ -182,6 +182,8 @@
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.structure.css" />
     <Content Include="Content\jquery-ui.theme.css" />
+    <Content Include="Content\Pop\PopModal.css" />
+    <Content Include="Content\Pop\PopModal.js" />
     <Content Include="Content\select2\css\select2.css" />
     <Content Include="Content\select2\js\select2.js" />
     <Content Include="Content\Template\css\perfect-scrollbar.css" />
