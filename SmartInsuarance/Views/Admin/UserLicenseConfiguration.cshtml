@@ -4,10 +4,21 @@
     Layout = "~/Views/Shared/_Layout_new.cshtml";
 
     ////var userSession = (UserModelSession)Session["UserDetails"];
+    ///
+    var isEditDataAvailable = 0;
+    var expiryDate = "";
     var insuarances = (List<Dropdown>)ViewBag.InsuranceList;
     var companies = (List<SmartInsuarance.Model.FillDropDown>)ViewBag.companyList;
+    var ipkID = (int)ViewBag.licenceIPKID;
 
     var childs = (List<ChildUsers>)ViewBag.childData;
+    var LicenceData = (UserLicenseConfigRequest)ViewBag.LicenceDetailsForEdit;
+
+    if (LicenceData != null)
+    {
+        isEditDataAvailable = 1;
+        expiryDate = LicenceData.dtExpry;
+    }
 
     var parentID = childs.Where(wh => wh.UserRelation == "Parent").Select(s => s.sUSRCode).First();
     ////var username = "";
@@ -53,7 +64,22 @@
                                     {
                                         foreach (var item in insuarances)
                                         {
-                                            <option value="@item.Id">@item.Text</option>
+                                            if (LicenceData != null)
+                                            {
+                                                if (LicenceData.iMenuID.ToString() == @item.Id)
+                                                {
+                                                    <option value="@item.Id" selected>@item.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Id">@item.Text</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Id">@item.Text</option>
+                                            }
+
                                         }
                                     }
                                 }
@@ -72,7 +98,21 @@
                                     {
                                         foreach (var item in companies)
                                         {
-                                            <option value="@item.DDLValue">@item.DDLText</option>
+                                            if (LicenceData != null)
+                                            {
+                                                if (LicenceData.iCmpnyID == @item.DDLValue)
+                                                {
+                                                    <option value="@item.DDLValue" selected>@item.DDLText</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.DDLValue">@item.DDLText</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.DDLValue">@item.DDLText</option>
+                                            }
                                         }
                                     }
                                 }
@@ -90,7 +130,21 @@
                                     {
                                         foreach (var item in childs)
                                         {
-                                            <option value="@item.sUSRCode">@item.FullName</option>
+                                            if (LicenceData != null)
+                                            {
+                                                if (LicenceData.sChildID == @item.sUSRCode)
+                                                {
+                                                    <option value="@item.sUSRCode" selected>@item.FullName</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.sUSRCode">@item.FullName</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.sUSRCode">@item.FullName</option>
+                                            }
                                         }
                                     }
                                 }
@@ -100,11 +154,11 @@
 
                     <tr>
                         <td><strong> CKYC Number <span style="color:red;font-size:15px;font-weight:700">*</span> : </strong></td>
-                        <td><input type="text" id="txtckycNumber" class="form-control" style="text-transform:uppercase" /></td>
+                        <td><input type="text" id="txtckycNumber" class="form-control" style="text-transform:uppercase" value="@LicenceData.sCKYC_No" /></td>
                     </tr>
                     <tr>
                         <td><strong> Registration Number By Company <span style="color:red;font-size:15px;font-weight:700">*</span> : </strong></td>
-                        <td><input type="text" id="txtRegsNo" class="form-control" style="text-transform:uppercase" /></td>
+                        <td><input type="text" id="txtRegsNo" class="form-control" style="text-transform:uppercase" value="@LicenceData.sRegstionNo" /></td>
                     </tr>
                     <tr>
                         <td><strong> Expiring on <span style="color:red;font-size:15px;font-weight:700">*</span> : </strong></td>
@@ -141,17 +195,18 @@
                 </div>
                 <p style="color: #cdbf29 !important;"><i>Optional, this will be used for auto mail, sms notification </i></p>
                 <div class="row col-12">
-                    <table class="table table-bordered" id="tblRm" style="width: 100%;font-size: 15px;">
+                    <table class="table table-bordered table-striped" id="tblRm" style="width: 100%;font-size: 15px;">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
                                 <th>Mobile</th>
                                 <th>Email</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td colspan="4" style="text-align:center">No Data Available</td></tr>
+                            <tr><td colspan="5" style="text-align:center">No Data Available</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -171,11 +226,34 @@
 <script src="~/Content/globalDomain.js"></script>
 <script type="text/javascript">
     var imagebase64 = "";
-    
+
     var relationshiManager = [];
     $(document).ready(function () {
         $(".singleselect").select2();
         getLocation();
+
+        if (@isEditDataAvailable == 1) {
+            SomeFunction();
+            var s = getHTML5DateAndTimeFromDate('@expiryDate');
+            //alert(s);
+            $('#ddlInsurance').attr('disabled', true);
+            $('#ddlCompany').attr('disabled', true);
+            $('#ddlMembers').attr('disabled', true);
+
+            $('#txtExpiryon').val(s[0]);
+            $('#btnSave').html('');
+            $('#btnSave').html('<i class="fas fa-refresh"></i> UPDATE DETAILS');
+
+        }
+        else {
+
+            $('#ddlInsurance').removeAttr('disabled');
+            $('#ddlCompany').removeAttr('disabled');
+            $('#ddlMembers').removeAttr('disabled');
+
+            $('#btnSave').html('');
+            $('#btnSave').html('<i class="fas fa-save"></i> SAVE DETAILS');
+        }
     });
 
     $('#btnRMAdd').click(function () {
@@ -186,6 +264,7 @@
         var email = $('#txtRMEmail').val();
         var phonenumber = $('#txtRMMobile').val();
             relationshiManager.push({
+                UniqueGuid : "",
                 sName: name,
                 sMobileNo: phonenumber,
                 sEmail: email
@@ -194,28 +273,54 @@
             $('#txtRMName').focus();
         }
         if (relationshiManager.length <= 0) {
-            RMTableHTML = `<tr><td colspan="4" style="text-align:center">No Data Available</td></tr>`
+            RMTableHTML = `<tr><td colspan="5" style="text-align:center">No Data Available</td></tr>`
             $('#tblRm tbody').html('');
             $('#tblRm tbody').html(RMTableHTML);
         }
         else {
 
             relationshiManager.forEach(function (item, index) {
-                RMTableHTML += `<tr><td>${index+1}</td><td>${item.sName}</td><td>${item.sMobileNo}</td><td>${item.sEmail}</td></tr>`
+                var sGuID = CreateGuid();
+                relationshiManager[index].UniqueGuid = sGuID;
+                RMTableHTML += `<tr><td>${index + 1}</td><td>${item.sName}</td><td>${item.sMobileNo}</td><td>${item.sEmail}</td><td><span onclick="EditData('${index}','${sGuID}')"><i class="fa fa-pen" style="color:#527cf1"></i></span> &nbsp; <span onclick="DeleteData('${sGuID}')"><i class="fa fa-trash" style="color:red"></i></span></td></tr>`
             });
 
             $('#tblRm tbody').html('');
             $('#tblRm tbody').html(RMTableHTML);
         }
+        console.table(relationshiManager);
         clearRMData();
     });
 
 
     $('#btnSave').click(function () {
-        SaveDetails();
+        var btntext = $('#btnSave').text();
+
+        if (btntext == " SAVE DETAILS") {
+            SaveDetails();
+
+        }
+        else {
+            UpdateDetails();
+        }
+
         return false;
     });
 
+
+     function SomeFunction() {
+    var htmlString = "";
+    var array = @Html.Raw(Json.Encode(LicenceData.relationshipManagers));
+    for(var i = 0; i < array.length; i++) {
+        relationshiManager.push(array[i]);
+        }
+         relationshiManager.forEach(function (item, index) {
+             htmlString += `<tr><td>${index + 1}</td><td>${item.sName}</td><td>${item.sMobileNo}</td><td>${item.sEmail}</td><td><span onclick="EditData('${index}','${item.UniqueGuid}')"><i class="fa fa-pen" style="color:#527cf1"></i></span> &nbsp; <span onclick="DeleteData('${item.UniqueGuid}')"><i class="fa fa-trash" style="color:red"></i></span></td></tr>`
+         });
+
+         $('#tblRm tbody').html('');
+         $('#tblRm tbody').html(htmlString);
+        };
 
 
     function SaveDetails() {
@@ -249,6 +354,70 @@
                     'Content-Type': 'application/json'
                 },
                 url: GetglobalDomain()+"/Admin/ConfigLicencse",
+                dataType: 'json',
+                type: 'Post',
+                cache: false,
+                data: JSON.stringify(userMasterModal),
+                success: function (data) {
+                    console.log('ajax');
+                    console.log(data);
+                    if (data.StatusCode == 1 && data.Message == 'Details Saved Successfully...') {
+                        Swal.fire({
+                            title: "Success",
+                            text: data.Message,
+                            icon: "success",
+                            showCancelButton: false,
+                        });
+                        setTimeout(function () {
+                            location.href='@Url.Action("LicenseConfiguration","Admin")';
+                        }, 1500);
+
+                    }
+                    else {
+                        Swal.fire({
+                            title: "Error",
+                            text: data.Message,
+                            icon: "error",
+                            showCancelButton: false,
+                        });
+                    }
+                },
+                error: function (d) {
+                    console.log(d);
+                    //alert("404. Please wait until the File is Loaded.");
+                }
+            });
+        }
+    }
+
+    function UpdateDetails() {
+        //var insurance = $('#ddlInsurance').val();
+        //var company = $('#ddlCompany').val();
+        //var member = $('#ddlMembers').val();
+        var ckyc = $('#txtckycNumber').val();
+        var regNo = $('#txtRegsNo').val();
+        var expiry = $('#txtExpiryon').val();
+
+        var userMasterModal = {
+            iPK_ID: '@ipkID',
+            sRegstionNo: regNo.toUpperCase(),
+            dtExpry: expiry,
+            sCKYC_No: ckyc.toUpperCase(),
+            relationshipManagers: relationshiManager
+        }
+
+        var d = checkValidate();
+        console.log(d);
+        //var d = JSON.stringify(Content);
+        //console.log(d);
+
+        if (d) {
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: GetglobalDomain() +"/Admin/UpdateLicencseConfiguration",
                 dataType: 'json',
                 type: 'Post',
                 cache: false,
@@ -419,6 +588,7 @@
 
         return status;
     }
+
     function RMcheckValidate() {
         var status = true;
 
@@ -518,6 +688,73 @@
         console.log('from inner');
         console.log("lat : " + $('#hdf_longitudeData').val());
         console.log("long : " + $('#hdf_latitudeData').val());
+    }
+
+    function CreateGuid() {
+        function _p8(s) {
+            var p = (Math.random().toString(16) + "000000000").substr(2, 8);
+            return s ? "-" + p.substr(0, 4) + "-" + p.substr(4, 4) : p;
+        }
+        return _p8() + _p8(true) + _p8(true) + _p8();
+    }
+
+    function getHTML5DateAndTimeFromDate(ddate) {
+
+        var d = new Date(ddate);
+
+        // Date string
+        let ds = d.getFullYear().toString().padStart(4, '0') + '-' + (d.getMonth() + 1).toString().padStart(2, '0') + '-' + d.getDate().toString().padStart(2, '0');
+
+        // Time string
+        let ts = d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0') + ':' + d.getSeconds().toString().padStart(2, '0');
+
+        // Return them in array
+        return [ds, ts];
+        //return ds;
+    }
+
+    function DeleteData(UniqueID) {
+        var htmlString = "";
+        relationshiManager = relationshiManager.filter(function (e) {
+            return e.UniqueGuid !== UniqueID;
+        })
+
+        if (relationshiManager.length <= 0) {
+            htmlString += `<td colspan="5" class="text-center">No Data Available</td>`
+
+            $("#tblRm tbody").html('');
+            $("#tblRm tbody").html(htmlString);
+        }
+        else {
+            relationshiManager.forEach(function (item, index) {
+                htmlString += `<tr><td>${index + 1}</td><td>${item.sName}</td><td>${item.sMobileNo}</td><td>${item.sEmail}</td><td><span onclick="EditData('${index}','${item.UniqueGuid}')"><i class="fa fa-pen" style="color:#527cf1"></i></span> &nbsp; <span onclick="DeleteData('${item.UniqueGuid}')"><i class="fa fa-trash" style="color:red"></i></span></td></tr>`
+            });
+            $("#tblRm tbody").html('');
+            $("#tblRm tbody").append(htmlString);
+            /*     ClearAllData();*/
+        }
+    }
+
+    function EditData(rowID,mguid) {
+        var name = $(`#tblRm > tbody  > tr:eq(${parseInt(rowID)})`).find('td:eq(1)').html();
+        var mobile = $(`#tblRm > tbody  > tr:eq(${parseInt(rowID)})`).find('td:eq(2)').html();
+        var email = $(`#tblRm > tbody  > tr:eq(${parseInt(rowID)})`).find('td:eq(3)').html();
+
+
+        relationshiManager = relationshiManager.filter(function (e) {
+            return e.UniqueGuid !== mguid;
+        })
+
+        $('#txtRMName').val('');
+        $('#txtRMName').val(name);
+
+        $('#txtRMMobile').val('');
+        $('#txtRMMobile').val(mobile);
+
+        $('#txtRMEmail').val('');
+        $('#txtRMEmail').val(email);
+
+
     }
 
 </script>

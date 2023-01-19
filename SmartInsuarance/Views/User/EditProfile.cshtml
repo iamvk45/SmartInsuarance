@@ -39,7 +39,7 @@
                         <div class="author-profile">
                             <div class="author-media">
                                 @*<img src="@profileImg" alt="" id="imgProfile">*@
-                                <img src="@((currentuser.s_profileImg==""|| currentuser.s_profileImg==null)?"../Content/Template/images/userlogo.png":profileImg)" alt=""  id="imgProfile">
+                                <img src="@((currentuser.s_profileImg==""|| currentuser.s_profileImg==null)?"../Content/Template/images/userlogo.png":profileImg)" alt="" id="imgProfile">
                                 <div class="upload-link" title="" data-toggle="tooltip" data-placement="right" data-original-title="update">
                                     <input type="file" class="update-flie" id="fupProfileImage" onchange="return encodeImageFileAsURL(this,'Profile')">
                                     <input type="hidden" id="hdnProfileImage">
@@ -211,29 +211,29 @@
                                     <label class="form-label">PAN Image</label>
                                     <div class="col-sm-6 m-b30" style="background:url('@panImg');background-size:contain;background-repeat:no-repeat;width:250px;height:100px">
                                     </div>
-                                    </div>
-                                    }
-                                    else
-                                    {
-                                    <div class="col-sm-6 m-b30">
-                                        <label class="form-label">Choose Image (PAN)</label>
-                                        <input type="file" class="form-control" id="fupPanImage" onchange="return encodeImageFileAsURL(this,'Pan')">
-                                        <input type="hidden" id="hdnPanImage">
-                                    </div>
-                                    }
-                                    }
-
-
-
-                                    <div class="col-sm-12 m-b30">
-                                        <label class="form-label">Full Address</label>
-                                        <textarea class="form-control" placeholder="Some where....." rows="3" style="resize:none" id="txtAddress">@currentuser.sAddress</textarea>
-                                    </div>
                                 </div>
-                            </div>
+                            }
+                            else
+                            {
+                                <div class="col-sm-6 m-b30">
+                                    <label class="form-label">Choose Image (PAN)</label>
+                                    <input type="file" class="form-control" id="fupPanImage" onchange="return encodeImageFileAsURL(this,'Pan')">
+                                    <input type="hidden" id="hdnPanImage">
+                                </div>
+                            }
+                        }
+
+
+
+                        <div class="col-sm-12 m-b30">
+                            <label class="form-label">Full Address</label>
+                            <textarea class="form-control" placeholder="Some where....." rows="3" style="resize:none" id="txtAddress">@currentuser.sAddress</textarea>
+                        </div>
+                    </div>
+                </div>
                 <div class="card-footer">
                     <button class="btn btn-secondary" type="button" onclick="SaveDetails()"><i class="fa fa-wrench"></i>&nbsp; UPDATE</button>
-                    <a href="javascript:void(0);" class="btn-link" data-bs-toggle="modal" data-bs-target="#ResetModel">Forgot your password?</a>
+                    <a href="javascript:void(0);" class="btn-link" data-bs-toggle="modal" data-bs-target="#ResetModel">Forgot password?</a>
                 </div>
             </form>
         </div>
@@ -243,11 +243,11 @@
 
 @*<button type="button" class="btn btn-primary mb-2" id="btnStartTrail" style="display:none" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Modal centered</button>*@
 <!-- Modal -->
-<div class="modal fade" id="ResetModel">
+<div class="modal fade" id="ResetModel" data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-m" role="document">
-        <div class="modal-content modal-m">
-            <div class="modal-header">
-                <h5 class="modal-title">Reset Password</h5>
+        <div class="modal-content modal-m" style="-webkit-box-shadow: -28px 28px 28px -11px rgba(181,181,181,1); -moz-box-shadow: -28px 28px 28px -11px rgba(181,181,181,1); box-shadow: -28px 28px 28px -11px rgb(180 170 170); border-radius: 50px;">
+            <div class="modal-header" style="border-radius: 51px;background: #22b1db;">
+                <h5 class="modal-title" style="margin-left: 20px;color:white">Reset Password</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal">
                 </button>
             </div>
@@ -276,7 +276,7 @@
                     </div>
                     <div class="row  mt-3">
                         <div class="col-sm-12" style="text-align:right">
-                            <button class="btn btn-primary btn-sm" id="btnResetPass" type="button"><i class="fa fa-recycle"></i>&nbsp;Reset Password</button>
+                            <button class="btn btn-primary btn-sm" id="btnResetPass" type="button"><i class="fa fa-envelope-open"></i>&nbsp; Generate OTP & Reset Password</button>
                         </div>
                     </div>
                 </div>
@@ -291,14 +291,14 @@
 
 
 
-<button type="button" class="btn btn-primary mb-2" id="btnStartTrail" style="display:none" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Modal centered</button>
+<button type="button" class="btn btn-primary mb-2" id="btnOpenVerficationModal" style="display:none" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Modal centered</button>
 <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter">
+<div class="modal fade" id="exampleModalCenter" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-        <div class="modal-content modal-xl">
-            <div class="modal-header">
-                <h5 class="modal-title">Enter OTP</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal">
+        <div class="modal-content modal-xl" style="-webkit-box-shadow: -28px 28px 28px -11px rgba(181,181,181,1); -moz-box-shadow: -28px 28px 28px -11px rgba(181,181,181,1); box-shadow: -28px 28px 28px -11px rgb(180 170 170); border-radius: 50px;">
+            <div class="modal-header" style="border-radius: 51px;background: #22b1db;">
+                <h5 class="modal-title" id="exampleModalCenterLabel" style="margin-left: 20px;color:white">Enter OTP</h5>
+                <button type="button" class="btn-close" id="btnCloseModal" data-bs-dismiss="modal">
                 </button>
             </div>
             <div class="modal-body">
@@ -320,19 +320,19 @@
                                     <input type="text" class="form-control" oninput="numberOnly(this.id)" id="txtMobileOTP" placeholder="----" maxlength="4" style="width: 340px;">
                                 </div>
                                 <div class="col-sm-4">
-                                    <button type="button" class="btn btn-primary" id="btnMverify" style="width: 160px;margin-left: -39px;-webkit-box-shadow: inset -12px 4px 34px -4px rgba(0,0,0,0.75);-moz-box-shadow: inset -12px 4px 34px -4px rgba(0,0,0,0.75);box-shadow: inset -12px 4px 34px -4px rgba(0,0,0,0.75);"> <i class='fa fa-check'></i> Verify</button>
+                                    <button type="button" class="btn btn-primary" id="btnMverify" style="background: #22b1db !important; width: 160px; margin-left: -39px; -webkit-box-shadow: inset -12px 4px 34px -4px rgba(0,0,0,0.75); -moz-box-shadow: inset -12px 4px 34px -4px rgba(0,0,0,0.75); box-shadow: inset -12px 4px 34px -4px rgba(0,0,0,0.75);"> <i class='fa fa-check'></i> Verify</button>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-sm-6">
+                        <div class="col-sm-6 mb-3">
                             <div class="row" style="display: flex; align-items: end;">
                                 <div class="col-sm-8">
                                     <label class="form-label"><strong>Email OTP</strong></label>
                                     <input type="text" class="form-control" oninput="numberOnly(this.id)" id="txtEmailOTP" placeholder="----" maxlength="4" style="width: 340px;">
                                 </div>
                                 <div class="col-sm-4">
-                                    <button type="button" class="btn btn-primary" id="btnEverify" style="width: 160px;margin-left: -39px;-webkit-box-shadow: inset -12px 4px 34px -4px rgba(0,0,0,0.75);-moz-box-shadow: inset -12px 4px 34px -4px rgba(0,0,0,0.75);box-shadow: inset -12px 4px 34px -4px rgba(0,0,0,0.75);"> <i class='fa fa-check'></i> Verify</button>
+                                    <button type="button" class="btn btn-primary" id="btnEverify" style="background: #22b1db !important; width: 160px; margin-left: -39px; -webkit-box-shadow: inset -12px 4px 34px -4px rgba(0,0,0,0.75); -moz-box-shadow: inset -12px 4px 34px -4px rgba(0,0,0,0.75); box-shadow: inset -12px 4px 34px -4px rgba(0,0,0,0.75);"> <i class='fa fa-check'></i> Verify</button>
                                 </div>
                             </div>
                         </div>
@@ -370,6 +370,10 @@
     </script>*@
 <script type="text/javascript">
     var imagebase64 = "";
+    var mailOTP = 0;
+    var mobileOTP = 0;
+    var verifyStatus = 0;
+
     $(document).ready(function () {
         $('#ddlRole').select2();
         $('#ddlCountry').select2();
@@ -413,7 +417,10 @@
         $('#btnResetPass').click(function () {
             var pass = $('#txtMpassword').val()
             if (pass.length > 0) {
-                resetpassword();
+                //$('#btnOpenVerficationModal').click();
+                sendEmail('@currentuser.sEmail');
+
+                //resetpassword();
                 //setTimeout(function () {
                 //    $('#btnStartTrail').click();
                 //}, 1500)
@@ -427,6 +434,126 @@
                 });
             }
         });
+
+
+        $('#btnEverify').click(function () {
+            //alert(verifyStatus);
+            var h = '<span class="spinner1"><i class="fa fa-spinner fa-pulse"></i> Verifying</span>'
+
+            $('#btnEverify').addClass('has-spinner1').addClass('activeSpin');
+            $('#btnEverify').html('');
+            $('#btnEverify').html(h);
+
+
+            //verifyStatus = verifyStatus + 1;
+            //alert(verifyStatus);
+            var detailsEmailOTP = mailOTP
+            var EmailRecievedOTP = detailsEmailOTP;
+            var EnteredOTP = $('#txtEmailOTP').val();
+            if (EnteredOTP.length > 0) {
+
+                if (parseInt(EnteredOTP) == 0) {
+                    Swal.fire({
+                        title: "Error",
+                        text: 'Invalid OTP..!',
+                        icon: "error",
+                        showCloseButton: true,
+                    });
+                    $('#txtEmailOTP').val('');
+                    EnteredOTP = '';
+
+                    $('#btnEverify').removeClass('has-spinner1').removeClass('activeSpin');
+                    $('#btnEverify').html("<i class='fa fa-check'></i> Verify");
+
+                }
+                else if (EmailRecievedOTP != EnteredOTP) {
+                    Swal.fire({
+                        title: "Error",
+                        text: 'OTP Not Matched, Please Retry..!',
+                        icon: "error",
+                        showCloseButton: true,
+                    });
+                    $('#txtEmailOTP').val('');
+                    EnteredOTP = '';
+                    $('#btnEverify').removeClass('has-spinner1').removeClass('activeSpin');
+                    $('#btnEverify').html("<i class='fa fa-check'></i> Verify");
+                }
+                else {
+                    updateverificationStatus('Email');
+                }
+            }
+            else {
+                Swal.fire({
+                    title: "Error",
+                    text: 'Please Enter OTP, Its Can`t be Blank..!',
+                    icon: "error",
+                    showCloseButton: true,
+                });
+                $('#txtEmailOTP').val('');
+                EnteredOTP = '';
+                $('#btnEverify').removeClass('has-spinner1').removeClass('activeSpin');
+                $('#btnEverify').html("<i class='fa fa-check'></i> Verify");
+            }
+        })
+
+        $('#btnMverify').click(function () {
+            //alert(verifyStatus);
+            var h = '<span class="spinner1"><i class="fa fa-spinner fa-pulse"></i> Verifying</span>'
+
+            $('#btnMverify').addClass('has-spinner1').addClass('activeSpin');
+            $('#btnMverify').html('');
+            $('#btnMverify').html(h);
+
+
+            var detailsMobileOTP = mobileOTP;
+            var mobileRecievedOTP = detailsMobileOTP;
+            var EnteredOTP = $('#txtMobileOTP').val();
+            //verifyStatus = verifyStatus + 1;
+
+            //alert(verifyStatus);
+            if (EnteredOTP.length > 0) {
+
+                //if (parseInt(EnteredOTP) == 0) {
+                //    Swal.fire({
+                //        title: "Error",
+                //        text: 'Invalid OTP..!',
+                //        icon: "error",
+                //        showCloseButton: true,
+                //    });
+                //    $('#txtMobileOTP').val('');
+                //    EnteredOTP = '';
+                //    $('#btnMverify').removeClass('has-spinner1').removeClass('activeSpin');
+                //    $('#btnMverify').html("<i class='fa fa-check'></i> Verify");
+                //}
+                //else if (mobileRecievedOTP != EnteredOTP) {
+                //    Swal.fire({
+                //        title: "Error",
+                //        text: 'OTP Not Matched, Please Retry..!',
+                //        icon: "error",
+                //        showCloseButton: true,
+                //    });
+                //    $('#txtMobileOTP').val('');
+                //    EnteredOTP = '';
+                //    $('#btnMverify').removeClass('has-spinner1').removeClass('activeSpin');
+                //    $('#btnMverify').html("<i class='fa fa-check'></i> Verify");
+                //}
+                //else {
+                updateverificationStatus('Mobile');
+                //}
+            }
+            else {
+                Swal.fire({
+                    title: "Error",
+                    text: 'Please Enter OTP, Its Can`t be Blank..!',
+                    icon: "error",
+                    showCloseButton: true,
+                });
+                $('#txtMobileOTP').val('');
+                EnteredOTP = '';
+                $('#btnMverify').removeClass('has-spinner1').removeClass('activeSpin');
+                $('#btnMverify').html("<i class='fa fa-check'></i> Verify");
+            }
+        })
     });
 
     function bindCountryStateCity(type, cID, sID) {
@@ -783,6 +910,7 @@
 
         return status;
     }
+
     function resetpassword() {
 
          var userMasterModal = {
@@ -830,5 +958,79 @@
             });
 
     }
+
+    function sendEmail(EmailAddress) {
+
+        var validationRequestModel = {
+            "Email": EmailAddress,
+            "Password": "",
+            "Type": 'UserCheck'
+        }
+
+        var d = JSON.stringify(validationRequestModel);
+        console.log(d);
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            url: GetglobalDomain() + "/Auth/sendOTPToResetPassword",
+            dataType: 'json',
+            type: 'Post',
+            cache: false,
+            data: JSON.stringify(validationRequestModel),
+            success: function (data) {
+                //console.log('ajax');
+                console.log(data);
+                var mainData = data.Data;
+
+                if (mainData.statusCode == 1 && mainData.message == "Email Sent") {
+
+                    mailOTP = mainData.emailOTP;
+                    mobileOTP = mainData.mobileOTP;
+
+                    if (mailOTP != null && mobileOTP != null) {
+                        $('#btnOpenVerficationModal').click();
+                    }
+                }
+            },
+            error: function (d) {
+                console.log(d);
+            }
+        });
+    }
+
+    function updateverificationStatus(item) {
+        Swal.fire({
+            title: "Success",
+            text: `${item} verified successfully...`,
+            icon: "success",
+            showCloseButton: true,
+        });
+        verifyStatus = verifyStatus + 1;
+
+        if (item == "Email") {
+            $('#btnEverify').removeClass('has-spinner1').removeClass('activeSpin');
+            $('#btnEverify').addClass('btn btn-success');
+            $('#btnEverify').html("<i class='fa fa-check'></i> Verified");
+        }
+
+        if (item == "Mobile") {
+            $('#btnMverify').removeClass('has-spinner1').removeClass('activeSpin');
+            $('#btnMverify').addClass('btn btn-success');
+            $('#btnMverify').html("<i class='fa fa-check'></i> Verified");
+        }
+
+        if (verifyStatus >= 2) {
+            setTimeout(function () {
+                $('#btnCloseModal').click();
+                setTimeout(function () {
+                   resetpassword();
+                }, 1500);
+            }, 2000)
+        }
+    }
+
+
 
 </script>

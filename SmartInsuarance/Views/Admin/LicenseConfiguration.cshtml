@@ -45,13 +45,14 @@
                 </ul>
                 <hr />
                 <div style="text-align:right">
-                    <a href="@Url.Action("UserLicenseConfiguration", "Admin")" class="btn btn-sm btn-outline-primary">Configure New License <i class="fas fa-arrow-right"></i></a>
+                    <a href="@Url.Action("UserLicenseConfiguration", "Admin", new {configurationID=0})" class="btn btn-sm btn-outline-primary">Configure New License <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="table-responsive mt-2">
                     <table class="table table-responsive-md">
                         <thead>
                             <tr>
                                 <th style="width:80px;"><strong>#</strong></th>
+                                <th hidden><strong>ConfigID</strong></th>
                                 <th><strong>INSURANCE NAME</strong></th>
                                 <th><strong>USER</strong></th>
                                 <th><strong>COMPANY</strong></th>
@@ -68,10 +69,11 @@
                                     {
                                         <tr>
                                             <td>@i</td>
+                                            <td hidden>@item.ConfigID</td>
                                             <td>@item.Insurance</td>
                                             <td>@item.User</td>
                                             <td>@item.Company</td>
-                                            <td><a href="#" class="btn btn-sm btn-outline-primary"><i class="fas fa-pencil"></i></a></td>
+                                            <td><a href="@Url.Action("UserLicenseConfiguration", "Admin", new {configurationID=item.ConfigID})" class="btn btn-sm btn-outline-primary"><i class="fas fa-pencil"></i></a></td>
                                             <td>
                                                 <div class="form-check form-check-inline" id="div_@item.ConfigID">
                                                     <label class="form-check-label">
