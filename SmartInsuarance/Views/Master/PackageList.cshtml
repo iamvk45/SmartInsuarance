@@ -122,12 +122,12 @@
                                             <a href="@Url.Action("PreviewMst", "Master", new {Id=item.iPk_PackId,Licenseid=item.iFk_LiceId})" title="Package preview" class="btn btn-primary shadow btn-xs sharp me-1 Edit"><i class="fa fa-eye"></i></a>
 
                                             <button class="btn btn-danger shadow btn-xs sharp Delete" id="delete_@item.iPk_PackId" onclick="DeleteData(@item.iPk_PackId)"><i class="fa fa-trash"></i></button>
-                                            <a data-preloaderid="#preloadcreatepopupright"
+                                            @*<a data-preloaderid="#preloadcreatepopupright"
                                                href="@Url.Action("AddSupplierSection", "Master" ,new {name="abhishek"})"
                                               data-bs-target="#exampleModalLong" data-bs-toggle="modal"
                                                class="btn btn-yellow btn-xs nomargin btn ajaxmodal padding5" title="Company Assign">
                                                 <i class="zmdi zmdi-settings">dgfdgdgdg</i>
-                                            </a>
+                                            </a>*@
                                         </div>
 
 
